@@ -9,5 +9,8 @@ int main()
     lat.computeGSO();
     std::cout << lat;
 
+    lat.deepLLL(0.99);
+    std::cout << lat;
+
     return 0;
 }
