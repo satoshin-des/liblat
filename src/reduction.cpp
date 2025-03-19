@@ -13,7 +13,7 @@ void Lattice<T>::LLL(const double delta, const bool compute_gso)
         computeGSO();
     }
 
-    for (int k = 1, i, j; k < m_num_rows;)
+    for (long k = 1, i, j; k < m_num_rows;)
     {
         for (j = k - 1; j > -1; --j)
         {
@@ -67,7 +67,7 @@ void Lattice<T>::deepLLL(const double delta, const bool compute_gso)
         computeGSO();
     }
 
-    for (int k = 1, j, i, t, l; k < m_num_rows;)
+    for (long k = 1, j, i, t, l; k < m_num_rows;)
     {
         for (j = k - 1; j >= 0; --j)
         {
@@ -85,21 +85,58 @@ void Lattice<T>::deepLLL(const double delta, const bool compute_gso)
             }
             else
             {
-                for (l = 0; l < m_num_cols; ++l)
-                {
-                    t = m_basis[k][l];
-                    for (j = k; j > i; --j)
-                    {
-                        m_basis[j][l] = m_basis[j - 1][l];
-                    }
-                    m_basis[i][l] = t;
-                }
-                
+                deepInsertion(i, k);
                 updateDeepInsGSO(i, k);
+                
                 k = fmax(i - 1, 0);
             }
         }
         ++k;
+    }
+}
+
+template <class T>
+void Lattice<T>::potLLL(const double delta, const bool compute_gso)
+{
+    double P, P_min, S;
+
+    LLL(delta, compute_gso);
+
+    for (long l = 0, j, i, k; l < m_num_rows;)
+    {
+        for (j = l - 1; j > -1; --j)
+        {
+            sizeReduce(l, j);
+        }
+
+        P = P_min = 1.0;
+        k = 0;
+        for (j = l - 1; j >= 0; --j)
+        {
+            S = 0;
+            for (i = j; i < l; ++i)
+            {
+                S += m_mu[l][i] * m_mu[l][i] * m_B[i];
+            }
+            P *= (m_B[l] + S) / m_B[j];
+
+            if (P < P_min)
+            {
+                k = j;
+                P_min = P;
+            }
+        }
+
+        if (delta > P_min)
+        {
+            deepInsertion(k, l);
+            updateDeepInsGSO(k, l);
+            l = k;
+        }
+        else
+        {
+            ++l;
+        }
     }
 }
 
