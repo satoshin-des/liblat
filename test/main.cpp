@@ -5,15 +5,15 @@
 
 int main()
 {
-    Lattice<int> lat(10, 10);
-    lat.setRandom(10, 10, 1000, 10000);
+    Lattice<int> lat(40, 40);
+    lat.setRandom(40, 40, 1000, 10000);
     lat.computeGSO();
     std::cout << lat;
 
-    std::vector<long> v = lat.enumShortVec();
+    std::vector<int> v = lat.enumShortVec();
     print(v);
 
-    lat.deepLLL(0.99);
+    lat.BKZ(20, 0.99);
     std::cout << lat;
 
     return 0;

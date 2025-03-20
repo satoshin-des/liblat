@@ -31,6 +31,7 @@ class Lattice
 private:
     long m_num_rows = 0;                                                   // 格子の次元
     long m_num_cols = 0;                                                   // 格子ベクトルのサイズ
+    long m_max_loop = 10;                                                  // BKZの最大ループ数
     std::vector<std::vector<T>> m_basis;                                   // 格子基底
     std::vector<double> m_B;                                               // GSOベクトルの二乗ノルム
     std::vector<std::vector<double>> m_b_star;                             // GSOベクトル
@@ -38,10 +39,14 @@ private:
     std::mt19937_64 m_mt64 = std::mt19937_64((unsigned int)time(nullptr)); // 乱数生成機
     std::uniform_real_distribution<> m_get_rand_uni;                       // 一様ランダムに生成
 
+    std::vector<long> ENUM_(const double R, const long start, const long end);
+
+    std::vector<long> enumShortVec_(const bool compute_gso, const long start, const long end);
+
 public:
     /**
      * @brief Construct a new Lattice object
-     * 
+     *
      * @param n 基底行列の行数
      * @param m 基底行列の列数
      */
@@ -49,7 +54,7 @@ public:
 
     /**
      * @brief ストリームへの出力
-     * 
+     *
      * @param os ストリーム
      * @param lat 格子
      * @return std::ostream& 出力ストリーム
@@ -70,6 +75,22 @@ public:
         return os;
     }
 
+    void setMaxLoop(const long max_loop);
+
+    /**
+     * @brief 格子基底行列の行数
+     *
+     * @return long 行数
+     */
+    long numRows() const;
+
+    /**
+     * @brief 格子基底行列の列数
+     *
+     * @return long 列数
+     */
+    long numCols() const;
+
     /// @brief 格子のサイズの設定
     /// @param n 格子次元
     /// @param m 格子ベクトルのサイズ
@@ -81,6 +102,14 @@ public:
     /// @param min 下限
     /// @param max 上限
     void setRandom(const long n, const long m, const T min, const T max);
+
+    /**
+     * @brief 係数ベクトルと基底の積
+     *
+     * @param v
+     * @return std::vector<T>
+     */
+    std::vector<T> mulVecBasis(const std::vector<long> v);
 
     /**
      * @brief deep insertion
@@ -120,6 +149,7 @@ public:
      * @cite A. K. Lenstra, H. W. Lenstra, L. Lovasz. Factoring polynomials with rational coefficients. 1982
      */
     void LLL(const double delta, const bool compute_gso = true);
+    void LLL(const double delta, const bool compute_gso, const long end);
 
     /**
      * @brief DeepLLL簡約
@@ -141,13 +171,21 @@ public:
 
     /**
      * @brief 二乗ノルムがR以下であるような格子ベクトルの数え上げ
-     * 
+     *
      * @param R 探索半径
      * @return std::vector<long> 格子ベクトル
      */
     std::vector<long> ENUM(const double R);
 
-    std::vector<long> enumShortVec(const bool compute_gso = true);
+    /**
+     * @brief 格子上の最短ベクトルの数え上げ
+     *
+     * @param compute_gso 数え上げ前にGSOを計算するかどうか
+     * @return std::vector<T> 最短ベクトル
+     */
+    std::vector<T> enumShortVec(const bool compute_gso = true);
+
+    void BKZ(const long beta, const double delta, const bool compute_gso = true);
 };
 
 #endif // !LATTICE_H_
