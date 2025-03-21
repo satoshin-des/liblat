@@ -3,71 +3,54 @@
 #include "core.h"
 
 template <class T>
-void Lattice<T>::LLL(const double delta, const bool compute_gso)
+void Lattice<T>::LLL(const double delta, const bool compute_gso, long start_, long end_)
 {
-    if (delta < 0.25 || delta > 1)
+    try
     {
-        throw std::out_of_range("The reduction parameter must be in [0.25, 1.0].");
-    }
-
-    double nu, B, t;
-    T tmp;
-
-    if (compute_gso)
-    {
-        computeGSO();
-    }
-
-    for (long k = 1, i, j; k < m_num_rows;)
-    {
-        for (j = k - 1; j > -1; --j)
+        if (delta < 0.25 || delta > 1)
         {
-            sizeReduce(k, j);
+            throw std::out_of_range("The reduction parameter must be in [0.25, 1.0].");
         }
 
-        if (k > 0 && m_B[k] < (delta - m_mu[k][k - 1] * m_mu[k][k - 1]) * m_B[k - 1])
+        if (end_ <= -2 || end_ == 0)
         {
-            for (i = 0; i < m_num_cols; ++i)
+            throw std::out_of_range("The parameter end_ must be a positive integer or -1.");
+        }
+        else if (end_ == -1)
+        {
+            if (start_ <= -1 || start_ >= m_num_rows)
             {
-                tmp = m_basis[k - 1][i];
-                m_basis[k - 1][i] = m_basis[k][i];
-                m_basis[k][i] = tmp;
+                throw std::out_of_range("The parameter start_ is out of index.");
             }
-
-            nu = m_mu[k][k - 1];
-            B = m_B[k] + nu * nu * m_B[k - 1];
-            m_mu[k][k - 1] = nu * m_B[k - 1] / B;
-            m_B[k] *= m_B[k - 1] / B;
-            m_B[k - 1] = B;
-
-            for (i = 0; i < k - 1; ++i)
-            {
-                t = m_mu[k - 1][i];
-                m_mu[k - 1][i] = m_mu[k][i];
-                m_mu[k][i] = t;
-            }
-            for (i = k + 1; i < m_num_rows; ++i)
-            {
-                t = m_mu[i][k];
-                m_mu[i][k] = m_mu[i][k - 1] - nu * t;
-                m_mu[i][k - 1] = t + m_mu[k][k - 1] * m_mu[i][k];
-            }
-
-            --k;
         }
         else
         {
-            ++k;
+            if (start_ <= -1 || start_ >= m_num_rows)
+            {
+                throw std::out_of_range("The parameter start_ is out of index.");
+            }
+            if (start_ >= end_)
+            {
+                throw std::invalid_argument("The parameter start_ must be less than the parameter end_.");
+            }
         }
     }
-}
-
-template <class T>
-void Lattice<T>::LLL(const double delta, const bool compute_gso, const long end)
-{
-    if (delta < 0.25 || delta > 1)
+    catch (const std::exception &ex)
     {
-        throw std::out_of_range("The reduction parameter must be in [0.25, 1.0].");
+        std::cerr << ex.what() << "@ function " << __FUNCTION__ << std::endl;
+        exit(EXIT_FAILURE);
+    }
+
+    long start = start_;
+    long end;
+
+    if (end_ == -1)
+    {
+        end = m_num_rows;
+    }
+    else
+    {
+        end = end_;
     }
 
     double nu, B, t;
@@ -78,14 +61,14 @@ void Lattice<T>::LLL(const double delta, const bool compute_gso, const long end)
         computeGSO();
     }
 
-    for (long k = 1, i, j; k < end;)
+    for (long k = start + 1, i, j; k < end;)
     {
         for (j = k - 1; j > -1; --j)
         {
             sizeReduce(k, j);
         }
 
-        if (k > 0 && m_B[k] < (delta - m_mu[k][k - 1] * m_mu[k][k - 1]) * m_B[k - 1])
+        if (k > start && m_B[k] < (delta - m_mu[k][k - 1] * m_mu[k][k - 1]) * m_B[k - 1])
         {
             for (i = 0; i < m_num_cols; ++i)
             {
@@ -130,11 +113,6 @@ void Lattice<T>::deepLLL(const double delta, const bool compute_gso)
         throw std::out_of_range("The reduction parameter must be in [0.25, 1.0].");
     }
 
-    if (delta < 0.25 || delta > 1)
-    {
-        throw std::out_of_range("The reduction parameter must be in [0.25, 1.0].");
-    }
-
     double C;
 
     if (compute_gso)
@@ -163,7 +141,7 @@ void Lattice<T>::deepLLL(const double delta, const bool compute_gso)
                 deepInsertion(i, k);
                 updateDeepInsGSO(i, k);
 
-                k = fmax(i - 1, 0);
+                k = std::max(i - 1, static_cast<long>(0));
             }
         }
         ++k;
@@ -223,16 +201,23 @@ void Lattice<T>::potLLL(const double delta, const bool compute_gso)
 template <class T>
 void Lattice<T>::BKZ(const long beta, const double delta, const bool compute_gso)
 {
-    if (delta < 0.25 || delta > 1)
+    try
     {
-        throw std::out_of_range("The reduction parameter must be in [0.25, 1.0].");
+        if (delta < 0.25 || delta > 1)
+        {
+            throw std::out_of_range("The reduction parameter must be in [0.25, 1.0].");
+        }
+        if (beta < 2 || beta > m_num_rows)
+        {
+            char err_s[100];
+            sprintf(err_s, "[ERROR] The blocksize must be in [2, %ld].", m_num_rows);
+            throw std::out_of_range(err_s);
+        }
     }
-
-    if (beta < 2 || beta > m_num_rows)
+    catch (const std::exception &ex)
     {
-        char err_s[100];
-        sprintf(err_s, "The blocksize must be in [2, %ld].", m_num_rows);
-        throw std::out_of_range(err_s);
+        std::cerr << ex.what() << "@ function " << __FUNCTION__ << std::endl;
+        exit(EXIT_FAILURE);
     }
 
     std::vector<T> v(m_num_cols);
@@ -288,12 +273,12 @@ void Lattice<T>::BKZ(const long beta, const double delta, const bool compute_gso
                 }
             }
 
-            LLL(delta, true, h);
+            LLL(delta, true, 0, h);
         }
         else
         {
             ++z;
-            LLL(delta, false, h);
+            LLL(delta, false, 0, h);
         }
     }
 }

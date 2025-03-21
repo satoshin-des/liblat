@@ -148,8 +148,7 @@ public:
      * @param compute_gso LLL前にGSOを計算するか
      * @cite A. K. Lenstra, H. W. Lenstra, L. Lovasz. Factoring polynomials with rational coefficients. 1982
      */
-    void LLL(const double delta, const bool compute_gso = true);
-    void LLL(const double delta, const bool compute_gso, const long end);
+    void LLL(const double delta, const bool compute_gso = true, const long start_ = 0, const long end_ = -1);
 
     /**
      * @brief DeepLLL簡約

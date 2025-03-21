@@ -118,6 +118,19 @@ std::vector<long> Lattice<T>::enumShortVec_(const bool compute_gso, const long s
 template <class T>
 void Lattice<T>::setMaxLoop(const long max_loop)
 {
+    try
+    {
+        if (max_loop <= 0)
+        {
+            throw std::out_of_range("The augment max_loop must be a positive integer.");
+        }
+    }
+    catch (const std::exception &ex)
+    {
+        std::cerr << ex.what() << "@ function " << __FUNCTION__ << std::endl;
+        exit(EXIT_FAILURE);
+    }
+
     m_max_loop = max_loop;
 }
 
@@ -136,14 +149,22 @@ long Lattice<T>::numCols() const
 template <class T>
 void Lattice<T>::setDims(const long n, const long m)
 {
-    if (n <= 0)
+    try
     {
-        throw std::invalid_argument("The number of rows of basis must be positive integer.");
-    }
+        if (n <= 0)
+        {
+            throw std::invalid_argument("The number of rows of basis must be positive integer.");
+        }
 
-    if (n <= 0)
+        if (n <= 0)
+        {
+            throw std::invalid_argument("The number of columns of basis must be positive integer.");
+        }
+    }
+    catch (const std::exception &ex)
     {
-        throw std::invalid_argument("The number of columns of basis must be positive integer.");
+        std::cerr << ex.what() << "@ function " << __FUNCTION__ << std::endl;
+        exit(EXIT_FAILURE);
     }
 
     m_num_rows = n;
