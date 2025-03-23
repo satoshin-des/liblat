@@ -4,6 +4,8 @@
 #include <iostream>
 #include <vector>
 
+#define ERR_STR_LEN 100
+
 template<class T>
 void print(const std::vector<T> v);
 

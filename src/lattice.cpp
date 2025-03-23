@@ -118,17 +118,9 @@ std::vector<long> Lattice<T>::enumShortVec_(const bool compute_gso, const long s
 template <class T>
 void Lattice<T>::setMaxLoop(const long max_loop)
 {
-    try
+    if (max_loop <= 0)
     {
-        if (max_loop <= 0)
-        {
-            throw std::out_of_range("The augment max_loop must be a positive integer.");
-        }
-    }
-    catch (const std::exception &ex)
-    {
-        std::cerr << ex.what() << "@ function " << __FUNCTION__ << std::endl;
-        exit(EXIT_FAILURE);
+        throw std::out_of_range("The augment max_loop must be a positive integer.");
     }
 
     m_max_loop = max_loop;
@@ -149,22 +141,14 @@ long Lattice<T>::numCols() const
 template <class T>
 void Lattice<T>::setDims(const long n, const long m)
 {
-    try
+    if (n <= 0)
     {
-        if (n <= 0)
-        {
-            throw std::invalid_argument("The number of rows of basis must be positive integer.");
-        }
-
-        if (n <= 0)
-        {
-            throw std::invalid_argument("The number of columns of basis must be positive integer.");
-        }
+        throw std::invalid_argument("The number of rows of basis must be positive integer.");
     }
-    catch (const std::exception &ex)
+
+    if (n <= 0)
     {
-        std::cerr << ex.what() << "@ function " << __FUNCTION__ << std::endl;
-        exit(EXIT_FAILURE);
+        throw std::invalid_argument("The number of columns of basis must be positive integer.");
     }
 
     m_num_rows = n;
@@ -183,7 +167,7 @@ void Lattice<T>::setRandom(const long n, const long m, const T min, const T max)
         throw std::invalid_argument("The number of rows of basis must be positive integer.");
     }
 
-    if (n <= 0)
+    if (m <= 0)
     {
         throw std::invalid_argument("The number of columns of basis must be positive integer.");
     }
@@ -229,14 +213,14 @@ void Lattice<T>::deepInsertion(const long k, const long l)
 {
     if (k < 0 || k >= m_num_rows)
     {
-        char err_s[100];
+        char err_s[ERR_STR_LEN];
         sprintf(err_s, "%ld is out of index.", k);
         throw std::out_of_range(err_s);
     }
 
     if (l < 0 || l >= m_num_rows)
     {
-        char err_s[100];
+        char err_s[ERR_STR_LEN];
         sprintf(err_s, "%ld is out of index.", l);
         throw std::out_of_range(err_s);
     }

@@ -184,7 +184,16 @@ public:
      */
     std::vector<T> enumShortVec(const bool compute_gso = true);
 
+    /**
+     * @brief BKZ簡約アルゴリズム
+     * 
+     * @param beta ブロックサイズ
+     * @param delta 簡約パラメタ
+     * @param compute_gso BKZ前にGSO情報を更新するか
+     */
     void BKZ(const long beta, const double delta, const bool compute_gso = true);
+
+    void HKZ(const double delta, const bool compute_gso = true);
 };
 
 #endif // !LATTICE_H_

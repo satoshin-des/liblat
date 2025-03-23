@@ -9,36 +9,39 @@ void Lattice<T>::LLL(const double delta, const bool compute_gso, long start_, lo
     {
         if (delta < 0.25 || delta > 1)
         {
-            throw std::out_of_range("The reduction parameter must be in [0.25, 1.0].");
-        }
-
-        if (end_ <= -2 || end_ == 0)
-        {
-            throw std::out_of_range("The parameter end_ must be a positive integer or -1.");
-        }
-        else if (end_ == -1)
-        {
-            if (start_ <= -1 || start_ >= m_num_rows)
-            {
-                throw std::out_of_range("The parameter start_ is out of index.");
-            }
-        }
-        else
-        {
-            if (start_ <= -1 || start_ >= m_num_rows)
-            {
-                throw std::out_of_range("The parameter start_ is out of index.");
-            }
-            if (start_ >= end_)
-            {
-                throw std::invalid_argument("The parameter start_ must be less than the parameter end_.");
-            }
+            throw std::out_of_range("[WARNING]The reduction parameter must be in [0.25, 1.0].");
         }
     }
     catch (const std::exception &ex)
     {
         std::cerr << ex.what() << "@ function " << __FUNCTION__ << std::endl;
-        exit(EXIT_FAILURE);
+    }
+
+    if (end_ <= -2 || end_ == 0)
+    {
+        throw std::out_of_range("The parameter end_ must be a positive integer or -1.");
+    }
+    else if (end_ == -1)
+    {
+        if (start_ <= -1 || start_ >= m_num_rows)
+        {
+            throw std::out_of_range("The parameter start_ is out of index.");
+        }
+    }
+    else
+    {
+        if (start_ <= -1 || start_ >= m_num_rows)
+        {
+            throw std::out_of_range("The parameter start_ is out of index.");
+        }
+        if (start_ >= end_)
+        {
+            throw std::invalid_argument("The parameter start_ must be less than the parameter end_.");
+        }
+        if (end_ > m_num_rows)
+        {
+            throw std::out_of_range("The parameter end_ is out of index.");
+        }
     }
 
     long start = start_;
@@ -108,9 +111,16 @@ void Lattice<T>::LLL(const double delta, const bool compute_gso, long start_, lo
 template <class T>
 void Lattice<T>::deepLLL(const double delta, const bool compute_gso)
 {
-    if (delta < 0.25 || delta > 1)
+    try
     {
-        throw std::out_of_range("The reduction parameter must be in [0.25, 1.0].");
+        if (delta < 0.25 || delta > 1)
+        {
+            throw std::out_of_range("[WARNING]The reduction parameter must be in [0.25, 1.0].");
+        }
+    }
+    catch (const std::exception &ex)
+    {
+        std::cerr << ex.what() << "@ function " << __FUNCTION__ << std::endl;
     }
 
     double C;
@@ -151,9 +161,16 @@ void Lattice<T>::deepLLL(const double delta, const bool compute_gso)
 template <class T>
 void Lattice<T>::potLLL(const double delta, const bool compute_gso)
 {
-    if (delta < 0.25 || delta > 1)
+    try
     {
-        throw std::out_of_range("The reduction parameter must be in [0.25, 1.0].");
+        if (delta < 0.25 || delta > 1)
+        {
+            throw std::out_of_range("[WARNING]The reduction parameter must be in [0.25, 1.0].");
+        }
+    }
+    catch (const std::exception &ex)
+    {
+        std::cerr << ex.what() << "@ function " << __FUNCTION__ << std::endl;
     }
 
     double P, P_min, S;
@@ -205,19 +222,19 @@ void Lattice<T>::BKZ(const long beta, const double delta, const bool compute_gso
     {
         if (delta < 0.25 || delta > 1)
         {
-            throw std::out_of_range("The reduction parameter must be in [0.25, 1.0].");
-        }
-        if (beta < 2 || beta > m_num_rows)
-        {
-            char err_s[100];
-            sprintf(err_s, "[ERROR] The blocksize must be in [2, %ld].", m_num_rows);
-            throw std::out_of_range(err_s);
+            throw std::out_of_range("[WARNING]The reduction parameter must be in [0.25, 1.0].");
         }
     }
     catch (const std::exception &ex)
     {
         std::cerr << ex.what() << "@ function " << __FUNCTION__ << std::endl;
-        exit(EXIT_FAILURE);
+    }
+
+    if (beta < 2 || beta > m_num_rows)
+    {
+        char err_s[100];
+        sprintf(err_s, "The blocksize is %ld. The blocksize must be in [2, %ld].", beta, m_num_rows);
+        throw std::out_of_range(err_s);
     }
 
     std::vector<T> v(m_num_cols);
@@ -281,6 +298,12 @@ void Lattice<T>::BKZ(const long beta, const double delta, const bool compute_gso
             LLL(delta, false, 0, h);
         }
     }
+}
+
+template<class T>
+void Lattice<T>::HKZ(const double delta, const bool compute_gso)
+{
+    BKZ(m_num_rows, delta, compute_gso);
 }
 
 template class Lattice<int>;

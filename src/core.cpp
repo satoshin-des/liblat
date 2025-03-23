@@ -16,18 +16,11 @@ void print(const std::vector<T> v)
 template <class U, class V>
 V dot(const std::vector<U> x, const std::vector<V> y)
 {
-    try{
-        if(x.size() != y.size())
-        {
-            char* err_s;
-            sprintf(err_s, "[ERROR] An inner product of %ld-th vector and %ld-th vector cannot be defined.", x.size(), y.size());
-            throw std::invalid_argument(err_s);
-        }
-    }
-    catch (const std::exception &ex)
+    if (x.size() != y.size())
     {
-        std::cerr << ex.what() << "@ function " << __FUNCTION__ << std::endl;
-        exit(EXIT_FAILURE);
+        char *err_s;
+        sprintf(err_s, "An inner product of %ld-th vector and %ld-th vector cannot be defined.", x.size(), y.size());
+        throw std::invalid_argument(err_s);
     }
 
     V S = 0;
