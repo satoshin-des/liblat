@@ -214,14 +214,14 @@ void Lattice<T>::deepInsertion(const long k, const long l)
     if (k < 0 || k >= m_num_rows)
     {
         char err_s[ERR_STR_LEN];
-        sprintf(err_s, "%ld is out of index.", k);
+        sprintf(err_s, "%ld is out of index. @ function deepInsertion.", k);
         throw std::out_of_range(err_s);
     }
 
     if (l < 0 || l >= m_num_rows)
     {
         char err_s[ERR_STR_LEN];
-        sprintf(err_s, "%ld is out of index.", l);
+        sprintf(err_s, "%ld is out of index. @ function deepInsertion.", l);
         throw std::out_of_range(err_s);
     }
 
@@ -262,11 +262,30 @@ void Lattice<T>::computeGSO()
 }
 
 template <class T>
-void Lattice<T>::updateDeepInsGSO(const long i, const long k)
+void Lattice<T>::updateDeepInsGSO(const long i, const long k, const long start, const long end)
 {
+    if (k <= i)
+    {
+        return;
+    }
+
+    if (start < 0 || start >= m_num_rows)
+    {
+        throw std::out_of_range("The argument start is out of index. @ function updateDeepInsGSO.");
+    }
+    if (end < 0 || end > m_num_rows)
+    {
+        throw std::out_of_range("The argument end is out of index. @ function updateDeepInsGSO.");
+    }
+    if (start >= end)
+    {
+        throw std::invalid_argument("The arguments start and end is invalid. @ function updateDeepInsGSO.");
+    }
+
     long j, l;
+    long n = end - start;
     double t, eps;
-    std::vector<double> P(m_num_rows, 0), D(m_num_rows, 0), S(m_num_rows, 0);
+    std::vector<double> P(n, 0), D(n, 0), S(n, 0);
 
     P[k] = D[k] = m_B[k];
     for (j = k - 1; j >= i; --j)
@@ -278,7 +297,7 @@ void Lattice<T>::updateDeepInsGSO(const long i, const long k)
     for (j = k; j > i; --j)
     {
         t = m_mu[k][j - 1] / D[j];
-        for (l = m_num_rows - 1; l > k; --l)
+        for (l = end - 1; l > k; --l)
         {
             S[l] += m_mu[l][j] * P[j];
             m_mu[l][j] = m_mu[l][j - 1] - t * S[l];
@@ -292,7 +311,7 @@ void Lattice<T>::updateDeepInsGSO(const long i, const long k)
 
     t = 1.0 / D[i];
 
-    for (l = m_num_rows - 1; l > k; --l)
+    for (l = end - 1; l > k; --l)
     {
         m_mu[l][i] = t * (S[l] + m_mu[l][i] * P[i]);
     }

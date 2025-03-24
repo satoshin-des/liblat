@@ -131,7 +131,7 @@ public:
      * @param i
      * @param k
      */
-    void updateDeepInsGSO(const long i, const long k);
+    void updateDeepInsGSO(const long i, const long k, const long start, const long end);
 
     /**
      * @brief 部分サイズ基底簡約
@@ -148,7 +148,7 @@ public:
      * @param compute_gso LLL前にGSOを計算するか
      * @cite A. K. Lenstra, H. W. Lenstra, L. Lovasz. Factoring polynomials with rational coefficients. 1982
      */
-    void LLL(const double delta, const bool compute_gso = true, const long start_ = 0, const long end_ = -1);
+    void LLL(const double delta = 0.75, const bool compute_gso = true, const long start_ = 0, const long end_ = -1);
 
     /**
      * @brief DeepLLL簡約
@@ -157,7 +157,7 @@ public:
      * @param compute_gso DeepLLL前にGSOを計算するか
      * @cite C. P. Schnorr, M. Euchner. Lattice basis reduction: Improved practical algorithms and solving subset sum problem.(1994)
      */
-    void deepLLL(const double delta, const bool compute_gso = true);
+    void deepLLL(const double delta = 0.75, const bool compute_gso = true, const long start_ = 0, const long end_ = -1);
 
     /**
      * @brief PotLLL簡約
@@ -166,7 +166,7 @@ public:
      * @param compute_gso PotLLL前にGSOを計算するか
      * @cite F. Fontein, M. Schneider, U. Wagner. PotLLL: A polynomial time version of LLL with deep insertions.(2014)
      */
-    void potLLL(const double delta, const bool compute_gso = true);
+    void potLLL(const double delta = 0.75, const bool compute_gso = true);
 
     /**
      * @brief 二乗ノルムがR以下であるような格子ベクトルの数え上げ
@@ -190,10 +190,13 @@ public:
      * @param beta ブロックサイズ
      * @param delta 簡約パラメタ
      * @param compute_gso BKZ前にGSO情報を更新するか
+     * @cite C. P. Schnorr, M. Euchner. Lattice basis reduction: Improved practical algorithms and solving subset sum problem.(1994)
      */
-    void BKZ(const long beta, const double delta, const bool compute_gso = true);
+    void BKZ(const long beta, const double delta = 0.75, const bool compute_gso = true);
 
-    void HKZ(const double delta, const bool compute_gso = true);
+    void HKZ(const double delta = 0.75, const bool compute_gso = true);
+
+    void deepBKZ(const long beta, const double delta = 0.75, const bool compute_gso = true);
 };
 
 #endif // !LATTICE_H_

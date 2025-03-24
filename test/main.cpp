@@ -13,7 +13,7 @@ int main()
     std::vector<int> v = lat.enumShortVec();
     print(v);
     // lat.LLL(0.99);
-    lat.HKZ(0.99);
+    lat.deepBKZ(30, 0.99);
     // lat.BKZ(30, 0.99);
     std::cout << lat;
 

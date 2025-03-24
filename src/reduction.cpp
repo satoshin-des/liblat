@@ -19,28 +19,28 @@ void Lattice<T>::LLL(const double delta, const bool compute_gso, long start_, lo
 
     if (end_ <= -2 || end_ == 0)
     {
-        throw std::out_of_range("The parameter end_ must be a positive integer or -1.");
+        throw std::out_of_range("The parameter end_ must be a positive integer or -1. @ function LLL");
     }
     else if (end_ == -1)
     {
         if (start_ <= -1 || start_ >= m_num_rows)
         {
-            throw std::out_of_range("The parameter start_ is out of index.");
+            throw std::out_of_range("The parameter start_ is out of index. @ function LLL");
         }
     }
     else
     {
         if (start_ <= -1 || start_ >= m_num_rows)
         {
-            throw std::out_of_range("The parameter start_ is out of index.");
+            throw std::out_of_range("The parameter start_ is out of index. @ function LLL");
         }
         if (start_ >= end_)
         {
-            throw std::invalid_argument("The parameter start_ must be less than the parameter end_.");
+            throw std::invalid_argument("The parameter start_ must be less than the parameter end_. @ function LLL");
         }
         if (end_ > m_num_rows)
         {
-            throw std::out_of_range("The parameter end_ is out of index.");
+            throw std::out_of_range("The parameter end_ is out of index. @ function LLL");
         }
     }
 
@@ -71,7 +71,7 @@ void Lattice<T>::LLL(const double delta, const bool compute_gso, long start_, lo
             sizeReduce(k, j);
         }
 
-        if (k > start && m_B[k] < (delta - m_mu[k][k - 1] * m_mu[k][k - 1]) * m_B[k - 1])
+        if ((k > start) && (m_B[k] < (delta - m_mu[k][k - 1] * m_mu[k][k - 1]) * m_B[k - 1]))
         {
             for (i = 0; i < m_num_cols; ++i)
             {
@@ -109,7 +109,7 @@ void Lattice<T>::LLL(const double delta, const bool compute_gso, long start_, lo
 }
 
 template <class T>
-void Lattice<T>::deepLLL(const double delta, const bool compute_gso)
+void Lattice<T>::deepLLL(const double delta, const bool compute_gso, long start_, long end_)
 {
     try
     {
@@ -123,6 +123,45 @@ void Lattice<T>::deepLLL(const double delta, const bool compute_gso)
         std::cerr << ex.what() << "@ function " << __FUNCTION__ << std::endl;
     }
 
+    if (end_ <= -2 || end_ == 0)
+    {
+        throw std::out_of_range("The parameter end_ must be a positive integer or -1. @ function deepLLL");
+    }
+    else if (end_ == -1)
+    {
+        if (start_ <= -1 || start_ >= m_num_rows)
+        {
+            throw std::out_of_range("The parameter start_ is out of index. @ function deepLLL");
+        }
+    }
+    else
+    {
+        if (start_ <= -1 || start_ >= m_num_rows)
+        {
+            throw std::out_of_range("The parameter start_ is out of index. @ function deepLLL");
+        }
+        if (start_ >= end_)
+        {
+            throw std::invalid_argument("The parameter start_ must be less than the parameter end_. @ function deepLLL");
+        }
+        if (end_ > m_num_rows)
+        {
+            throw std::out_of_range("The parameter end_ is out of index. @ function deepLLL");
+        }
+    }
+
+    long start = start_;
+    long end;
+
+    if (end_ == -1)
+    {
+        end = m_num_rows;
+    }
+    else
+    {
+        end = end_;
+    }
+
     double C;
 
     if (compute_gso)
@@ -130,16 +169,16 @@ void Lattice<T>::deepLLL(const double delta, const bool compute_gso)
         computeGSO();
     }
 
-    for (long k = 1, j, i, t, l; k < m_num_rows;)
+    for (long k = start + 1, j, i, t, l; k < end;)
     {
-        for (j = k - 1; j >= 0; --j)
+        for (j = k - 1; j >= start; --j)
         {
             sizeReduce(k, j);
         }
 
         C = static_cast<double>(dot(m_basis[k], m_basis[k]));
 
-        for (i = 0; i < k;)
+        for (i = start; i < k;)
         {
             if (C >= delta * m_B[i])
             {
@@ -149,7 +188,7 @@ void Lattice<T>::deepLLL(const double delta, const bool compute_gso)
             else
             {
                 deepInsertion(i, k);
-                updateDeepInsGSO(i, k);
+                updateDeepInsGSO(i, k, start, end);
 
                 k = std::max(i - 1, static_cast<long>(0));
             }
@@ -205,7 +244,7 @@ void Lattice<T>::potLLL(const double delta, const bool compute_gso)
         if (delta > P_min)
         {
             deepInsertion(k, l);
-            updateDeepInsGSO(k, l);
+            updateDeepInsGSO(k, l, 0, m_num_rows);
             l = k;
         }
         else
@@ -233,7 +272,7 @@ void Lattice<T>::BKZ(const long beta, const double delta, const bool compute_gso
     if (beta < 2 || beta > m_num_rows)
     {
         char err_s[100];
-        sprintf(err_s, "The blocksize is %ld. The blocksize must be in [2, %ld].", beta, m_num_rows);
+        sprintf(err_s, "The blocksize is %ld. The blocksize must be in [2, %ld]. @ function BKZ.", beta, m_num_rows);
         throw std::out_of_range(err_s);
     }
 
@@ -300,10 +339,95 @@ void Lattice<T>::BKZ(const long beta, const double delta, const bool compute_gso
     }
 }
 
-template<class T>
+template <class T>
 void Lattice<T>::HKZ(const double delta, const bool compute_gso)
 {
     BKZ(m_num_rows, delta, compute_gso);
+}
+
+template <class T>
+void Lattice<T>::deepBKZ(const long beta, const double delta, const bool compute_gso)
+{
+    try
+    {
+        if (delta < 0.25 || delta > 1)
+        {
+            throw std::out_of_range("[WARNING]The reduction parameter must be in [0.25, 1.0].");
+        }
+    }
+    catch (const std::exception &ex)
+    {
+        std::cerr << ex.what() << "@ function " << __FUNCTION__ << std::endl;
+    }
+
+    if (beta < 2 || beta > m_num_rows)
+    {
+        char err_s[100];
+        sprintf(err_s, "The blocksize is %ld. The blocksize must be in [2, %ld]. @ function deepBKZ.", beta, m_num_rows);
+        throw std::out_of_range(err_s);
+    }
+
+    std::vector<T> v(m_num_cols);
+    std::vector<long> w(m_num_rows);
+
+    deepLLL(delta, true);
+
+    for (long z = 0, j, t, num_tour = 0, i, k = 0, h, d, l; z < m_num_rows - 1;)
+    {
+        if (num_tour >= m_max_loop)
+        {
+            break;
+        }
+
+        if (k == m_num_rows - 1)
+        {
+            k = 0;
+            ++num_tour;
+        }
+        ++k;
+        l = std::min(k + beta - 1, m_num_rows);
+        h = std::min(l + 1, m_num_rows);
+        d = l - k + 1;
+
+        w = enumShortVec_(false, k - 1, l);
+        --w[0];
+
+        if (!isZero(w))
+        {
+            ++w[0];
+            z = 0;
+
+            for (i = 0; i < m_num_cols; ++i)
+            {
+                v[i] = 0;
+                for (j = 0; j < d; ++j)
+                {
+                    v[i] += w[j] * m_basis[j + k - 1][i];
+                }
+            }
+
+            for (i = d - 1; i >= 0; --i)
+            {
+                if (w[i] == 1 || w[i] == -1)
+                {
+                    for (j = 0; j < m_num_cols; ++j)
+                    {
+                        m_basis[i + k - 1][j] = v[j];
+                    }
+
+                    deepInsertion(k - 1, i + k - 1);
+                    break;
+                }
+            }
+
+            deepLLL(delta, true, 0, h);
+        }
+        else
+        {
+            ++z;
+            deepLLL(delta, false, 0, h);
+        }
+    }
 }
 
 template class Lattice<int>;
