@@ -155,8 +155,11 @@ void Lattice<T>::setDims(const long n, const long m)
     m_num_cols = m;
     m_basis = std::vector<std::vector<T>>(n, std::vector<T>(m, 0));
     m_b_star = std::vector<std::vector<double>>(n, std::vector<double>(m, 0));
+    m_dual_b_star = std::vector<std::vector<double>>(n, std::vector<double>(m, 0));
     m_mu = std::vector<std::vector<double>>(n, std::vector<double>(n, 0));
+    m_dual_mu = std::vector<std::vector<double>>(n, std::vector<double>(n, 0));
     m_B = std::vector<double>(n, 0);
+    m_dual_B = std::vector<double>(n, 0);
 }
 
 template <class T>
@@ -234,6 +237,35 @@ void Lattice<T>::deepInsertion(const long k, const long l)
             m_basis[j][i] = m_basis[j - 1][i];
         }
         m_basis[k][i] = t;
+    }
+}
+
+template <class T>
+void Lattice<T>::dualDeepInsertion(const long k, const long l)
+{
+    if (k < 0 || k >= m_num_rows)
+    {
+        char err_s[ERR_STR_LEN];
+        sprintf(err_s, "%ld is out of index. @ function dualDeepInsertion.", k);
+        throw std::out_of_range(err_s);
+    }
+
+    if (l < 0 || l >= m_num_rows)
+    {
+        char err_s[ERR_STR_LEN];
+        sprintf(err_s, "%ld is out of index. @ function dualDeepInsertion.", l);
+        throw std::out_of_range(err_s);
+    }
+
+    T t;
+    for (long i = 0; i < m_num_cols; ++i)
+    {
+        t = m_basis[k][i];
+        for (int j = k; j < l; ++j)
+        {
+            m_basis[j][i] = m_basis[j + 1][i];
+        }
+        m_basis[l][i] = t;
     }
 }
 
@@ -459,6 +491,60 @@ std::vector<T> Lattice<T>::enumShortVec(const bool compute_gso)
             return mulVecBasis(old_enum_vector);
         }
     }
+}
+
+template <class T>
+void Lattice<T>::insertToDualBasis(const std::vector<double> x)
+{
+    if (x.size() != m_num_rows)
+    {
+        char err_s[ERR_STR_LEN];
+        sprintf(err_s, "%ld-th vector cannot insert into the dual basis( its size is %ld times %ld). @function insertToDualBasis.", x.size(), m_num_rows, m_num_cols);
+        throw std::invalid_argument(err_s);
+    }
+
+    long i, j, k;
+    const double beta = 1.16247638743819280699046939662833968000372102125550;
+    double gamma, temp;
+    Lattice<T> U(m_num_rows, m_num_cols);
+    Lattice<T> temp_basis(m_num_rows, m_num_rows + 1);
+
+    temp = dot(x, x);
+    temp *= pow(beta, m_num_rows - 2);
+    gamma = round(temp + temp);
+
+    for (i = 0; i < m_num_rows; ++i)
+    {
+        for (j = 0; j < m_num_rows; ++j)
+        {
+            temp_basis.m_basis[i][j] = 0;
+        }
+        temp_basis.m_basis[i][i] = 1;
+        temp_basis.m_basis[i][m_num_rows] = gamma * x[i];
+    }
+
+    temp_basis.LLL(0.99);
+
+    for (i = 0; i < m_num_rows; ++i)
+    {
+        for (j = 0; j < m_num_cols; ++j)
+        {
+            for (k = 0; k < m_num_rows; ++k)
+            {
+                U.m_basis[i][j] = static_cast<T>(temp_basis.m_basis[i][k]) * m_basis[k][j];
+            }
+        }
+    }
+
+    for (i = 0; i < m_num_rows; ++i)
+    {
+        for (j = 0; j < m_num_cols; ++j)
+        {
+            m_basis[i][j] = U.m_basis[i][j];
+        }
+    }
+
+    computeGSO();
 }
 
 template class Lattice<int>;

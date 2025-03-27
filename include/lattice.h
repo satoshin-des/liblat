@@ -34,11 +34,22 @@ private:
     long m_max_loop = 10;                                                  // BKZの最大ループ数
     std::vector<std::vector<T>> m_basis;                                   // 格子基底
     std::vector<double> m_B;                                               // GSOベクトルの二乗ノルム
+    std::vector<double> m_dual_B;                                          // 双対基底のGSOベクトルの二乗ノルム
     std::vector<std::vector<double>> m_b_star;                             // GSOベクトル
+    std::vector<std::vector<double>> m_dual_b_star;                        // 双対基底のGSOベクトル
     std::vector<std::vector<double>> m_mu;                                 // GSO係数行列
+    std::vector<std::vector<double>> m_dual_mu;                            // 双対基底のGSO係数行列
     std::mt19937_64 m_mt64 = std::mt19937_64((unsigned int)time(nullptr)); // 乱数生成機
     std::uniform_real_distribution<> m_get_rand_uni;                       // 一様ランダムに生成
 
+    /**
+     * @brief 局所射影ブロック格子上のノルムがR未満である格子ベクトルの数え上げ
+     *
+     * @param R 数え上げ半径
+     * @param start
+     * @param end
+     * @return std::vector<long>
+     */
     std::vector<long> ENUM_(const double R, const long start, const long end);
 
     std::vector<long> enumShortVec_(const bool compute_gso, const long start, const long end);
@@ -50,7 +61,7 @@ public:
      * @param n 基底行列の行数
      * @param m 基底行列の列数
      */
-    Lattice(const long n = 0, const long m = 0) : m_num_rows(n), m_num_cols(m), m_basis(std::vector<std::vector<T>>(n, std::vector<T>(m, 0))), m_B(std::vector<double>(n, 0)), m_b_star(std::vector<std::vector<double>>(n, std::vector<double>(m, 0))), m_mu(std::vector<std::vector<double>>(n, std::vector<double>(n, 0))) {};
+    Lattice(const long n = 0, const long m = 0) : m_num_rows(n), m_num_cols(m), m_basis(std::vector<std::vector<T>>(n, std::vector<T>(m, 0))), m_B(std::vector<double>(n, 0)), m_b_star(std::vector<std::vector<double>>(n, std::vector<double>(m, 0))), m_mu(std::vector<std::vector<double>>(n, std::vector<double>(n, 0))), m_dual_B(std::vector<double>(n, 0)), m_dual_b_star(std::vector<std::vector<double>>(n, std::vector<double>(m, 0))), m_dual_mu(std::vector<std::vector<double>>(n, std::vector<double>(n, 0))) {};
 
     /**
      * @brief ストリームへの出力
@@ -120,6 +131,14 @@ public:
     void deepInsertion(const long k, const long l);
 
     /**
+     * @brief dual deep insertion
+     * 
+     * @param k 
+     * @param l 
+     */
+    void dualDeepInsertion(const long k, const long l);
+
+    /**
      * @brief GSO情報の計算
      *
      */
@@ -186,7 +205,7 @@ public:
 
     /**
      * @brief BKZ簡約アルゴリズム
-     * 
+     *
      * @param beta ブロックサイズ
      * @param delta 簡約パラメタ
      * @param compute_gso BKZ前にGSO情報を更新するか
@@ -194,9 +213,27 @@ public:
      */
     void BKZ(const long beta, const double delta = 0.75, const bool compute_gso = true);
 
+    /**
+     * @brief HKZ簡約
+     *
+     * @param delta 簡約パラメタ
+     * @param compute_gso HKZ前にGSO情報を更新するか
+     * @cite C. P. Schnorr, M. Euchner. Lattice basis reduction: Improved practical algorithms and solving subset sum problem.(1994)
+     */
     void HKZ(const double delta = 0.75, const bool compute_gso = true);
 
+    /**
+     * @brief DeepBKZ簡約アルゴリズム
+     *
+     * @param beta ブロックサイズ
+     * @param delta 簡約パラメタ
+     * @param compute_gso DeepBKZ前にGSO情報を更新するか
+     */
     void deepBKZ(const long beta, const double delta = 0.75, const bool compute_gso = true);
+
+    void dualDeepLLL(const double delta = 0.75, const bool compute_gso = true);
+
+    void insertToDualBasis(const std::vector<double> x);
 };
 
 #endif // !LATTICE_H_
