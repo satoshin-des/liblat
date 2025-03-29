@@ -152,6 +152,8 @@ public:
      */
     void updateDeepInsGSO(const long i, const long k, const long start, const long end);
 
+    void updateDualDeepInsGSO(const long k, const long l, const std::vector<double> dual_D, const long start, const long end);
+
     /**
      * @brief 部分サイズ基底簡約
      *
@@ -231,6 +233,12 @@ public:
      */
     void deepBKZ(const long beta, const double delta = 0.75, const bool compute_gso = true);
 
+    /**
+     * @brief 双対型DeepLLL簡約アルゴリズム
+     * 
+     * @param delta 簡約パラメタ
+     * @param compute_gso 双対型DeepLLL前にGSO情報を更新するか
+     */
     void dualDeepLLL(const double delta = 0.75, const bool compute_gso = true);
 
     void insertToDualBasis(const std::vector<double> x);

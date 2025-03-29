@@ -445,8 +445,9 @@ void Lattice<T>::dualDeepLLL(const double delta, const bool compute_gso)
         std::cerr << ex.what() << "@ function " << __FUNCTION__ << std::endl;
     }
 
-    long j, i, l;
-    double q, D;
+    long j, i, l, h;
+    double q, d, D;
+    std::vector<double> dual_D(m_num_rows);
 
     if (compute_gso)
     {
@@ -485,18 +486,28 @@ void Lattice<T>::dualDeepLLL(const double delta, const bool compute_gso)
             }
         }
 
-        D = 0.0;
+        d = 0.0;
         l = m_num_rows - 1;
         for (j = k; j < m_num_rows; ++j)
         {
-            D += m_dual_mu[k][j] * m_dual_mu[k][j] / m_B[j];
+            d += m_dual_mu[k][j] * m_dual_mu[k][j] / m_B[j];
         }
 
         while (l > k)
         {
-            if (m_B[l] * D < delta)
+            if (m_B[l] * d < delta)
             {
+                D = 1.0 / m_B[k];
+
+                std::fill(dual_D.begin(), dual_D.end(), 0.0);
+				dual_D[k] = D;
+				for (h = k + 1; h < m_num_rows; ++h) {
+					D += m_dual_mu[k][h] * m_dual_mu[k][h] / m_B[h];
+					dual_D[h] = D;
+				}
+
                 dualDeepInsertion(k, l);
+                updateDualDeepInsGSO(k, l, dual_D, 0, m_num_rows);
 
                 if (l < m_num_rows - 2)
                 {
@@ -506,12 +517,10 @@ void Lattice<T>::dualDeepLLL(const double delta, const bool compute_gso)
                 {
                     k = m_num_rows - 1;
                 }
-
-                computeGSO();
             }
             else
             {
-                D -= m_dual_mu[k][l] * m_dual_mu[k][l] / m_B[l];
+                d -= m_dual_mu[k][l] * m_dual_mu[k][l] / m_B[l];
                 --l;
             }
         }

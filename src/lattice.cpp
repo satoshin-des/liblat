@@ -371,6 +371,80 @@ void Lattice<T>::updateDeepInsGSO(const long i, const long k, const long start, 
 }
 
 template <class T>
+void Lattice<T>::updateDualDeepInsGSO(const long k, const long l, const std::vector<double> dual_D, const long start, const long end)
+{
+    long i, j, h;
+    double sum;
+    std::vector<std::vector<double>> xi(m_num_rows, std::vector<double>(m_num_rows, 0));
+
+    for (i = 0; i < m_num_rows; ++i)
+    {
+        for (j = 0; j < m_num_rows; ++j)
+        {
+            xi[i][j] = m_mu[i][j];
+        }
+    }
+
+    for (i = l + 1; i < m_num_rows; ++i)
+    {
+        sum = 0.0;
+        for (h = k; h <= l; ++h)
+        {
+            sum += m_dual_mu[k][h] * m_mu[i][h];
+        }
+        xi[i][l] = sum;
+    }
+
+    for (j = k; j < l; ++j)
+    {
+        for (i = j + 1; i < l; ++i)
+        {
+            sum = 0.0;
+            for (h = k; h <= j; ++h)
+            {
+                sum += m_dual_mu[k][h] * m_mu[i + 1][h];
+            }
+
+            xi[i][j] = m_mu[i + 1][j + 1] * dual_D[j] / dual_D[j + 1] - m_dual_mu[k][j + 1] / (dual_D[j + 1] * m_B[j + 1]) * sum;
+        }
+        xi[l][j] = -m_dual_mu[k][j + 1] / (dual_D[j + 1] * m_B[j + 1]);
+        for (i = l + 1; i < m_num_rows; ++i)
+        {
+            sum = 0;
+            for (h = k; h <= j; ++h)
+            {
+                sum += m_dual_mu[k][h] * m_mu[i][h];
+            }
+
+            xi[i][j] = m_mu[i][j + 1] * dual_D[j] / dual_D[j + 1] - m_dual_mu[k][j + 1] / (dual_D[j + 1] * m_B[j + 1]) * sum;
+        }
+    }
+
+    for (j = 0; j < k; ++j)
+    {
+        for (i = k; i < l; ++i)
+        {
+            xi[i][j] = m_mu[i + 1][j];
+        }
+        xi[l][j] = m_mu[k][j];
+    }
+
+    for (i = 0; i < m_num_rows; ++i)
+    {
+        for (j = 0; j < m_num_rows; ++j)
+        {
+            m_mu[i][j] = xi[i][j];
+        }
+    }
+
+    for (j = k; j < l; ++j)
+    {
+        m_B[j] = dual_D[j + 1] * m_B[j + 1] / dual_D[j];
+    }
+    m_B[l] = 1.0 / dual_D[l];
+}
+
+template <class T>
 void Lattice<T>::sizeReduce(const long i, const long j)
 {
     if (m_mu[i][j] > 0.5 || m_mu[i][j] < -0.5)
