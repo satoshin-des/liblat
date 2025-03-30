@@ -14,7 +14,7 @@ int main()
     print(v);
     // lat.LLL(0.99);
     // lat.deepBKZ(30, 0.99);
-    lat.dualPotLLL(0.99);
+    lat.potBKZ(20, 0.99);
     // lat.BKZ(30, 0.99);
     std::cout << lat;
 

@@ -157,15 +157,33 @@ public:
      */
     void updateDeepInsGSO(const long i, const long k, const long start, const long end);
 
+    /**
+     * @brief 双対型deep insertion後のGSO情報の効率的な更新
+     *
+     * @param k
+     * @param l
+     * @param dual_D
+     */
     void updateDualDeepInsGSO(const long k, const long l, const std::vector<double> dual_D);
 
     /**
      * @brief 部分サイズ基底簡約
      *
+     * Y. Aono, M. Yasuda. 格子暗号解読のための数学的基礎.(2019)
+     *
      * @param i
      * @param j
      */
     void sizeReduce(const long i, const long j);
+
+    /**
+     * @brief サイズ基底簡約
+     *
+     * Y. Aono, M. Yasuda. 格子暗号解読のための数学的基礎.(2019)
+     *
+     * @param compute_gso サイズ基底簡約前にGSOを計算するか
+     */
+    void sizeReduce(const bool compute_gso = true);
 
     /**
      * @brief LLL簡約
@@ -246,6 +264,28 @@ public:
      * @param compute_gso DeepBKZ前にGSO情報を更新するか
      */
     void deepBKZ(const long beta, const double delta = 0.75, const bool compute_gso = true);
+    
+    /**
+     * @brief PotENUMアルゴリズム
+     * 
+     * A. Sato, M. Yasuda. 自己双対型PotBKZ基底簡約の提案とBKZとの比較.(2025)
+     * 
+     * @param start 
+     * @param n 局所射影ブロック格子の次元
+     * @return std::vector<long> 
+     */
+    std::vector<long> potENUM(const long start, const long n);
+
+    /**
+     * @brief PotBKZ簡約アルゴリズム
+     * 
+     * A. Sato, M. Yasuda. 自己双対型PotBKZ基底簡約の提案とBKZとの比較.(2025)
+     * 
+     * @param beta ブロックサイズ
+     * @param delta 簡約パラメタ
+     * @param compute_gso 
+     */
+    void potBKZ(const long beta, const double delta = 0.75, const bool compute_gso = true);
 
     /**
      * @brief 双対型DeepLLL簡約アルゴリズム
