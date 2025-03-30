@@ -86,6 +86,11 @@ public:
         return os;
     }
 
+    /**
+     * @brief Set the Max Loop object
+     *
+     * @param max_loop BKZのループ回数の上限の設定
+     */
     void setMaxLoop(const long max_loop);
 
     /**
@@ -132,9 +137,9 @@ public:
 
     /**
      * @brief dual deep insertion
-     * 
-     * @param k 
-     * @param l 
+     *
+     * @param k
+     * @param l
      */
     void dualDeepInsertion(const long k, const long l);
 
@@ -152,7 +157,7 @@ public:
      */
     void updateDeepInsGSO(const long i, const long k, const long start, const long end);
 
-    void updateDualDeepInsGSO(const long k, const long l, const std::vector<double> dual_D, const long start, const long end);
+    void updateDualDeepInsGSO(const long k, const long l, const std::vector<double> dual_D);
 
     /**
      * @brief 部分サイズ基底簡約
@@ -165,32 +170,37 @@ public:
     /**
      * @brief LLL簡約
      *
+     * A. K. Lenstra, H. W. Lenstra, L. Lovasz. Factoring polynomials with rational coefficients. 1982
+     *
      * @param delta 簡約パラメタ
      * @param compute_gso LLL前にGSOを計算するか
-     * @cite A. K. Lenstra, H. W. Lenstra, L. Lovasz. Factoring polynomials with rational coefficients. 1982
      */
     void LLL(const double delta = 0.75, const bool compute_gso = true, const long start_ = 0, const long end_ = -1);
 
     /**
      * @brief DeepLLL簡約
      *
+     * C. P. Schnorr, M. Euchner. Lattice basis reduction: Improved practical algorithms and solving subset sum problem.(1994)
+     *
      * @param delta 簡約パラメタ
      * @param compute_gso DeepLLL前にGSOを計算するか
-     * @cite C. P. Schnorr, M. Euchner. Lattice basis reduction: Improved practical algorithms and solving subset sum problem.(1994)
      */
     void deepLLL(const double delta = 0.75, const bool compute_gso = true, const long start_ = 0, const long end_ = -1);
 
     /**
      * @brief PotLLL簡約
      *
+     * F. Fontein, M. Schneider, U. Wagner. PotLLL: A polynomial time version of LLL with deep insertions.(2014)
+     *
      * @param delta 簡約パラメタ
      * @param compute_gso PotLLL前にGSOを計算するか
-     * @cite F. Fontein, M. Schneider, U. Wagner. PotLLL: A polynomial time version of LLL with deep insertions.(2014)
      */
     void potLLL(const double delta = 0.75, const bool compute_gso = true);
 
     /**
      * @brief 二乗ノルムがR以下であるような格子ベクトルの数え上げ
+     *
+     * N. Gama, P. Q. Nguyen, O. Regev. Lattice enumeration using extreme pruning.(2010)
      *
      * @param R 探索半径
      * @return std::vector<long> 格子ベクトル
@@ -208,24 +218,28 @@ public:
     /**
      * @brief BKZ簡約アルゴリズム
      *
+     * C. P. Schnorr, M. Euchner. Lattice basis reduction: Improved practical algorithms and solving subset sum problem.(1994)
+     *
      * @param beta ブロックサイズ
      * @param delta 簡約パラメタ
      * @param compute_gso BKZ前にGSO情報を更新するか
-     * @cite C. P. Schnorr, M. Euchner. Lattice basis reduction: Improved practical algorithms and solving subset sum problem.(1994)
      */
     void BKZ(const long beta, const double delta = 0.75, const bool compute_gso = true);
 
     /**
      * @brief HKZ簡約
      *
+     * C. P. Schnorr, M. Euchner. Lattice basis reduction: Improved practical algorithms and solving subset sum problem.(1994)
+     *
      * @param delta 簡約パラメタ
      * @param compute_gso HKZ前にGSO情報を更新するか
-     * @cite C. P. Schnorr, M. Euchner. Lattice basis reduction: Improved practical algorithms and solving subset sum problem.(1994)
      */
     void HKZ(const double delta = 0.75, const bool compute_gso = true);
 
     /**
      * @brief DeepBKZ簡約アルゴリズム
+     *
+     * J. Yamaguchi, M. Yasuda. Explicit formula for Gram-Schmidt vectors in LLL with deep insertions and its applications.(2017)
      *
      * @param beta ブロックサイズ
      * @param delta 簡約パラメタ
@@ -235,11 +249,23 @@ public:
 
     /**
      * @brief 双対型DeepLLL簡約アルゴリズム
-     * 
+     *
+     * M. Yasuda, J. Yamaguchi, M. Ooka, S. Nakamura. Development of a dual version of DeepBKZ and its application to solving the LWE challenge.(2018)
+     *
      * @param delta 簡約パラメタ
      * @param compute_gso 双対型DeepLLL前にGSO情報を更新するか
      */
     void dualDeepLLL(const double delta = 0.75, const bool compute_gso = true);
+
+    /**
+     * @brief 双対型PotLLL簡約アルゴリズム
+     *
+     * A. Sato, M. Yasuda. 自己双対型PotBKZ基底簡約の提案とBKZとの比較.(2025)
+     *
+     * @param delta 簡約パラメタ
+     * @param compute_gso 双対型DeepLLL前にGSO情報を更新するか
+     */
+    void dualPotLLL(const double delta = 0.75, const bool compute_gso = true);
 
     void insertToDualBasis(const std::vector<double> x);
 };

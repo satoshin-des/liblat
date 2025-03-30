@@ -371,7 +371,7 @@ void Lattice<T>::updateDeepInsGSO(const long i, const long k, const long start, 
 }
 
 template <class T>
-void Lattice<T>::updateDualDeepInsGSO(const long k, const long l, const std::vector<double> dual_D, const long start, const long end)
+void Lattice<T>::updateDualDeepInsGSO(const long k, const long l, const std::vector<double> dual_D)
 {
     long i, j, h;
     double sum;
