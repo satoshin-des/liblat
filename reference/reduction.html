@@ -1,0 +1,85 @@
+<html>
+
+<head>
+    <title>さとしんのHP</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <style>
+        .Nenpyo {
+            text-align: left;
+        }
+    </style>
+    <style>
+        @import url(style.css);
+    </style>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+
+<body>
+    <header>
+        <h1 style="text-align:center">
+            liblat関数レファレンスページ
+        </h1>
+    </header>
+
+    <h2>基底簡約関係関数</h2>
+    <table style="border: none; vertical-align: top;">
+        <tr>
+            <th style="width:40px;"><a name="LLL">宣言</a></th>
+            <td style="color: yellow;">void LLL(const double delta = 0.75, const bool compute_gso = true, const long
+                start_ = 0, const long end_ = -1);</td>
+        </tr>
+        <tr>
+            <th style="width:40px;">概略</th>
+            <td>
+                LLL基底簡約
+                <br>
+                C. P. Schnorr, M. Euchner. Lattice basis reduction: Improved practical algorithms and solving subset sum problem.(1994)
+            </td>
+        </tr>
+        <tr>
+            <th style="width:40px;">引数</th>
+            <td>
+                <table style="border: none; vertical-align: top;">
+                    <tr>
+                        <td>delta</td>
+                        <td>：</td>
+                        <td>簡約パラメータ（0.75以上1以下）</td>
+                    </tr>
+                    <tr>
+                        <td>compute_gso</td>
+                        <td>：</td>
+                        <td>簡約する前にGSO情報を更新するか．<br>事前にGSO情報を計算していない場合はtrueにする必要がある</td>
+                    </tr>
+                    <tr>
+                        <td>start_</td>
+                        <td>：</td>
+                        <td>LLL簡約を基底の一部分にのみ行う場合，その開始インデックス</td>
+                    </tr>
+                    <tr>
+                        <td>end_</td>
+                        <td>：</td>
+                        <td>LLL簡約を基底の一部分にのみ行う場合，その終了インデックス</td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <th style="width:40px;">解説</th>
+            <td>
+                格子基底\(\lbrace\boldsymbol{b}_1, \ldots,
+                \boldsymbol{b}_n\rbrace\)に対して，その部分格子基底\(\lbrace\boldsymbol{b}_{\texttt{start_}+1}, \ldots,
+                \boldsymbol{b}_\texttt{end_}\rbrace\)を簡約パラメータdeltaに関してLLL簡約する関数です．
+            </td>
+        </tr>
+    </table>
+    <br>
+    <hr style="color: white;">
+    <br>
+
+    <footer style="text-align: center;">
+        <p>Copyright © 2024 さとしん All Rights Reserved.</p>
+    </footer>
+</body>
+
+</html>

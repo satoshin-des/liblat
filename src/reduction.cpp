@@ -387,7 +387,7 @@ void Lattice<T>::deepBKZ(const long beta, const double delta, const bool compute
     std::vector<T> v(m_num_cols);
     std::vector<long> w(m_num_rows);
 
-    deepLLL(delta, true);
+    deepLLL(delta, compute_gso);
 
     for (long z = 0, j, t, num_tour = 0, i, k = 0, h, d, l; z < m_num_rows - 1;)
     {
@@ -485,14 +485,7 @@ void Lattice<T>::potBKZ(const long beta, const double delta, const bool compute_
         }
         ++j;
 
-        if (j + beta - 1 < m_num_rows - 1)
-        {
-            k = j + beta - 1;
-        }
-        else
-        {
-            k = m_num_rows - 1;
-        }
+        k = std::min(j + beta - 1, m_num_rows - 1);
 
         d = k - j + 1;
         v.resize(d);
