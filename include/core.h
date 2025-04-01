@@ -9,6 +9,8 @@
 template<class T>
 void print(const std::vector<T> v);
 
+long prime(const long n);
+
 /// @brief 内積を計算する関数
 /// @tparam U 何らかの数のクラス
 /// @tparam V 何らかの数のクラス

@@ -1,6 +1,7 @@
 #include "core.h"
 
 #include <iostream>
+#include <cmath>
 
 template <class T>
 void print(const std::vector<T> v)
@@ -12,6 +13,28 @@ void print(const std::vector<T> v)
     }
     std::cout << "\b\b" << "]\n";
 }
+
+long prime(const long n)
+{
+    long S = 0, T, U;
+    for(long k = 2, j, i; k <= floor(2 * n * log(n) + 2); ++k)
+    {
+        T = 0;
+        for(j = 2; j <= k; ++j)
+        {
+            U = 0;
+            for(i = 1; i <= j; ++i)
+            {
+                U += floor(static_cast<double>(j) / i) - floor(static_cast<double>(j - 1) / i);
+            }
+            T += 1 + floor((2.0 - U) / j);
+        }
+        S += 1 - floor(static_cast<double>(T) / n);
+    }
+    
+    return S + 2;
+}
+
 
 template <class U, class V>
 V dot(const std::vector<U> x, const std::vector<V> y)

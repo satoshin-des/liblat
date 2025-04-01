@@ -20,33 +20,53 @@
     <h2>基礎的な関数</h2>
     <table style="border: none;">
         <tr>
-            <th><a href="latsetting.html#numRows">numRows</a></th>
+            <th><a href="fund.html#numRows">numRows</a></th>
             <td>格子基底行列の行数を返す</td>
         </tr>
         <tr>
-            <th><a href="latsetting.html#numCols">numCols</a></th>
+            <th><a href="fund.html#numCols">numCols</a></th>
             <td>格子基底行列の列数を返す</td>
         </tr>
         <tr>
-            <th><a href="latsetting.html#setDims">setDims</a></th>
+            <th><a href="fund.html#setDims">setDims</a></th>
             <td>格子基底行列のサイズを設定する</td>
         </tr>
         <tr>
-            <th><a href="latsetting.html#setRandom">setRandom</a></th>
+            <th><a href="fund.html#setRandom">setRandom</a></th>
             <td>ランダムにsvp-challenge型の格子基底を設定する</td>
         </tr>
         <tr>
-            <th><a href="latsetting.html#setBasis">setBasis</a></th>
+            <th><a href="fund.html#setBasis">setBasis</a></th>
             <td>格子基底行列を設定する</td>
         </tr>
         <tr>
-            <th><a href="latsetting.html#GSO">computeGSO</a></th>
+            <th><a href="fund.html#GSO">computeGSO</a></th>
             <td>Gram-Schmidtの直交化ベクトルの二乗ノルムとGram-Schmidtの直交化係数行列を計算する</td>
         </tr>
     </table>
 
-    <h2>基底簡約関数</h2>
+    <h2>その他格子の設定に関する関数</h2>
     <table style="border: none;">
+        <tr>
+            <th><a href="latsetting.html#GoldesteinMayer">setGoldesteinMayerLattice</a></th>
+            <td>Goldestein-Mayer格子に設定する</td>
+        </tr>
+        <tr>
+            <th><a href="latsetting.html#SchnorrLattice">setSchnorrLattice</a></th>
+            <td>Schnorr格子に設定する</td>
+        </tr>
+    </table>
+
+    <h2>基底簡約関係関数</h2>
+    <table style="border: none;">
+        <tr>
+            <th><a href="reduction.html#MaxLoop">setMaxLoop</a></th>
+            <td>BKZ系アルゴリズムのツアー回数の上限を設定する</td>
+        </tr>
+        <tr>
+            <th><a href="reduction.html#DeepInsertion">deepInsertion</a></th>
+            <td>deep-insertionを行う</td>
+        </tr>
         <tr>
             <th><a href="reduction.html#size">sizeReduce</a></th>
             <td>サイズ基底簡約</td>

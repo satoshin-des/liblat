@@ -127,6 +127,23 @@ public:
     void setBasis(const std::vector<std::vector<T>> basis_mat);
 
     /**
+     * @brief Goldestei-Mayer格子に設定
+     * 
+     * @param p 
+     * @param q 
+     */
+    void setGoldesteinMayerLattice(const T p, const T q);
+
+    /**
+     * @brief Schnorr格子に設定
+     * 
+     * 
+     * @param N 合成数
+     * @param c 精度パラメータ
+     */
+    void setSchnorrLattice(const long N, const double c);
+
+    /**
      * @brief 係数ベクトルと基底の積
      *
      * @param v

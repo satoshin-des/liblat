@@ -17,8 +17,88 @@
         </h1>
     </header>
 
-    <h2>基底簡約関数</h2>
-
+    <h2>基底簡約関係関数</h2>
+    <table>
+        <tr>
+            <th style="width:60px;"><a name="MaxLoop">宣言</a></th>
+            <td style="color: yellow;">void setMaxLoop(const long max_loop);</td>
+        </tr>
+        <tr>
+            <th style="width:60px;">概略</th>
+            <td>
+                BKZやDeepBKZのツアー回数の上限を設定する
+            </td>
+        </tr>
+        <tr>
+            <th style="width:60px;">引数</th>
+            <td>
+                <table>
+                    <tr>
+                        <td>max_loop</td>
+                        <td>：</td>
+                        <td>ツアー回数の上限</td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <th style="width: 40px;">戻り値</th>
+            <td>なし</td>
+        </tr>
+        <tr>
+            <th style="width:60px;">解説</th>
+            <td>
+                BKZやDeepBKZのツアー回数の上限を設定する関数です．
+                BKZアルゴリズムやDeepBKZアルゴリズムなどは停止性が保証されていないので，確実に停止させるにはツアー回数の上限を設定してあげる必要があります．
+            </td>
+        </tr>
+    </table>
+    <br>
+    <hr style="color: white;">
+    <br>
+    <table>
+        <tr>
+            <th style="width:60px;"><a name="DeepInsertion">宣言</a></th>
+            <td style="color: yellow;">void deepInsertion(const long k, const long l);</td>
+        </tr>
+        <tr>
+            <th style="width:60px;">概略</th>
+            <td>
+                deep-insertionを行う
+            </td>
+        </tr>
+        <tr>
+            <th style="width:60px;">引数</th>
+            <td>
+                <table>
+                    <tr>
+                        <td>k</td>
+                        <td>：</td>
+                        <td>基底を挿入するインデックス</td>
+                    </tr>
+                    <tr>
+                        <td>l</td>
+                        <td>：</td>
+                        <td>引き抜く基底のインデックス</td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <th style="width: 40px;">戻り値</th>
+            <td>なし</td>
+        </tr>
+        <tr>
+            <th style="width:60px;">解説</th>
+            <td>
+                基底にdeep-insertionを施す関数です．
+                具体的には基底\(\lbrace\ldots,\boldsymbol{b}_k,\ldots,\boldsymbol{b}_\ell,\ldots\rbrace\)を\(\lbrace\ldots,\boldsymbol{b}_{k-1},\boldsymbol{b}_\ell,\boldsymbol{b}_k,\ldots,\boldsymbol{b}_{\ell-1},\boldsymbol{b}_{\ell+1},\ldots\rbrace\)に変換します．
+            </td>
+        </tr>
+    </table>
+    <br>
+    <hr style="color: white;">
+    <br>
     <table>
         <tr>
             <th style="width:60px;"><a name="size">宣言</a></th>
@@ -290,6 +370,12 @@
             <th style="width:60px;">概略</th>
             <td>
                 HKZ基底簡約
+                <br>
+                <a href="https://link.springer.com/article/10.1007/BF01442912">A. Korkine, G. Zolotareff. Sur les formes
+                    quadratiques positives ternaires.(1872)</a>
+                <br>
+                <a href="https://link.springer.com/article/10.1007/BF01442795">A. Korkine, G. Zolotareff. Sur les formes
+                    quadratiques.(1873)</a>
                 <br>
                 <a href="https://link.springer.com/article/10.1007/BF01581144">C. P. Schnorr, M. Euchner. Lattice basis
                     reduction: Improved practical algorithms and solving subset sum problem.(1994)

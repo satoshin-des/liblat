@@ -211,6 +211,55 @@ void Lattice<T>::setBasis(const std::vector<std::vector<T>> basis_mat)
     }
 }
 
+template<class T>
+void Lattice<T>::setGoldesteinMayerLattice(const T p, const T q)
+{
+    if((q < 1) || (p < 1))
+    {
+        throw std::invalid_argument("The argument p and q must be greater than or equal to 1.");
+    }
+
+    if(q > p)
+    {
+        throw std::invalid_argument("The argument p must be greater than or equal to q.");
+    }
+
+    for(long i = 0, j; i < m_num_rows; ++i)
+    {
+        for(j = 0; j < m_num_cols; ++j)
+        {
+            m_basis[i][j] = 0;
+        }
+    }
+
+    for(long i = 0; i < m_num_rows; ++i)
+    {
+        m_basis[i][i] = 1;
+        m_basis[i][0] = q;
+    }
+    m_basis[0][0] = p;
+}
+
+template<class T>
+void Lattice<T>::setSchnorrLattice(const long N, const double c)
+{
+    if(m_num_rows + 1 != m_num_cols)
+    {
+        throw std::invalid_argument("Schnorr lattice can be defined if and only if the size of a lattice basis matrix is (N, N + 1).");
+    }
+
+    for(long i = 0, j; i < m_num_rows; ++i)
+    {
+        for(j = 0; j < m_num_cols; ++j)
+        {
+            m_basis[i][j] = 0;
+        }
+
+        m_basis[i][i] = sqrt(log(prime(i + 1)));
+        m_basis[i][m_num_cols - 1] = std::pow(N, c) * log(prime(i + 1));
+    }
+}
+
 template <class T>
 std::vector<T> Lattice<T>::mulVecBasis(const std::vector<long> v)
 {
