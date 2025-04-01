@@ -1,0 +1,262 @@
+<html>
+
+<head>
+    <title>liblat関数レファレンスページ</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <style>
+        @import url(style.css);
+    </style>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+
+<body>
+    <header>
+        <h1 style="text-align:center">
+            liblat関数レファレンスページ
+        </h1>
+    </header>
+
+    <h2>基礎的な関数</h2>
+    <table>
+        <tr>
+            <th style="width:40px;"><a name="numRows">宣言</a></th>
+            <td style="color: yellow;">long numRows() const;</td>
+        </tr>
+        <tr>
+            <th style="width:40px;">概略</th>
+            <td>
+                格子基底行列の行数を返す関数
+            </td>
+        </tr>
+        <tr>
+            <th style="width:40px;">引数</th>
+            <td>なし</td>
+        </tr>
+        <tr>
+            <th style="width: 40px;">戻り値</th>
+            <td>格子基底行列の行数（つまり格子次元）</td>
+        </tr>
+        <tr>
+            <th style="width:40px;">解説</th>
+            <td>
+                格子基底行列の行数，つまり格子次元を返す関数です．
+            </td>
+        </tr>
+    </table>
+    <br>
+    <hr style="color: white;">
+    <br>
+    <table>
+        <tr>
+            <th style="width:40px;"><a name="numCols">宣言</a></th>
+            <td style="color: yellow;">long numCols() const;</td>
+        </tr>
+        <tr>
+            <th style="width:40px;">概略</th>
+            <td>
+                格子基底行列の列数を返す関数
+            </td>
+        </tr>
+        <tr>
+            <th style="width:40px;">引数</th>
+            <td>なし</td>
+        </tr>
+        <tr>
+            <th style="width: 40px;">戻り値</th>
+            <td>格子基底行列の列数</td>
+        </tr>
+        <tr>
+            <th style="width:40px;">解説</th>
+            <td>
+                格子基底行列の列数を返す関数です．
+            </td>
+        </tr>
+    </table>
+    <br>
+    <hr style="color: white;">
+    <br>
+    <table>
+        <tr>
+            <th style="width:40px;"><a name="setDims">宣言</a></th>
+            <td style="color: yellow;">void setDims(const long n, const long m);</td>
+        </tr>
+        <tr>
+            <th style="width:40px;">概略</th>
+            <td>
+                格子基底行列のサイズを設定する
+            </td>
+        </tr>
+        <tr>
+            <th style="width:40px;">引数</th>
+            <td>
+                <table>
+                    <tr>
+                        <td>n</td>
+                        <td>：</td>
+                        <td>格子基底行列の行数</td>
+                    </tr>
+                    <tr>
+                        <td>m</td>
+                        <td>：</td>
+                        <td>格子基底行列の列数</td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <th style="width: 40px;">戻り値</th>
+            <td>なし</td>
+        </tr>
+        <tr>
+            <th style="width:40px;">解説</th>
+            <td>
+                格子基底行列のサイズを設定する関数です．
+                具体的にはこの関数を使用することで\(\mathbb{R}^m\)上の\(n\)次元格子が用意されます．
+                但し，これを使用した場合基底行列は零行列として設定されるので，実際に使用する場合は別途値を指定する必要があります．
+            </td>
+        </tr>
+    </table>
+    <br>
+    <hr style="color: white;">
+    <br>
+    <table>
+        <tr>
+            <th style="width:40px;"><a name="setRandom">宣言</a></th>
+            <td style="color: yellow;">void setRandom(const long n, const long m, const T min, const T max);</td>
+        </tr>
+        <tr>
+            <th style="width:40px;">概略</th>
+            <td>
+                ランダムにsvp-challenge型の格子基底を設定する
+            </td>
+        </tr>
+        <tr>
+            <th style="width:40px;">引数</th>
+            <td>
+                <table>
+                    <tr>
+                        <td>n</td>
+                        <td>：</td>
+                        <td>格子基底行列の行数</td>
+                    </tr>
+                    <tr>
+                        <td>m</td>
+                        <td>：</td>
+                        <td>格子基底行列の列数</td>
+                    </tr>
+                    <tr>
+                        <td>min</td>
+                        <td>：</td>
+                        <td>乱数の下限</td>
+                    </tr>
+                    <tr>
+                        <td>max</td>
+                        <td>：</td>
+                        <td>乱数の上限</td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <th style="width: 40px;">戻り値</th>
+            <td>なし</td>
+        </tr>
+        <tr>
+            <th style="width:40px;">解説</th>
+            <td>
+                格子基底行列をランダムに設定する関数です．
+                具体的にはこの関数を使用することで\(\mathbb{R}^m\)上の\(n\)次元格子が用意した上で，そこにランダムな基底を代入します．
+                但し，基底行列が非正則になることを避けるためにsvp-challenge型の基底行列に設定されます．
+                ここでいうsvp-challenge型の基底とは
+                \[
+                \begin{pmatrix}
+                    * & 0 & 0 & \cdots & 0\\
+                    * & 1 & 0 & \cdots & 0\\
+                    * & 0 & 1 & \cdots & 0\\
+                    * & \vdots & \vdots & \ddots & \vdots\\
+                    * & 0 & 0 & \cdots & 1
+                \end{pmatrix}
+                \]
+                という形の基底行列を指します．
+            </td>
+        </tr>
+    </table>
+    <br>
+    <hr style="color: white;">
+    <br>
+    <table>
+        <tr>
+            <th style="width:40px;"><a name="setBasis">宣言</a></th>
+            <td style="color: yellow;">
+                void setBasis(const std::vector&lt;std::vector&lt;T&gt;&gt; basis_mat);
+            </td>
+        </tr>
+        <tr>
+            <th style="width:40px;">概略</th>
+            <td>
+                格子基底行列を任意の行列として設定する
+            </td>
+        </tr>
+        <tr>
+            <th style="width:40px;">引数</th>
+            <td>
+                <table>
+                    <tr>
+                        <td>basis_mat</td>
+                        <td>：</td>
+                        <td>格子基底行列</td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <th style="width: 40px;">戻り値</th>
+            <td>なし</td>
+        </tr>
+        <tr>
+            <th style="width:40px;">解説</th>
+            <td>
+                格子基底行列を任意の行列で初期化する関数です．
+            </td>
+        </tr>
+    </table>
+    <br>
+    <hr style="color: white;">
+    <br>
+    <table>
+        <tr>
+            <th style="width:40px;"><a name="GSO">宣言</a></th>
+            <td style="color: yellow;">void computeGSO();</td>
+        </tr>
+        <tr>
+            <th style="width:40px;">概略</th>
+            <td>
+                Gram-Schmidtの直交化ベクトルの二乗ノルムとGram-Schmidtの直交化係数行列（GSO情報）を計算する
+            </td>
+        </tr>
+        <tr>
+            <th style="width:40px;">引数</th>
+            <td>なし</td>
+        </tr>
+        <tr>
+            <th style="width: 40px;">戻り値</th>
+            <td>なし</td>
+        </tr>
+        <tr>
+            <th style="width:40px;">解説</th>
+            <td>
+                基底行列のGram-Schmidtの直交化ベクトルの二乗ノルムとGram-Schmidtの直交化係数行列（GSO情報）を計算する関数です．
+            </td>
+        </tr>
+    </table>
+    <br>
+    <hr style="color: white;">
+    <br>
+
+    <footer style="text-align: center;">
+        <p>Copyright © 2024 さとしん All Rights Reserved.</p>
+    </footer>
+</body>
+
+</html>

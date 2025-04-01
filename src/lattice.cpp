@@ -195,6 +195,23 @@ void Lattice<T>::setRandom(const long n, const long m, const T min, const T max)
 }
 
 template <class T>
+void Lattice<T>::setBasis(const std::vector<std::vector<T>> basis_mat)
+{
+    if ((m_num_rows != basis_mat.size()) && (m_num_cols != basis_mat.at(0).size()))
+    {
+        setDims(basis_mat.size(), basis_mat[0].size());
+    }
+
+    for (long i = 0, j; i < m_num_rows; ++i)
+    {
+        for (j = 0; j < m_num_cols; ++j)
+        {
+            m_basis[i][j] = basis_mat[i][j];
+        }
+    }
+}
+
+template <class T>
 std::vector<T> Lattice<T>::mulVecBasis(const std::vector<long> v)
 {
     std::vector<T> w(m_num_cols);

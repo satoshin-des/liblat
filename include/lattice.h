@@ -120,6 +120,13 @@ public:
     void setRandom(const long n, const long m, const T min, const T max);
 
     /**
+     * @brief 基底行列の設定
+     *
+     * @param basis_mat 基底行列
+     */
+    void setBasis(const std::vector<std::vector<T>> basis_mat);
+
+    /**
      * @brief 係数ベクトルと基底の積
      *
      * @param v
@@ -264,26 +271,26 @@ public:
      * @param compute_gso DeepBKZ前にGSO情報を更新するか
      */
     void deepBKZ(const long beta, const double delta = 0.75, const bool compute_gso = true);
-    
+
     /**
      * @brief PotENUMアルゴリズム
-     * 
+     *
      * A. Sato, M. Yasuda. 自己双対型PotBKZ基底簡約の提案とBKZとの比較.(2025)
-     * 
-     * @param start 
+     *
+     * @param start
      * @param n 局所射影ブロック格子の次元
-     * @return std::vector<long> 
+     * @return std::vector<long>
      */
     std::vector<long> potENUM(const long start, const long n);
 
     /**
      * @brief PotBKZ簡約アルゴリズム
-     * 
+     *
      * A. Sato, M. Yasuda. 自己双対型PotBKZ基底簡約の提案とBKZとの比較.(2025)
-     * 
+     *
      * @param beta ブロックサイズ
      * @param delta 簡約パラメタ
-     * @param compute_gso 
+     * @param compute_gso
      */
     void potBKZ(const long beta, const double delta = 0.75, const bool compute_gso = true);
 

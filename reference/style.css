@@ -56,3 +56,8 @@ td {
     color: #ffffff;
     vertical-align: top;
 }
+
+table {
+    border: none;
+    vertical-align: top;
+}

@@ -1,14 +1,9 @@
 <html>
 
 <head>
-    <title>さとしんのHP</title>
+    <title>liblat関数レファレンスページ</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <style>
-        .Nenpyo {
-            text-align: left;
-        }
-    </style>
     <style>
         @import url(style.css);
     </style>
@@ -22,10 +17,38 @@
         </h1>
     </header>
 
-    <h2>基底簡約関係関数</h2>
+    <h2>基礎的な関数</h2>
     <table style="border: none;">
         <tr>
-            <th>sizeReduce</th>
+            <th><a href="latsetting.html#numRows">numRows</a></th>
+            <td>格子基底行列の行数を返す</td>
+        </tr>
+        <tr>
+            <th><a href="latsetting.html#numCols">numCols</a></th>
+            <td>格子基底行列の列数を返す</td>
+        </tr>
+        <tr>
+            <th><a href="latsetting.html#setDims">setDims</a></th>
+            <td>格子基底行列のサイズを設定する</td>
+        </tr>
+        <tr>
+            <th><a href="latsetting.html#setRandom">setRandom</a></th>
+            <td>ランダムにsvp-challenge型の格子基底を設定する</td>
+        </tr>
+        <tr>
+            <th><a href="latsetting.html#setBasis">setBasis</a></th>
+            <td>格子基底行列を設定する</td>
+        </tr>
+        <tr>
+            <th><a href="latsetting.html#GSO">computeGSO</a></th>
+            <td>Gram-Schmidtの直交化ベクトルの二乗ノルムとGram-Schmidtの直交化係数行列を計算する</td>
+        </tr>
+    </table>
+
+    <h2>基底簡約関数</h2>
+    <table style="border: none;">
+        <tr>
+            <th><a href="reduction.html#size">sizeReduce</a></th>
             <td>サイズ基底簡約</td>
         </tr>
         <tr>
@@ -37,31 +60,31 @@
             <td>DeepLLL基底簡約</td>
         </tr>
         <tr>
-            <th>potLLL</th>
+            <th><a href="reduction.html#PotLLL">potLLL</a></th>
             <td>PotLLL基底簡約</td>
         </tr>
         <tr>
-            <th>BKZ</th>
+            <th><a href="reduction.html#BKZ">BKZ</a></th>
             <td>BKZ基底簡約</td>
         </tr>
         <tr>
-            <th>HKZ</th>
+            <th><a href="reduction.html#HKZ">HKZ</a></th>
             <td>HKZ基底簡約</td>
         </tr>
         <tr>
-            <th>deepBKZ</th>
+            <th><a href="reduction.html#DeepBKZ">deepBKZ</a></th>
             <td>DeepBKZ基底簡約</td>
         </tr>
         <tr>
-            <th>potBKZ</th>
+            <th><a href="reduction.html#PotBKZ">potBKZ</a></th>
             <td>PotBKZ基底簡約</td>
         </tr>
         <tr>
-            <th>dualDeepLLL</th>
+            <th><a href="reduction.html#DualDeepLLL">dualDeepLLL</a></th>
             <td>双対型DeepLLL基底簡約</td>
         </tr>
         <tr>
-            <th>dualPotLLL</th>
+            <th><a href="reduction.html#DualPotLLL">dualPotLLL</a></th>
             <td>双対型PotLLL基底簡約</td>
         </tr>
     </table>

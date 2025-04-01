@@ -1,14 +1,9 @@
 <html>
 
 <head>
-    <title>さとしんのHP</title>
+    <title>liblat関数レファレンスページ</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <style>
-        .Nenpyo {
-            text-align: left;
-        }
-    </style>
     <style>
         @import url(style.css);
     </style>
@@ -22,8 +17,51 @@
         </h1>
     </header>
 
-    <h2>基底簡約関係関数</h2>
-    <table style="border: none; vertical-align: top;">
+    <h2>基底簡約関数</h2>
+
+    <table>
+        <tr>
+            <th style="width:40px;"><a name="size">宣言</a></th>
+            <td style="color: yellow;">void sizeReduce(const bool compute_gso = true);</td>
+        </tr>
+        <tr>
+            <th style="width:40px;">概略</th>
+            <td>
+                サイズ基底簡約
+                <br>
+                <a
+                    href="https://www.amazon.co.jp/%E6%A0%BC%E5%AD%90%E6%9A%97%E5%8F%B7%E8%A7%A3%E8%AA%AD%E3%81%AE%E3%81%9F%E3%82%81%E3%81%AE%E6%95%B0%E5%AD%A6%E7%9A%84%E5%9F%BA%E7%A4%8E-IMI%E3%82%B7%E3%83%AA%E3%83%BC%E3%82%BA-%E9%80%B2%E5%8C%96%E3%81%99%E3%82%8B%E7%94%A3%E6%A5%AD%E6%95%B0%E5%AD%A6-%E9%9D%92%E9%87%8E-%E8%89%AF%E7%AF%84/dp/4764905981">Y.
+                    Aono, M. Yasuda. 格子暗号解読のための数学的基礎.(2019)</a>
+            </td>
+        </tr>
+        <tr>
+            <th style="width:40px;">引数</th>
+            <td>
+                <table>
+                    <tr>
+                        <td>compute_gso</td>
+                        <td>：</td>
+                        <td>簡約する前にGSO情報を更新するか．<br>事前にGSO情報を計算していない場合はtrueにする必要がある</td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <th style="width: 40px;">戻り値</th>
+            <td>なし</td>
+        </tr>
+        <tr>
+            <th style="width:40px;">解説</th>
+            <td>
+                格子基底\(\lbrace\boldsymbol{b}_1, \ldots,
+                \boldsymbol{b}_n\rbrace\)をサイズ基底簡約する関数です．
+            </td>
+        </tr>
+    </table>
+    <br>
+    <hr style="color: white;">
+    <br>
+    <table>
         <tr>
             <th style="width:40px;"><a name="LLL">宣言</a></th>
             <td style="color: yellow;">void LLL(const double delta = 0.75, const bool compute_gso = true, const long
@@ -34,13 +72,14 @@
             <td>
                 LLL基底簡約
                 <br>
-                A. K. Lenstra, H. W. Lenstra, L. Lovasz. Factoring polynomials with rational coefficients.(1982)
+                <a href="https://link.springer.com/article/10.1007/BF01457454">A. K. Lenstra, H. W. Lenstra, L. Lovasz.
+                    Factoring polynomials with rational coefficients.(1982)</a>
             </td>
         </tr>
         <tr>
             <th style="width:40px;">引数</th>
             <td>
-                <table style="border: none; vertical-align: top;">
+                <table>
                     <tr>
                         <td>delta</td>
                         <td>：</td>
@@ -65,6 +104,10 @@
             </td>
         </tr>
         <tr>
+            <th style="width: 40px;">戻り値</th>
+            <td>なし</td>
+        </tr>
+        <tr>
             <th style="width:40px;">解説</th>
             <td>
                 格子基底\(\lbrace\boldsymbol{b}_1, \ldots,
@@ -76,23 +119,28 @@
     <br>
     <hr style="color: white;">
     <br>
-    <table style="border: none; vertical-align: top;">
+    <table>
         <tr>
             <th style="width:40px;"><a name="DeepLLL">宣言</a></th>
-            <td style="color: yellow;">void deepLLL(const double delta = 0.75, const bool compute_gso = true, const long start_ = 0, const long end_ = -1);</td>
+            <td style="color: yellow;">void deepLLL(const double delta = 0.75, const bool compute_gso = true, const long
+                start_ = 0, const long end_ = -1);</td>
         </tr>
         <tr>
             <th style="width:40px;">概略</th>
             <td>
                 DeepLLL基底簡約
                 <br>
-                C. P. Schnorr, M. Euchner. Lattice basis reduction: Improved practical algorithms and solving subset sum problem.(1994)
+                <a href="https://link.springer.com/article/10.1007/BF01581144">
+                    C. P. Schnorr, M. Euchner. Lattice basis
+                    reduction: Improved practical algorithms and solving subset sum
+                    problem.(1994)
+                </a>
             </td>
         </tr>
         <tr>
             <th style="width:40px;">引数</th>
             <td>
-                <table style="border: none; vertical-align: top;">
+                <table>
                     <tr>
                         <td>delta</td>
                         <td>：</td>
@@ -117,11 +165,368 @@
             </td>
         </tr>
         <tr>
+            <th style="width: 40px;">戻り値</th>
+            <td>なし</td>
+        </tr>
+        <tr>
             <th style="width:40px;">解説</th>
             <td>
                 格子基底\(\lbrace\boldsymbol{b}_1, \ldots,
                 \boldsymbol{b}_n\rbrace\)に対して，その部分格子基底\(\lbrace\boldsymbol{b}_{\texttt{start_}+1}, \ldots,
                 \boldsymbol{b}_\texttt{end_}\rbrace\)を簡約パラメータdeltaに関してDeepLLL簡約する関数です．
+            </td>
+        </tr>
+    </table>
+    <br>
+    <hr style="color: white;">
+    <br>
+    <table>
+        <tr>
+            <th style="width:40px;"><a name="PotLLL">宣言</a></th>
+            <td style="color: yellow;">void potLLL(const double delta = 0.75, const bool compute_gso = true);</td>
+        </tr>
+        <tr>
+            <th style="width:40px;">概略</th>
+            <td>
+                PotLLL基底簡約
+                <br>
+                <a href="https://link.springer.com/article/10.1007/s10623-014-9918-8">F. Fontein, M. Schneider, U.
+                    Wagner. PotLLL: A polynomial time version of LLL with deep
+                    insertions.(2014)
+                </a>
+            </td>
+        </tr>
+        <tr>
+            <th style="width:40px;">引数</th>
+            <td>
+                <table>
+                    <tr>
+                        <td>delta</td>
+                        <td>：</td>
+                        <td>簡約パラメータ（0.75以上1以下）</td>
+                    </tr>
+                    <tr>
+                        <td>compute_gso</td>
+                        <td>：</td>
+                        <td>簡約する前にGSO情報を更新するか．<br>事前にGSO情報を計算していない場合はtrueにする必要がある</td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <th style="width: 40px;">戻り値</th>
+            <td>なし</td>
+        </tr>
+        <tr>
+            <th style="width:40px;">解説</th>
+            <td>
+                格子基底\(\lbrace\boldsymbol{b}_1, \ldots,
+                \boldsymbol{b}_n\rbrace\)を簡約パラメータdeltaに関してPotLLL簡約する関数です．
+            </td>
+        </tr>
+    </table>
+    <br>
+    <hr style="color: white;">
+    <br>
+    <table>
+        <tr>
+            <th style="width:40px;"><a name="BKZ">宣言</a></th>
+            <td style="color: yellow;">void BKZ(const long beta, const double delta = 0.75, const bool compute_gso =
+                true);</td>
+        </tr>
+        <tr>
+            <th style="width:40px;">概略</th>
+            <td>
+                BKZ基底簡約
+                <br>
+                <a href="https://link.springer.com/article/10.1007/BF01581144">C. P. Schnorr, M. Euchner. Lattice basis
+                    reduction: Improved practical algorithms and solving subset sum problem.(1994)
+                </a>
+            </td>
+        </tr>
+        <tr>
+            <th style="width:40px;">引数</th>
+            <td>
+                <table>
+                    <tr>
+                        <td>beta</td>
+                        <td>：</td>
+                        <td>ブロックサイズ（2以上格子次元以下）</td>
+                    </tr>
+                    <tr>
+                        <td>delta</td>
+                        <td>：</td>
+                        <td>簡約パラメータ（0.75以上1以下）</td>
+                    </tr>
+                    <tr>
+                        <td>compute_gso</td>
+                        <td>：</td>
+                        <td>簡約する前にGSO情報を更新するか．<br>事前にGSO情報を計算していない場合はtrueにする必要がある</td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <th style="width: 40px;">戻り値</th>
+            <td>なし</td>
+        </tr>
+        <tr>
+            <th style="width:40px;">解説</th>
+            <td>
+                格子基底\(\lbrace\boldsymbol{b}_1, \ldots,
+                \boldsymbol{b}_n\rbrace\)をブロックサイズbetaと簡約パラメータdeltaに関してBKZ簡約する関数です．
+            </td>
+        </tr>
+    </table>
+    <br>
+    <hr style="color: white;">
+    <br>
+    <table>
+        <tr>
+            <th style="width:40px;"><a name="HKZ">宣言</a></th>
+            <td style="color: yellow;">void HKZ(const double delta = 0.75, const bool compute_gso = true);</td>
+        </tr>
+        <tr>
+            <th style="width:40px;">概略</th>
+            <td>
+                HKZ基底簡約
+                <br>
+                <a href="https://link.springer.com/article/10.1007/BF01581144">C. P. Schnorr, M. Euchner. Lattice basis
+                    reduction: Improved practical algorithms and solving subset sum problem.(1994)
+                </a>
+            </td>
+        </tr>
+        <tr>
+            <th style="width:40px;">引数</th>
+            <td>
+                <table>
+                    <tr>
+                        <td>delta</td>
+                        <td>：</td>
+                        <td>簡約パラメータ（0.75以上1以下）</td>
+                    </tr>
+                    <tr>
+                        <td>compute_gso</td>
+                        <td>：</td>
+                        <td>簡約する前にGSO情報を更新するか．<br>事前にGSO情報を計算していない場合はtrueにする必要がある</td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <th style="width: 40px;">戻り値</th>
+            <td>なし</td>
+        </tr>
+        <tr>
+            <th style="width:40px;">解説</th>
+            <td>
+                格子基底\(\lbrace\boldsymbol{b}_1, \ldots,
+                \boldsymbol{b}_n\rbrace\)を簡約パラメータdeltaに関してHKZ簡約する関数です．
+                <br>
+                具体的には，格子基底を格子次元と同じ大きさのブロックサイズに関してBKZ基底簡約します．
+            </td>
+        </tr>
+    </table>
+    <br>
+    <hr style="color: white;">
+    <br>
+    <table>
+        <tr>
+            <th style="width:40px;"><a name="DeepBKZ">宣言</a></th>
+            <td style="color: yellow;">void deepBKZ(const long beta, const double delta = 0.75, const bool compute_gso =
+                true);</td>
+        </tr>
+        <tr>
+            <th style="width:40px;">概略</th>
+            <td>
+                DeepBKZ基底簡約
+                <br>
+                <a href="https://link.springer.com/chapter/10.1007/978-3-319-76620-1_9">J. Yamaguchi, M. Yasuda.
+                    Explicit formula for Gram-Schmidt vectors in LLL with deep insertions and its applications.(2017)
+                </a>
+            </td>
+        </tr>
+        <tr>
+            <th style="width:40px;">引数</th>
+            <td>
+                <table>
+                    <tr>
+                        <td>beta</td>
+                        <td>：</td>
+                        <td>ブロックサイズ（2以上格子次元以下）</td>
+                    </tr>
+                    <tr>
+                        <td>delta</td>
+                        <td>：</td>
+                        <td>簡約パラメータ（0.75以上1以下）</td>
+                    </tr>
+                    <tr>
+                        <td>compute_gso</td>
+                        <td>：</td>
+                        <td>簡約する前にGSO情報を更新するか．<br>事前にGSO情報を計算していない場合はtrueにする必要がある</td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <th style="width: 40px;">戻り値</th>
+            <td>なし</td>
+        </tr>
+        <tr>
+            <th style="width:40px;">解説</th>
+            <td>
+                格子基底\(\lbrace\boldsymbol{b}_1, \ldots,
+                \boldsymbol{b}_n\rbrace\)をブロックサイズbetaと簡約パラメータdeltaに関してDeepBKZ簡約する関数です．
+                <br>
+                具体的には，BKZアルゴリズムのサブルーチンとして使っているLLLの代わりにDeepLLLを使用することによって実現しています．
+            </td>
+        </tr>
+    </table>
+    <br>
+    <hr style="color: white;">
+    <br>
+    <table>
+        <tr>
+            <th style="width:40px;"><a name="PotBKZ">宣言</a></th>
+            <td style="color: yellow;">void potBKZ(const long beta, const double delta = 0.75, const bool compute_gso =
+                true);</td>
+        </tr>
+        <tr>
+            <th style="width:40px;">概略</th>
+            <td>
+                PotBKZ基底簡約
+                <br>
+                <a href="https://www.iwsec.org/scis/2025/program.html#2D2">A. Sato, M. Yasuda.
+                    自己双対型PotBKZ基底簡約の提案とBKZとの比較.(2025)
+                </a>
+            </td>
+        </tr>
+        <tr>
+            <th style="width:40px;">引数</th>
+            <td>
+                <table>
+                    <tr>
+                        <td>beta</td>
+                        <td>：</td>
+                        <td>ブロックサイズ（2以上格子次元以下）</td>
+                    </tr>
+                    <tr>
+                        <td>delta</td>
+                        <td>：</td>
+                        <td>簡約パラメータ（0.75以上1以下）</td>
+                    </tr>
+                    <tr>
+                        <td>compute_gso</td>
+                        <td>：</td>
+                        <td>簡約する前にGSO情報を更新するか．<br>事前にGSO情報を計算していない場合はtrueにする必要がある</td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <th style="width: 40px;">戻り値</th>
+            <td>なし</td>
+        </tr>
+        <tr>
+            <th style="width:40px;">解説</th>
+            <td>
+                格子基底\(\lbrace\boldsymbol{b}_1, \ldots,
+                \boldsymbol{b}_n\rbrace\)をブロックサイズbetaと簡約パラメータdeltaに関してPotBKZ簡約する関数です．
+            </td>
+        </tr>
+    </table>
+    <br>
+    <hr style="color: white;">
+    <br>
+    <table>
+        <tr>
+            <th style="width:40px;"><a name="DualDeepLLL">宣言</a></th>
+            <td style="color: yellow;">void dualDeepLLL(const double delta = 0.75, const bool compute_gso = true);</td>
+        </tr>
+        <tr>
+            <th style="width:40px;">概略</th>
+            <td>
+                双対型DeepLLL基底簡約
+                <br>
+                <a href="https://link.springer.com/chapter/10.1007/978-3-319-89339-6_10">M. Yasuda, J. Yamaguchi, M.
+                    Ooka, S. Nakamura. Development of a dual version of DeepBKZ and its application to solving the LWE
+                    challenge.(2018)
+                </a>
+            </td>
+        </tr>
+        <tr>
+            <th style="width:40px;">引数</th>
+            <td>
+                <table>
+                    <tr>
+                        <td>delta</td>
+                        <td>：</td>
+                        <td>簡約パラメータ（0.75以上1以下）</td>
+                    </tr>
+                    <tr>
+                        <td>compute_gso</td>
+                        <td>：</td>
+                        <td>簡約する前にGSO情報を更新するか．<br>事前にGSO情報を計算していない場合はtrueにする必要がある</td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <th style="width: 40px;">戻り値</th>
+            <td>なし</td>
+        </tr>
+        <tr>
+            <th style="width:40px;">解説</th>
+            <td>
+                格子基底\(\lbrace\boldsymbol{b}_1, \ldots,
+                \boldsymbol{b}_n\rbrace\)を簡約パラメータdeltaに関して双対型DeepLLL簡約する関数です．
+            </td>
+        </tr>
+    </table>
+    <br>
+    <hr style="color: white;">
+    <br>
+    <table>
+        <tr>
+            <th style="width:40px;"><a name="DualPotLLL">宣言</a></th>
+            <td style="color: yellow;">void dualPotLLL(const double delta = 0.75, const bool compute_gso = true);</td>
+        </tr>
+        <tr>
+            <th style="width:40px;">概略</th>
+            <td>
+                双対型PotLLL基底簡約
+                <br>
+                <a href="https://www.iwsec.org/scis/2025/program.html#2D2">A. Sato, M. Yasuda.
+                    自己双対型PotBKZ基底簡約の提案とBKZとの比較.(2025)
+                </a>
+            </td>
+        </tr>
+        <tr>
+            <th style="width:40px;">引数</th>
+            <td>
+                <table>
+                    <tr>
+                        <td>delta</td>
+                        <td>：</td>
+                        <td>簡約パラメータ（0.75以上1以下）</td>
+                    </tr>
+                    <tr>
+                        <td>compute_gso</td>
+                        <td>：</td>
+                        <td>簡約する前にGSO情報を更新するか．<br>事前にGSO情報を計算していない場合はtrueにする必要がある</td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <th style="width: 40px;">戻り値</th>
+            <td>なし</td>
+        </tr>
+        <tr>
+            <th style="width:40px;">解説</th>
+            <td>
+                格子基底\(\lbrace\boldsymbol{b}_1, \ldots,
+                \boldsymbol{b}_n\rbrace\)を簡約パラメータdeltaに関して双対型PotLLL簡約する関数です．
             </td>
         </tr>
     </table>
