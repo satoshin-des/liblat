@@ -1,7 +1,7 @@
 <html>
 
 <head>
-    <title>liblat関数レファレンスページ</title>
+    <title>liblat　関数レファレンスページ</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <style>
@@ -13,7 +13,7 @@
 <body>
     <header>
         <h1 style="text-align:center">
-            liblat関数レファレンスページ
+            liblat　関数レファレンスページ
         </h1>
     </header>
 
@@ -238,6 +238,43 @@
         </tr>
         <tr>
             <th style="width:60px;">引数</th>
+            <td>
+                <table>
+                    <tr>
+                        <td>v</td>
+                        <td>：</td>
+                        <td>係数ベクトル</td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <th style="width: 40px;">戻り値</th>
+            <td>格子ベクトル</td>
+        </tr>
+        <tr>
+            <th style="width:60px;">解説</th>
+            <td>
+                基底行列のGram-Schmidtの直交化ベクトルの二乗ノルムとGram-Schmidtの直交化係数行列（GSO情報）を計算する関数です．
+            </td>
+        </tr>
+    </table>
+    <br>
+    <hr style="color: white;">
+    <br>
+    <table>
+        <tr>
+            <th style="width:60px;"><a name="mulVecBasis">宣言</a></th>
+            <td style="color: yellow;">std::vector&lt;T&gt; mulVecBasis(const std::vector&lt;long&gt; v);</td>
+        </tr>
+        <tr>
+            <th style="width:60px;">概略</th>
+            <td>
+                係数ベクトルを格子ベクトルに変換する
+            </td>
+        </tr>
+        <tr>
+            <th style="width:60px;">引数</th>
             <td>なし</td>
         </tr>
         <tr>
@@ -247,7 +284,7 @@
         <tr>
             <th style="width:60px;">解説</th>
             <td>
-                基底行列のGram-Schmidtの直交化ベクトルの二乗ノルムとGram-Schmidtの直交化係数行列（GSO情報）を計算する関数です．
+                係数ベクトルを基底行列に左から乗じて格子ベクトルに変換する関数です．
             </td>
         </tr>
     </table>

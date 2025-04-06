@@ -1,7 +1,7 @@
 <html>
 
 <head>
-    <title>liblat関数レファレンスページ</title>
+    <title>liblat　関数レファレンスページ</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <style>
@@ -13,7 +13,7 @@
 <body>
     <header>
         <h1 style="text-align:center">
-            liblat関数レファレンスページ
+            liblat　関数レファレンスページ
         </h1>
     </header>
 
@@ -93,6 +93,163 @@
             <td>
                 基底にdeep-insertionを施す関数です．
                 具体的には基底\(\lbrace\ldots,\boldsymbol{b}_k,\ldots,\boldsymbol{b}_\ell,\ldots\rbrace\)を\(\lbrace\ldots,\boldsymbol{b}_{k-1},\boldsymbol{b}_\ell,\boldsymbol{b}_k,\ldots,\boldsymbol{b}_{\ell-1},\boldsymbol{b}_{\ell+1},\ldots\rbrace\)に変換します．
+            </td>
+        </tr>
+    </table>
+    <br>
+    <hr style="color: white;">
+    <br>
+    <table>
+        <tr>
+            <th style="width:60px;"><a name="DualDeepInsertion">宣言</a></th>
+            <td style="color: yellow;">void dualDeepInsertion(const long k, const long l);</td>
+        </tr>
+        <tr>
+            <th style="width:60px;">概略</th>
+            <td>
+                双対型deep-insertionを行う
+            </td>
+        </tr>
+        <tr>
+            <th style="width:60px;">引数</th>
+            <td>
+                <table>
+                    <tr>
+                        <td>k</td>
+                        <td>：</td>
+                        <td>引き抜く基底のインデックス</td>
+                    </tr>
+                    <tr>
+                        <td>l</td>
+                        <td>：</td>
+                        <td>基底を挿入するインデックス</td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <th style="width: 40px;">戻り値</th>
+            <td>なし</td>
+        </tr>
+        <tr>
+            <th style="width:60px;">解説</th>
+            <td>
+                基底に双対型deep-insertionを施す関数です．
+                具体的には基底\(\lbrace\ldots,\boldsymbol{b}_k,\ldots,\boldsymbol{b}_\ell,\ldots\rbrace\)を\(\lbrace\ldots,\boldsymbol{b}_{k-1},\boldsymbol{b}_{k+1},\ldots,\boldsymbol{b}_{\ell},\boldsymbol{b}_{k},\boldsymbol{b}_{\ell+1},\ldots\rbrace\)に変換します．
+            </td>
+        </tr>
+    </table>
+    <br>
+    <hr style="color: white;">
+    <br>
+    <table>
+        <tr>
+            <th style="width:60px;"><a name="updateDeep">宣言</a></th>
+            <td style="color: yellow;">void updateDeepInsGSO(const long i, const long k, const long start, const long
+                end);</td>
+        </tr>
+        <tr>
+            <th style="width:60px;">概略</th>
+            <td>
+                deep-insertionを施した後のGSO情報の効率的な更新
+            </td>
+        </tr>
+        <tr>
+            <th style="width:60px;">引数</th>
+            <td>
+                <table>
+                    <tr>
+                        <td>i</td>
+                        <td>：</td>
+                        <td>引き抜く基底のインデックス</td>
+                    </tr>
+                    <tr>
+                        <td>k</td>
+                        <td>：</td>
+                        <td>基底を挿入するインデックス</td>
+                    </tr>
+                    <tr>
+                        <td>start</td>
+                        <td>：</td>
+                        <td>deep-insertionを格子基底の一部に施す際，その開始インデックス</td>
+                    </tr>
+                    <tr>
+                        <td>end</td>
+                        <td>：</td>
+                        <td>deep-insertionを格子基底の一部に施す際，その終了インデックス</td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <th style="width: 40px;">戻り値</th>
+            <td>なし</td>
+        </tr>
+        <tr>
+            <th style="width:60px;">解説</th>
+            <td>
+                基底にdeep-insertionを施した後のGSO情報の更新を効率的に行う関数です．
+                <a
+                    href="fund.html#GSO">computeGSO</a>関数を用いてGSO情報を更新することも可能ですが，効率的ではない上に誤差が出やすいのでこの関数を用いて更新することを強くおすすめします．
+            </td>
+        </tr>
+    </table>
+    <br>
+    <hr style="color: white;">
+    <br>
+    <table>
+        <tr>
+            <th style="width:60px;"><a name="updateDualDeep">宣言</a></th>
+            <td style="color: yellow;">void updateDualDeepInsGSO(const long k, const long l, const std::vector<double> dual_D);</td>
+        </tr>
+        <tr>
+            <th style="width:60px;">概略</th>
+            <td>
+                双対型deep-insertionを施した後のGSO情報の効率的な更新
+            </td>
+        </tr>
+        <tr>
+            <th style="width:60px;">引数</th>
+            <td>
+                <table>
+                    <tr>
+                        <td>i</td>
+                        <td>：</td>
+                        <td>引き抜く基底のインデックス</td>
+                    </tr>
+                    <tr>
+                        <td>k</td>
+                        <td>：</td>
+                        <td>基底を挿入するインデックス</td>
+                    </tr>
+                    <tr>
+                        <td>start</td>
+                        <td>：</td>
+                        <td>deep-insertionを格子基底の一部に施す際，その開始インデックス</td>
+                    </tr>
+                    <tr>
+                        <td>end</td>
+                        <td>：</td>
+                        <td>deep-insertionを格子基底の一部に施す際，その終了インデックス</td>
+                    </tr>
+                    <tr>
+                        <td>dual_D</td>
+                        <td>：</td>
+                        <td></td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <th style="width: 40px;">戻り値</th>
+            <td>なし</td>
+        </tr>
+        <tr>
+            <th style="width:60px;">解説</th>
+            <td>
+                基底に双対型deep-insertionを施した後のGSO情報の更新を効率的に行う関数です．
+                <a
+                    href="fund.html#GSO">computeGSO</a>関数を用いてGSO情報を更新することも可能ですが，効率的ではない上に誤差が出やすいのでこの関数を用いて更新することを強くおすすめします．
             </td>
         </tr>
     </table>
