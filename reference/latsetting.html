@@ -80,20 +80,23 @@
             </td>
         </tr>
     </table>
-    <pre class="code_block">
-        <code>
-#include &lt;iostream&gt;
+    <h3>サンプル</h3>
+    <pre class="code_block"><code>#include &lt;iostream&gt;
 #include "lattice.h"
 
-int main() {
+int main()
+{
+    // 3次正方行列を基底行列に持つ格子
     Lattice lat(3, 3);
+
+    // Goldestein-Mayer格子に設定
     lat.setGoldesteinMayerLattice(2, 3);
+
+    // 基底行列の表示
     std::cout &lt;&lt; lat &lt;&lt; std::endl;
 
     return 0;
-}
-</code>
-    </pre>
+}</code></pre>
     <br>
     <hr style="color: white;">
     <br>
@@ -153,6 +156,23 @@ int main() {
             </td>
         </tr>
     </table>
+    <h3>サンプル</h3>
+    <pre class="code_block"><code>#include &lt;iostream&gt;
+#include "lattice.h"
+
+int main()
+{
+    // 3次正方行列を基底行列に持つ格子
+    Lattice lat(3, 3);
+
+    // Schnorr格子に設定
+    lat.setSchnorrLattice(2, 3);
+
+    // 基底行列の表示
+    std::cout &lt;&lt; lat &lt;&lt; std::endl;
+
+    return 0;
+}</code></pre>
     <br>
     <hr style="color: white;">
     <br>

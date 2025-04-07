@@ -45,6 +45,8 @@
             </td>
         </tr>
     </table>
+    <h3>サンプル</h3>
+    <p><a href="fund.html#numCols">numCols</a>を参照のこと．</p>
     <br>
     <hr style="color: white;">
     <br>
@@ -74,6 +76,20 @@
             </td>
         </tr>
     </table>
+    <h3>サンプル</h3>
+    <pre class="code_block"><code>#include &lt;iostream&gt;
+#include "lattice.h"
+
+int main()
+{
+    // 3次正方行列を基底行列に持つ格子
+    Lattice lat(3, 3);
+
+    std::cout &lt;&lt; lat.numRows() &lt;&lt; std::endl;
+    std::cout &lt;&lt; lat.numCols() &lt;&lt; std::endl;
+
+    return 0;
+}</code></pre>
     <br>
     <hr style="color: white;">
     <br>
@@ -183,6 +199,23 @@
             </td>
         </tr>
     </table>
+    <h3>サンプル</h3>
+    <pre class="code_block"><code>#include &lt;iostream&gt;
+#include "lattice.h"
+
+int main()
+{
+    // 3次正方行列を基底行列に持つ格子
+    Lattice lat(3, 3);
+
+    // ランダムなSVP型格子に設定
+    lat.setRandom(3, 3, 1000, 9999);
+
+    // 基底行列の表示
+    std::cout &lt;&lt; lat &lt;&lt; std::endl;
+
+    return 0;
+}</code></pre>
     <br>
     <hr style="color: white;">
     <br>

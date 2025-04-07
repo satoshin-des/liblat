@@ -353,6 +353,25 @@
             </td>
         </tr>
     </table>
+<pre class="code_block"><code>#include &lt;iostream&gt;
+#include "lattice.h"
+        
+int main()
+{
+    // 40次正方行列を基底行列に持つ格子
+    Lattice lat(40, 40);
+        
+    // ランダムなSVP型格子に設定
+    lat.setRandom(40, 40, 1000, 9999);
+            
+    // LLL基底簡約
+    lat.LLL(0.99);
+
+    // 基底行列の表示
+    std::cout &lt;&lt; lat &lt;&lt; std::endl;
+        
+    return 0;
+}</code></pre>
     <br>
     <hr style="color: white;">
     <br>
@@ -414,6 +433,25 @@
             </td>
         </tr>
     </table>
+<pre class="code_block"><code>#include &lt;iostream&gt;
+#include "lattice.h"
+        
+int main()
+{
+    // 40次正方行列を基底行列に持つ格子
+    Lattice lat(40, 40);
+        
+    // ランダムなSVP型格子に設定
+    lat.setRandom(40, 40, 1000, 9999);
+            
+    // DeepLLL基底簡約
+    lat.deepLLL(0.99);
+
+    // 基底行列の表示
+    std::cout &lt;&lt; lat &lt;&lt; std::endl;
+        
+    return 0;
+}</code></pre>
     <br>
     <hr style="color: white;">
     <br>
@@ -462,6 +500,25 @@
             </td>
         </tr>
     </table>
+<pre class="code_block"><code>#include &lt;iostream&gt;
+#include "lattice.h"
+        
+int main()
+{
+    // 40次正方行列を基底行列に持つ格子
+    Lattice lat(40, 40);
+        
+    // ランダムなSVP型格子に設定
+    lat.setRandom(40, 40, 1000, 9999);
+            
+    // LLL基底簡約
+    lat.potLLL(0.99);
+
+    // 基底行列の表示
+    std::cout &lt;&lt; lat &lt;&lt; std::endl;
+        
+    return 0;
+}</code></pre>
     <br>
     <hr style="color: white;">
     <br>
