@@ -116,6 +116,113 @@ std::vector<long> Lattice<T>::enumShortVec_(const bool compute_gso, const long s
 }
 
 template <class T>
+std::vector<long> Lattice<T>::dualENUM_(const double R, const long start, const long end)
+{
+    long n = end - start;
+    long i, r[n + 1];
+    long last_nonzero = 0; // index of last non-zero elements
+    double temp;
+    std::vector<long> weight(n, 0);
+    std::vector<long> coeff_vector(n, 0);
+    std::vector<double> center(n, 0);
+    std::vector<std::vector<double>> sigma(n + 1, std::vector<double>(n, 0));
+    std::vector<double> rho(n + 1, 0);
+
+    coeff_vector[0] = 1;
+    for (i = 0; i < n; ++i)
+    {
+        r[i] = i;
+    }
+
+    for (long k = 0;;)
+    {
+        temp = static_cast<double>(coeff_vector[k]) - center[k];
+        temp *= temp;
+        rho[k] = rho[k + 1] + temp / m_B[k + start]; // rho[k]=∥πₖ(shortest_vec)∥
+        if (rho[k] <= R)
+        {
+            if (k == 0)
+            {
+                return coeff_vector;
+            }
+            else
+            {
+                --k;
+                if (r[k + 1] >= r[k])
+                {
+                    r[k] = r[k + 1];
+                }
+                for (i = r[k]; i > k; --i)
+                {
+                    sigma[i][k] = sigma[i + 1][k] + m_dual_mu[i + start][k + start] * coeff_vector[i];
+                }
+                center[k] = -sigma[k + 1][k];
+                coeff_vector[k] = round(center[k]);
+                weight[k] = 1;
+            }
+        }
+        else
+        {
+            ++k;
+            if (k == n)
+            { // no solution
+                coeff_vector = std::vector<long>(n, 0);
+                return coeff_vector;
+            }
+            else
+            {
+                r[k] = k;
+                if (k >= last_nonzero)
+                {
+                    last_nonzero = k;
+                    ++coeff_vector[k];
+                }
+                else
+                {
+                    if (coeff_vector[k] > center[k])
+                    {
+                        coeff_vector[k] -= weight[k];
+                    }
+                    else
+                    {
+                        coeff_vector[k] += weight[k];
+                    }
+
+                    ++weight[k];
+                }
+            }
+        }
+    }
+}
+
+template<class T>
+std::vector<long> Lattice<T>::dualEnumShortVec_(const bool compute_gso, const long start, const long end)
+{
+    const long n = end - start;
+    std::vector<long> enum_vector(n);
+    std::vector<long> old_enum_vector(n);
+
+    if (compute_gso)
+    {
+        computeGSO();
+    }
+
+    for (double R = m_B[start];; R *= 0.99)
+    {
+        for (long i = 0; i < n; ++i)
+        {
+            old_enum_vector[i] = enum_vector[i];
+        }
+        enum_vector = dualENUM_(R, start, end);
+        
+        if (isZero(enum_vector))
+        {
+            return old_enum_vector;
+        }
+    }
+}
+
+template <class T>
 void Lattice<T>::setMaxLoop(const long max_loop)
 {
     if (max_loop <= 0)
@@ -211,28 +318,28 @@ void Lattice<T>::setBasis(const std::vector<std::vector<T>> basis_mat)
     }
 }
 
-template<class T>
+template <class T>
 void Lattice<T>::setGoldesteinMayerLattice(const T p, const T q)
 {
-    if((q < 1) || (p < 1))
+    if ((q < 1) || (p < 1))
     {
         throw std::invalid_argument("The argument p and q must be greater than or equal to 1.");
     }
 
-    if(q > p)
+    if (q > p)
     {
         throw std::invalid_argument("The argument p must be greater than or equal to q.");
     }
 
-    for(long i = 0, j; i < m_num_rows; ++i)
+    for (long i = 0, j; i < m_num_rows; ++i)
     {
-        for(j = 0; j < m_num_cols; ++j)
+        for (j = 0; j < m_num_cols; ++j)
         {
             m_basis[i][j] = 0;
         }
     }
 
-    for(long i = 0; i < m_num_rows; ++i)
+    for (long i = 0; i < m_num_rows; ++i)
     {
         m_basis[i][i] = 1;
         m_basis[i][0] = q;
@@ -240,17 +347,17 @@ void Lattice<T>::setGoldesteinMayerLattice(const T p, const T q)
     m_basis[0][0] = p;
 }
 
-template<class T>
+template <class T>
 void Lattice<T>::setSchnorrLattice(const long N, const double c)
 {
-    if(m_num_rows + 1 != m_num_cols)
+    if (m_num_rows + 1 != m_num_cols)
     {
         throw std::invalid_argument("Schnorr lattice can be defined if and only if the size of a lattice basis matrix is (N, N + 1).");
     }
 
-    for(long i = 0, j; i < m_num_rows; ++i)
+    for (long i = 0, j; i < m_num_rows; ++i)
     {
-        for(j = 0; j < m_num_cols; ++j)
+        for (j = 0; j < m_num_cols; ++j)
         {
             m_basis[i][j] = 0;
         }
@@ -356,6 +463,25 @@ void Lattice<T>::computeGSO()
             }
         }
         m_B[i] = dot(m_b_star[i], m_b_star[i]);
+    }
+}
+
+template <class T>
+void Lattice<T>::computeDualGSO()
+{
+    double sum;
+    for (long i = 0, j, k; i < m_num_rows; ++i)
+    {
+        for (j = i + 1; j < m_num_cols; ++j)
+        {
+            sum = 0;
+            for (k = 0; k < j - i; ++k)
+            {
+                sum += m_mu[j][i + k] * m_dual_mu[i][i + k];
+            }
+
+            // m_dual_mu[i][j] = -m_mu.row(j).segment(i, j - i).dot(hmu.row(i).segment(i, j - i));
+        }
     }
 }
 
@@ -739,49 +865,49 @@ std::vector<long> Lattice<T>::potENUM(const long start, const long n)
 }
 
 template <class T>
-void Lattice<T>::insertToDualBasis(const std::vector<double> x)
+void Lattice<T>::insertToDualBasis(const std::vector<long> x, const long dim)
 {
-    if (x.size() != m_num_rows)
+    if (x.size() != dim)
     {
         char err_s[ERR_STR_LEN];
-        sprintf(err_s, "%ld-th vector cannot insert into the dual basis( its size is %ld times %ld). @function insertToDualBasis.", x.size(), m_num_rows, m_num_cols);
+        sprintf(err_s, "%ld-th vector cannot insert into the dual basis( its size is %ld times %ld). @function insertToDualBasis.", x.size(), dim, m_num_cols);
         throw std::invalid_argument(err_s);
     }
 
     long i, j, k;
     const double beta = 1.16247638743819280699046939662833968000372102125550;
     double gamma, temp;
-    Lattice<T> U(m_num_rows, m_num_cols);
-    Lattice<T> temp_basis(m_num_rows, m_num_rows + 1);
+    Lattice<T> U(dim, m_num_cols);
+    Lattice<T> temp_basis(dim, dim + 1);
 
     temp = dot(x, x);
-    temp *= pow(beta, m_num_rows - 2);
+    temp *= pow(beta, dim - 2);
     gamma = round(temp + temp);
 
-    for (i = 0; i < m_num_rows; ++i)
+    for (i = 0; i < dim; ++i)
     {
-        for (j = 0; j < m_num_rows; ++j)
+        for (j = 0; j < dim; ++j)
         {
             temp_basis.m_basis[i][j] = 0;
         }
         temp_basis.m_basis[i][i] = 1;
-        temp_basis.m_basis[i][m_num_rows] = gamma * x[i];
+        temp_basis.m_basis[i][dim] = gamma * x[i];
     }
 
-    temp_basis.LLL(0.99);
+    temp_basis.LLL(0.99, true, 0, dim);
 
-    for (i = 0; i < m_num_rows; ++i)
+    for (i = 0; i < dim; ++i)
     {
         for (j = 0; j < m_num_cols; ++j)
         {
-            for (k = 0; k < m_num_rows; ++k)
+            for (k = 0; k < dim; ++k)
             {
                 U.m_basis[i][j] = static_cast<T>(temp_basis.m_basis[i][k]) * m_basis[k][j];
             }
         }
     }
 
-    for (i = 0; i < m_num_rows; ++i)
+    for (i = 0; i < dim; ++i)
     {
         for (j = 0; j < m_num_cols; ++j)
         {

@@ -54,6 +54,10 @@ private:
 
     std::vector<long> enumShortVec_(const bool compute_gso, const long start, const long end);
 
+    std::vector<long> dualENUM_(const double R, const long start, const long end);
+
+    std::vector<long> dualEnumShortVec_(const bool compute_gso, const long start, const long end);
+
 public:
     /**
      * @brief Construct a new Lattice object
@@ -172,6 +176,12 @@ public:
      *
      */
     void computeGSO();
+
+    /**
+     * @brief 双対型GSO情報の計算
+     *
+     */
+    void computeDualGSO();
 
     /**
      * @brief deep insertion後のGSO情報の効率的な更新
@@ -312,6 +322,14 @@ public:
     void potBKZ(const long beta, const double delta = 0.75, const bool compute_gso = true);
 
     /**
+     * @brief 双対型LLL簡約アルゴリズム
+     * 
+     * @param delta 簡約パラメタ
+     * @param compute_gso 双対型LLL前にGSO情報を更新するかどうか
+     */
+    void dualLLL(const double delta = 0.75, const bool compute_gso = true);
+
+    /**
      * @brief 双対型DeepLLL簡約アルゴリズム
      *
      * M. Yasuda, J. Yamaguchi, M. Ooka, S. Nakamura. Development of a dual version of DeepBKZ and its application to solving the LWE challenge.(2018)
@@ -331,7 +349,16 @@ public:
      */
     void dualPotLLL(const double delta = 0.75, const bool compute_gso = true);
 
-    void insertToDualBasis(const std::vector<double> x);
+    void insertToDualBasis(const std::vector<long> x, const long dim);
+
+    /**
+     * @brief 双対型BKZ簡約アルゴリズム
+     * 
+     * @param beta ブロックサイズ
+     * @param delta 簡約パラメタ
+     * @param compute_gso 双対型BKZ前にGSO情報を更新するか
+     */
+    void dualBKZ(const long beta, const double delta = 0.75, const bool compute_gso = true);
 };
 
 #endif // !LATTICE_H_
