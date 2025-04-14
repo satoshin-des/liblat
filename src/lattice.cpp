@@ -11,6 +11,24 @@
 template <class T>
 std::vector<long> Lattice<T>::ENUM_(const double R, const long start, const long end)
 {
+    if ((start < 0) || (start >= m_num_rows))
+    {
+        throw std::out_of_range("The argument start is out of index. @ function ENUM_.");
+    }
+    if ((end < 0) || (end > m_num_rows))
+    {
+        throw std::out_of_range("The argument end is out of index. @ function ENUM_.");
+    }
+    if (start >= end)
+    {
+        throw std::invalid_argument("The arguments start and end is invalid. @ function ENUM_.");
+    }
+    
+    if(R <= 0)
+    {
+        return std::vector<long>(m_num_rows, 0);
+    }
+
     long n = end - start;
     long i, r[n + 1];
     long last_nonzero = 0; // index of last non-zero elements
@@ -352,7 +370,11 @@ void Lattice<T>::setSchnorrLattice(const long N, const double c)
 {
     if (m_num_rows + 1 != m_num_cols)
     {
-        throw std::invalid_argument("Schnorr lattice can be defined if and only if the size of a lattice basis matrix is (N, N + 1).");
+        throw std::invalid_argument("Schnorr lattice can be defined if and only if the size of a lattice basis matrix is (N, N + 1).  @ function setSchnorrLattice");
+    }
+    if (N <= 0)
+    {
+        throw std::invalid_argument("The augment N must be a positive integer. @ function setSchnorrLattice");
     }
 
     for (long i = 0, j; i < m_num_rows; ++i)
@@ -365,6 +387,38 @@ void Lattice<T>::setSchnorrLattice(const long N, const double c)
         m_basis[i][i] = sqrt(log(prime(i + 1)));
         m_basis[i][m_num_cols - 1] = std::pow(N, c) * log(prime(i + 1));
     }
+}
+
+template <class T>
+T Lattice<T>::volume(const bool compute_gso)
+{
+    if (compute_gso)
+    {
+        computeGSO();
+    }
+
+    double vol = 1.0;
+    for (long i = 0; i < m_num_rows; ++i)
+    {
+        vol *= m_B[i];
+    }
+    return sqrt(vol);
+}
+
+template <class T>
+T Lattice<T>::potential(const bool compute_gso)
+{
+    if (compute_gso)
+    {
+        computeGSO();
+    }
+
+    double pot = 1.0;
+    for (long i = 0; i < m_num_rows; ++i)
+    {
+        pot *= pow(m_B[i], m_num_rows - i);
+    }
+    return pot;
 }
 
 template <class T>
@@ -479,8 +533,6 @@ void Lattice<T>::computeDualGSO()
             {
                 sum += m_mu[j][i + k] * m_dual_mu[i][i + k];
             }
-
-            // m_dual_mu[i][j] = -m_mu.row(j).segment(i, j - i).dot(hmu.row(i).segment(i, j - i));
         }
     }
 }
@@ -658,6 +710,11 @@ void Lattice<T>::sizeReduce(const long i, const long j)
 template <class T>
 std::vector<long> Lattice<T>::ENUM(const double R)
 {
+    if(R <= 0)
+    {
+        return std::vector<long>(m_num_rows, 0);
+    }
+
     long i, r[m_num_rows + 1];
     long last_nonzero = 0; // index of last non-zero elements
     double temp;

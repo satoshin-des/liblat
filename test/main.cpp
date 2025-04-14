@@ -17,6 +17,7 @@ int main()
     // lat.BKZ(20, 0.99);
     // lat.BKZ(30, 0.99);
     std::cout << lat;
+    std::cout << lat.volume(false) << std::endl;
 
     return 0;
 }

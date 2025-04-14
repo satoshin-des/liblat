@@ -147,6 +147,22 @@ public:
      */
     void setSchnorrLattice(const long N, const double c);
 
+     /**
+      * @brief 格子の体積を計算する
+      * 
+      * @param compute_gso 体積の計算前にGSO情報を更新するか
+      * @return T 格子の体積
+      */
+    T volume(const bool compute_gso = true);
+
+    /**
+     * @brief 格子基底のポテンシャル量を計算する
+     * 
+     * @param compute_gso ポテンシャル量の計算前にGSO情報を更新するか
+     * @return T 基底のポテンシャル量
+     */
+    T potential(const bool compute_gso = true);
+
     /**
      * @brief 係数ベクトルと基底の積
      *
