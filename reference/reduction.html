@@ -109,6 +109,8 @@
             </td>
         </tr>
     </table>
+    <h3>サンプル</h3>
+    <p>なし</p>
     <br>
     <hr style="color: white;">
     <br>
@@ -152,6 +154,8 @@
             </td>
         </tr>
     </table>
+    <h3>サンプル</h3>
+    <p>なし</p>
     <br>
     <hr style="color: white;">
     <br>
@@ -207,6 +211,8 @@
             </td>
         </tr>
     </table>
+    <h3>サンプル</h3>
+    <p><a href="../src/reduction.cpp">reduction.cpp</a>の<code>deepLLL</code>関数を参照のこと．</p>
     <br>
     <hr style="color: white;">
     <br>
@@ -266,6 +272,8 @@
             </td>
         </tr>
     </table>
+    <h3>サンプル</h3>
+    <p><a href="../src/reduction.cpp">reduction.cpp</a>の<code>dualDeepLLL</code>関数を参照のこと．</p>
     <br>
     <hr style="color: white;">
     <br>
@@ -308,6 +316,26 @@
             </td>
         </tr>
     </table>
+    <h3>サンプル</h3>
+<pre class="code_block"><code>#include &lt;iostream&gt;
+#include "lattice.h"
+        
+int main()
+{
+    // 80次正方行列を基底行列に持つ格子
+    Lattice lat(80, 80);
+        
+    // ランダムなSVP型格子に設定
+    lat.setRandom(80, 80, 1000, 9999);
+            
+    // サイズ基底簡約
+    lat.sizeReduce();
+
+    // 基底行列の表示
+    std::cout &lt;&lt; lat &lt;&lt; std::endl;
+        
+    return 0;
+}</code></pre>
     <br>
     <hr style="color: white;">
     <br>
@@ -366,6 +394,7 @@
             </td>
         </tr>
     </table>
+    <h3>サンプル</h3>
 <pre class="code_block"><code>#include &lt;iostream&gt;
 #include "lattice.h"
         
@@ -446,6 +475,7 @@ int main()
             </td>
         </tr>
     </table>
+    <h3>サンプル</h3>
 <pre class="code_block"><code>#include &lt;iostream&gt;
 #include "lattice.h"
         
@@ -513,6 +543,7 @@ int main()
             </td>
         </tr>
     </table>
+    <h3>サンプル</h3>
 <pre class="code_block"><code>#include &lt;iostream&gt;
 #include "lattice.h"
         
@@ -585,6 +616,7 @@ int main()
             </td>
         </tr>
     </table>
+    <h3>サンプル</h3>
 <pre class="code_block"><code>#include &lt;iostream&gt;
 #include "lattice.h"
         
@@ -659,6 +691,26 @@ int main()
             </td>
         </tr>
     </table>
+    <h3>サンプル</h3>
+<pre class="code_block"><code>#include &lt;iostream&gt;
+#include "lattice.h"
+        
+int main()
+{
+    // 80次正方行列を基底行列に持つ格子
+    Lattice lat(80, 80);
+        
+    // ランダムなSVP型格子に設定
+    lat.setRandom(80, 80, 1000, 9999);
+            
+    // HKZ基底簡約
+    lat.HKZ(0.99);
+
+    // 基底行列の表示
+    std::cout &lt;&lt; lat &lt;&lt; std::endl;
+        
+    return 0;
+}</code></pre>
     <br>
     <hr style="color: white;">
     <br>
@@ -714,6 +766,26 @@ int main()
             </td>
         </tr>
     </table>
+    <h3>サンプル</h3>
+<pre class="code_block"><code>#include &lt;iostream&gt;
+#include "lattice.h"
+        
+int main()
+{
+    // 80次正方行列を基底行列に持つ格子
+    Lattice lat(80, 80);
+        
+    // ランダムなSVP型格子に設定
+    lat.setRandom(80, 80, 1000, 9999);
+            
+    // DeepBKZ基底簡約
+    lat.deepBKZ(40, 0.99);
+
+    // 基底行列の表示
+    std::cout &lt;&lt; lat &lt;&lt; std::endl;
+        
+    return 0;
+}</code></pre>
     <br>
     <hr style="color: white;">
     <br>
@@ -767,6 +839,26 @@ int main()
             </td>
         </tr>
     </table>
+    <h3>サンプル</h3>
+<pre class="code_block"><code>#include &lt;iostream&gt;
+#include "lattice.h"
+        
+int main()
+{
+    // 80次正方行列を基底行列に持つ格子
+    Lattice lat(80, 80);
+        
+    // ランダムなSVP型格子に設定
+    lat.setRandom(80, 80, 1000, 9999);
+            
+    // PotBKZ基底簡約
+    lat.potBKZ(40, 0.99);
+
+    // 基底行列の表示
+    std::cout &lt;&lt; lat &lt;&lt; std::endl;
+        
+    return 0;
+}</code></pre>
     <br>
     <hr style="color: white;">
     <br>
@@ -815,6 +907,26 @@ int main()
             </td>
         </tr>
     </table>
+    <h3>サンプル</h3>
+<pre class="code_block"><code>#include &lt;iostream&gt;
+#include "lattice.h"
+        
+int main()
+{
+    // 80次正方行列を基底行列に持つ格子
+    Lattice lat(80, 80);
+        
+    // ランダムなSVP型格子に設定
+    lat.setRandom(80, 80, 1000, 9999);
+            
+    // 双対型DeepLLL基底簡約
+    lat.dualDeepLLL(0.99);
+
+    // 基底行列の表示
+    std::cout &lt;&lt; lat &lt;&lt; std::endl;
+        
+    return 0;
+}</code></pre>
     <br>
     <hr style="color: white;">
     <br>
@@ -862,6 +974,26 @@ int main()
             </td>
         </tr>
     </table>
+    <h3>サンプル</h3>
+<pre class="code_block"><code>#include &lt;iostream&gt;
+#include "lattice.h"
+        
+int main()
+{
+    // 80次正方行列を基底行列に持つ格子
+    Lattice lat(80, 80);
+        
+    // ランダムなSVP型格子に設定
+    lat.setRandom(80, 80, 1000, 9999);
+            
+    // 双対型PotLLL基底簡約
+    lat.dualPotLLL(0.99);
+
+    // 基底行列の表示
+    std::cout &lt;&lt; lat &lt;&lt; std::endl;
+        
+    return 0;
+}</code></pre>
     <br>
     <hr style="color: white;">
     <br>
@@ -912,6 +1044,26 @@ int main()
             </td>
         </tr>
     </table>
+    <h3>サンプル</h3>
+<pre class="code_block"><code>#include &lt;iostream&gt;
+#include "lattice.h"
+        
+int main()
+{
+    // 80次正方行列を基底行列に持つ格子
+    Lattice lat(80, 80);
+        
+    // ランダムなSVP型格子に設定
+    lat.setRandom(80, 80, 1000, 9999);
+            
+    // 双対型BKZ基底簡約
+    lat.BKZ(40, 0.99);
+
+    // 基底行列の表示
+    std::cout &lt;&lt; lat &lt;&lt; std::endl;
+        
+    return 0;
+}</code></pre>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.1/highlight.min.js"></script>
     <script>hljs.initHighlightingOnLoad();</script>
