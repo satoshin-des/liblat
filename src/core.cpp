@@ -7,7 +7,7 @@ template <class T>
 void print(const std::vector<T> v)
 {
     std::cout << "[";
-    for (T w : v)
+    for (const T w : v)
     {
         std::cout << w << ", ";
     }
@@ -16,6 +16,13 @@ void print(const std::vector<T> v)
 
 long prime(const long n)
 {
+    if(n <= 0)
+    {
+        char *err_s;
+        sprintf(err_s, "The %ld-th prime number cannot be defined.", n);
+        throw std::invalid_argument(err_s);
+    }
+    
     long S = 0, T, U;
     for(long k = 2, j, i; k <= floor(2 * n * log(n) + 2); ++k)
     {
@@ -57,7 +64,7 @@ V dot(const std::vector<U> x, const std::vector<V> y)
 template <class T>
 bool isZero(const std::vector<T> v)
 {
-    for (T w : v)
+    for (const T w : v)
     {
         if (w != 0)
         {

@@ -23,8 +23,8 @@ std::vector<long> Lattice<T>::ENUM_(const double R, const long start, const long
     {
         throw std::invalid_argument("The arguments start and end is invalid. @ function ENUM_.");
     }
-    
-    if(R <= 0)
+
+    if (R <= 0)
     {
         return std::vector<long>(m_num_rows, 0);
     }
@@ -109,6 +109,23 @@ std::vector<long> Lattice<T>::ENUM_(const double R, const long start, const long
 template <class T>
 std::vector<long> Lattice<T>::enumShortVec_(const bool compute_gso, const long start, const long end)
 {
+    if ((start < 0) || (start >= m_num_rows))
+    {
+        char err_s[ERR_STR_LEN];
+        sprintf(err_s, "%ld is out of index. @ function enumShortVec_.", start);
+        throw std::out_of_range(err_s);
+    }
+    if ((end < 0) || (end >= m_num_rows))
+    {
+        char err_s[ERR_STR_LEN];
+        sprintf(err_s, "%ld is out of index. @ function enumShortVec_.", end);
+        throw std::out_of_range(err_s);
+    }
+    if (start >= end)
+    {
+        throw std::invalid_argument("The arguments start and end is invalid. @ function enumShortVec_.");
+    }
+
     const long n = end - start;
     std::vector<long> enum_vector(n);
     std::vector<long> old_enum_vector(n);
@@ -136,6 +153,24 @@ std::vector<long> Lattice<T>::enumShortVec_(const bool compute_gso, const long s
 template <class T>
 std::vector<long> Lattice<T>::dualENUM_(const double R, const long start, const long end)
 {
+    if ((start < 0) || (start >= m_num_rows))
+    {
+        throw std::out_of_range("The argument start is out of index. @ function dualENUM_.");
+    }
+    if ((end < 0) || (end > m_num_rows))
+    {
+        throw std::out_of_range("The argument end is out of index. @ function dualENUM_.");
+    }
+    if (start >= end)
+    {
+        throw std::invalid_argument("The arguments start and end is invalid. @ function dualENUM_.");
+    }
+
+    if (R <= 0)
+    {
+        return std::vector<long>(m_num_rows, 0);
+    }
+
     long n = end - start;
     long i, r[n + 1];
     long last_nonzero = 0; // index of last non-zero elements
@@ -213,9 +248,22 @@ std::vector<long> Lattice<T>::dualENUM_(const double R, const long start, const 
     }
 }
 
-template<class T>
+template <class T>
 std::vector<long> Lattice<T>::dualEnumShortVec_(const bool compute_gso, const long start, const long end)
 {
+    if ((start < 0) || (start >= m_num_rows))
+    {
+        throw std::out_of_range("The argument start is out of index. @ function dualEnumShortVec_.");
+    }
+    if ((end < 0) || (end > m_num_rows))
+    {
+        throw std::out_of_range("The argument end is out of index. @ function dualEnumShortVec_.");
+    }
+    if (start >= end)
+    {
+        throw std::invalid_argument("The arguments start and end is invalid. @ function dualEnumShortVec_.");
+    }
+
     const long n = end - start;
     std::vector<long> enum_vector(n);
     std::vector<long> old_enum_vector(n);
@@ -232,7 +280,7 @@ std::vector<long> Lattice<T>::dualEnumShortVec_(const bool compute_gso, const lo
             old_enum_vector[i] = enum_vector[i];
         }
         enum_vector = dualENUM_(R, start, end);
-        
+
         if (isZero(enum_vector))
         {
             return old_enum_vector;
@@ -270,8 +318,7 @@ void Lattice<T>::setDims(const long n, const long m)
     {
         throw std::invalid_argument("The number of rows of basis must be positive integer.");
     }
-
-    if (n <= 0)
+    if (m <= 0)
     {
         throw std::invalid_argument("The number of columns of basis must be positive integer.");
     }
@@ -406,7 +453,7 @@ T Lattice<T>::volume(const bool compute_gso)
 }
 
 template <class T>
-T Lattice<T>::potential(const bool compute_gso)
+double Lattice<T>::potential(const bool compute_gso)
 {
     if (compute_gso)
     {
@@ -417,6 +464,22 @@ T Lattice<T>::potential(const bool compute_gso)
     for (long i = 0; i < m_num_rows; ++i)
     {
         pot *= pow(m_B[i], m_num_rows - i);
+    }
+    return pot;
+}
+
+template <class T>
+double Lattice<T>::logPotential(const bool compute_gso)
+{
+    if (compute_gso)
+    {
+        computeGSO();
+    }
+
+    double pot = 0.0;
+    for (long i = 0; i < m_num_rows; ++i)
+    {
+        pot += (m_num_rows - i) * log(m_B[i]);
     }
     return pot;
 }
@@ -476,7 +539,6 @@ void Lattice<T>::dualDeepInsertion(const long k, const long l)
         sprintf(err_s, "%ld is out of index. @ function dualDeepInsertion.", k);
         throw std::out_of_range(err_s);
     }
-
     if ((l < 0) || (l >= m_num_rows))
     {
         char err_s[ERR_STR_LEN];
@@ -710,7 +772,7 @@ void Lattice<T>::sizeReduce(const long i, const long j)
 template <class T>
 std::vector<long> Lattice<T>::ENUM(const double R)
 {
-    if(R <= 0)
+    if (R <= 0)
     {
         return std::vector<long>(m_num_rows, 0);
     }
@@ -819,6 +881,15 @@ std::vector<T> Lattice<T>::enumShortVec(const bool compute_gso)
 template <class T>
 std::vector<long> Lattice<T>::potENUM(const long start, const long n)
 {
+    if((start < 0) || (start >= m_num_rows))
+    {
+        throw std::out_of_range("The argument start is out of index. @ function potENUM.");
+    }
+    if((n <= 0) || (n > m_num_rows))
+    {
+        throw std::invalid_argument("The argument n is invalid. @ function potENUM.");
+    }
+
     long i, r[n + 1];
     double R = log(m_B[start]), P = 0, temp;
     std::vector<long> w(n, 0), v(n, 0);
@@ -924,6 +995,10 @@ std::vector<long> Lattice<T>::potENUM(const long start, const long n)
 template <class T>
 void Lattice<T>::insertToDualBasis(const std::vector<long> x, const long dim)
 {
+    if((dim <= 0) || (dim > m_num_rows))
+    {
+        throw std::invalid_argument("The augment dim is invalid. @ function insertToDualBasis.");
+    }
     if (x.size() != dim)
     {
         char err_s[ERR_STR_LEN];

@@ -132,36 +132,44 @@ public:
 
     /**
      * @brief Goldestei-Mayer格子に設定
-     * 
-     * @param p 
-     * @param q 
+     *
+     * @param p
+     * @param q
      */
     void setGoldesteinMayerLattice(const T p, const T q);
 
     /**
      * @brief Schnorr格子に設定
-     * 
-     * 
+     *
+     *
      * @param N 合成数
      * @param c 精度パラメータ
      */
     void setSchnorrLattice(const long N, const double c);
 
-     /**
-      * @brief 格子の体積を計算する
-      * 
-      * @param compute_gso 体積の計算前にGSO情報を更新するか
-      * @return T 格子の体積
-      */
+    /**
+     * @brief 格子の体積を計算する
+     *
+     * @param compute_gso 体積の計算前にGSO情報を更新するか
+     * @return T 格子の体積
+     */
     T volume(const bool compute_gso = true);
 
     /**
      * @brief 格子基底のポテンシャル量を計算する
-     * 
+     *
      * @param compute_gso ポテンシャル量の計算前にGSO情報を更新するか
      * @return T 基底のポテンシャル量
      */
-    T potential(const bool compute_gso = true);
+    double potential(const bool compute_gso = true);
+
+    /**
+     * @brief 格子基底のポテンシャル量の自然対数を計算する
+     * 
+     * @param compute_gso 計算前にGSO情報を更新するか
+     * @return T 格子基底のポテンシャル量の自然対数
+     */
+    double logPotential(const bool compute_gso = true);
 
     /**
      * @brief 係数ベクトルと基底の積
@@ -339,7 +347,7 @@ public:
 
     /**
      * @brief 双対型LLL簡約アルゴリズム
-     * 
+     *
      * @param delta 簡約パラメタ
      * @param compute_gso 双対型LLL前にGSO情報を更新するかどうか
      */
@@ -369,12 +377,21 @@ public:
 
     /**
      * @brief 双対型BKZ簡約アルゴリズム
-     * 
+     *
      * @param beta ブロックサイズ
      * @param delta 簡約パラメタ
      * @param compute_gso 双対型BKZ前にGSO情報を更新するか
      */
     void dualBKZ(const long beta, const double delta = 0.75, const bool compute_gso = true);
+
+    /**
+     * @brief 双対型DeepBKZ簡約アルゴリズム
+     * 
+     * @param beta ブロックサイズ
+     * @param delta 簡約パラメタ
+     * @param compute_gso 双対型DeepBKZ前にGSO情報を更新するか
+     */
+    void dualDeepBKZ(const long beta, const double delta = 0.75, const bool compute_gso = true);
 };
 
 #endif // !LATTICE_H_
