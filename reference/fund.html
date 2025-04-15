@@ -94,7 +94,7 @@
 int main()
 {
     // 3次正方行列を基底行列に持つ格子
-    Lattice lat(3, 3);
+    Lattice&lt;int&gt; lat(3, 3);
 
     std::cout &lt;&lt; lat.numRows() &lt;&lt; std::endl;
     std::cout &lt;&lt; lat.numCols() &lt;&lt; std::endl;
@@ -219,13 +219,129 @@ int main()
 int main()
 {
     // 3次正方行列を基底行列に持つ格子
-    Lattice lat(3, 3);
+    Lattice&lt;int&gt; lat(3, 3);
 
     // ランダムなSVP型格子に設定
     lat.setRandom(3, 3, 1000, 9999);
 
     // 基底行列の表示
     std::cout &lt;&lt; lat &lt;&lt; std::endl;
+
+    return 0;
+}</code></pre>
+    <br>
+    <hr style="color: white;">
+    <br>
+    <table>
+        <tr>
+            <th style="width:60px;"><a name="Volume">宣言</a></th>
+            <td style="color: yellow;"> T volume(const bool compute_gso = true);</td>
+        </tr>
+        <tr>
+            <th style="width:60px;">概略</th>
+            <td>
+                格子の体積（行列式）を計算する
+            </td>
+        </tr>
+        <tr>
+            <th style="width:60px;">引数</th>
+            <td>
+                <table>
+                    <tr>
+                        <td><code>compute_gso</code></td>
+                        <td>：</td>
+                        <td>体積を計算する前にGSO情報を更新するかどうか</td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <th style="width: 40px;">戻り値</th>
+            <td>格子の体積</td>
+        </tr>
+        <tr>
+            <th style="width:60px;">解説</th>
+            <td>
+                格子の体積（つまり行列式）を計算する関数です．尚，格子\(L\)の体積とは格子基底\(\lbrace\boldsymbol{b}_1,\ldots,\boldsymbol{b}_n\rbrace\)のGSOベクトル\(\boldsymbol{b}_1^\star,\ldots,\boldsymbol{b}_n^\star\)に対して
+                \[
+                \mathrm{vol}(L)=\prod_{i=1}^n \|\boldsymbol{b}_i^\star\|
+                \]
+                と表される量です．
+            </td>
+        </tr>
+    </table>
+    <h3>サンプル</h3>
+    <pre class="code_block"><code>#include &lt;iostream&gt;
+#include "lattice.h"
+
+int main()
+{
+    // 3次正方行列を基底行列に持つ格子
+    Lattice&lt;int&gt; lat(3, 3);
+
+    // ランダムなSVP型格子に設定
+    lat.setRandom(3, 3, 1000, 9999);
+
+    // 体積
+    std::cout &lt;&lt; lat.volume() &lt;&lt; std::endl;
+
+    return 0;
+}</code></pre>
+    <br>
+    <hr style="color: white;">
+    <br>
+    <table>
+        <tr>
+            <th style="width:60px;"><a name="Potential">宣言</a></th>
+            <td style="color: yellow;">double potential(const bool compute_gso = true);</td>
+        </tr>
+        <tr>
+            <th style="width:60px;">概略</th>
+            <td>
+                格子基底のポテンシャル量を計算する
+            </td>
+        </tr>
+        <tr>
+            <th style="width:60px;">引数</th>
+            <td>
+                <table>
+                    <tr>
+                        <td><code>compute_gso</code></td>
+                        <td>：</td>
+                        <td>ポテンシャル量を計算する前にGSO情報を更新するかどうか</td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <th style="width: 40px;">戻り値</th>
+            <td>格子基底のポテンシャル量</td>
+        </tr>
+        <tr>
+            <th style="width:60px;">解説</th>
+            <td>
+                格子基底のポテンシャル量（potential）を計算する関数です．尚，格子基底\(\boldsymbol{B}=\lbrace\boldsymbol{b}_1,\ldots,\boldsymbol{b}_n\rbrace\)のポテンシャル量とは，そのGSOベクトル\(\boldsymbol{b}_1^\star,\ldots,\boldsymbol{b}_n^\star\)に対して
+                \[
+                \mathrm{Pot}(\boldsymbol{B})=\prod_{i=1}^n \|\boldsymbol{b}_i^\star\|^{2(n-i+1)}
+                \]
+                と表される量です．
+            </td>
+        </tr>
+    </table>
+    <h3>サンプル</h3>
+    <pre class="code_block"><code>#include &lt;iostream&gt;
+#include "lattice.h"
+
+int main()
+{
+    // 3次正方行列を基底行列に持つ格子
+    Lattice&lt;int&gt; lat(3, 3);
+
+    // ランダムなSVP型格子に設定
+    lat.setRandom(3, 3, 1000, 9999);
+
+    // 体積
+    std::cout &lt;&lt; lat.potential() &lt;&lt; std::endl;
 
     return 0;
 }</code></pre>

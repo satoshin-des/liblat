@@ -87,7 +87,7 @@
 int main()
 {
     // 3次正方行列を基底行列に持つ格子
-    Lattice lat(3, 3);
+    Lattice&lt;int&gt; lat(3, 3);
 
     // Goldestein-Mayer格子に設定
     lat.setGoldesteinMayerLattice(2, 3);
@@ -163,7 +163,7 @@ int main()
 int main()
 {
     // 3次正方行列を基底行列に持つ格子
-    Lattice lat(3, 3);
+    Lattice&lt;int&gt; lat(3, 3);
 
     // Schnorr格子に設定
     lat.setSchnorrLattice(2, 3);

@@ -323,7 +323,7 @@
 int main()
 {
     // 80次正方行列を基底行列に持つ格子
-    Lattice lat(80, 80);
+    Lattice&lt;int&gt; lat(80, 80);
         
     // ランダムなSVP型格子に設定
     lat.setRandom(80, 80, 1000, 9999);
@@ -401,7 +401,7 @@ int main()
 int main()
 {
     // 40次正方行列を基底行列に持つ格子
-    Lattice lat(40, 40);
+    Lattice&lt;int&gt; lat(40, 40);
         
     // ランダムなSVP型格子に設定
     lat.setRandom(40, 40, 1000, 9999);
@@ -482,7 +482,7 @@ int main()
 int main()
 {
     // 40次正方行列を基底行列に持つ格子
-    Lattice lat(40, 40);
+    Lattice&lt;int&gt; lat(40, 40);
         
     // ランダムなSVP型格子に設定
     lat.setRandom(40, 40, 1000, 9999);
@@ -550,7 +550,7 @@ int main()
 int main()
 {
     // 40次正方行列を基底行列に持つ格子
-    Lattice lat(40, 40);
+    Lattice&lt;int&gt; lat(40, 40);
         
     // ランダムなSVP型格子に設定
     lat.setRandom(40, 40, 1000, 9999);
@@ -623,7 +623,7 @@ int main()
 int main()
 {
     // 80次正方行列を基底行列に持つ格子
-    Lattice lat(80, 80);
+    Lattice&lt;int&gt; lat(80, 80);
         
     // ランダムなSVP型格子に設定
     lat.setRandom(80, 80, 1000, 9999);
@@ -698,7 +698,7 @@ int main()
 int main()
 {
     // 80次正方行列を基底行列に持つ格子
-    Lattice lat(80, 80);
+    Lattice&lt;int&gt; lat(80, 80);
         
     // ランダムなSVP型格子に設定
     lat.setRandom(80, 80, 1000, 9999);
@@ -773,7 +773,7 @@ int main()
 int main()
 {
     // 80次正方行列を基底行列に持つ格子
-    Lattice lat(80, 80);
+    Lattice&lt;int&gt; lat(80, 80);
         
     // ランダムなSVP型格子に設定
     lat.setRandom(80, 80, 1000, 9999);
@@ -846,7 +846,7 @@ int main()
 int main()
 {
     // 80次正方行列を基底行列に持つ格子
-    Lattice lat(80, 80);
+    Lattice&lt;int&gt; lat(80, 80);
         
     // ランダムなSVP型格子に設定
     lat.setRandom(80, 80, 1000, 9999);
@@ -914,7 +914,7 @@ int main()
 int main()
 {
     // 80次正方行列を基底行列に持つ格子
-    Lattice lat(80, 80);
+    Lattice&lt;int&gt; lat(80, 80);
         
     // ランダムなSVP型格子に設定
     lat.setRandom(80, 80, 1000, 9999);
@@ -981,7 +981,7 @@ int main()
 int main()
 {
     // 80次正方行列を基底行列に持つ格子
-    Lattice lat(80, 80);
+    Lattice&lt;int&gt; lat(80, 80);
         
     // ランダムなSVP型格子に設定
     lat.setRandom(80, 80, 1000, 9999);
@@ -1051,17 +1051,87 @@ int main()
 int main()
 {
     // 80次正方行列を基底行列に持つ格子
-    Lattice lat(80, 80);
+    Lattice&lt;int&gt; lat(80, 80);
         
     // ランダムなSVP型格子に設定
     lat.setRandom(80, 80, 1000, 9999);
             
     // 双対型BKZ基底簡約
-    lat.BKZ(40, 0.99);
+    lat.dualBKZ(40, 0.99);
 
     // 基底行列の表示
     std::cout &lt;&lt; lat &lt;&lt; std::endl;
         
+    return 0;
+}</code></pre>
+<br>
+<hr style="color: white;">
+<br>
+<table>
+    <tr>
+        <th style="width:60px;"><a name="DualDeepBKZ">宣言</a></th>
+        <td style="color: yellow;">void dualDeepBKZ(const long beta, const double delta = 0.75, const bool compute_gso = true);</td>
+    </tr>
+    <tr>
+        <th style="width:60px;">概略</th>
+        <td>
+            双対型DeepBKZ基底簡約
+            <br>
+            <a href="https://link.springer.com/chapter/10.1007/978-3-662-49890-3_31">D. Micciancio and M. Walter. Practical, predictable lattice basis reduction.(2016)</a>
+        </td>
+    </tr>
+    <tr>
+        <th style="width:60px;">引数</th>
+        <td>
+            <table>
+                <tr>
+                    <td><code>beta</code></td>
+                    <td>：</td>
+                    <td>ブロックサイズ（2以上格子次元以下）</td>
+                </tr>
+                <tr>
+                    <td><code>delta</code></td>
+                    <td>：</td>
+                    <td>簡約パラメータ（0.75以上1以下）</td>
+                </tr>
+                <tr>
+                    <td><code>compute_gso</code></td>
+                    <td>：</td>
+                    <td>簡約する前にGSO情報を更新するか．<br>事前にGSO情報を計算していない場合はtrueにする必要がある</td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+    <tr>
+        <th style="width: 40px;">戻り値</th>
+        <td>なし</td>
+    </tr>
+    <tr>
+        <th style="width:60px;">解説</th>
+        <td>
+            格子基底\(\lbrace\boldsymbol{b}_1, \ldots,
+            \boldsymbol{b}_n\rbrace\)をブロックサイズ<code>beta</code>と簡約パラメータ<code>delta</code>に関して双対型BKZ簡約する関数です．
+        </td>
+    </tr>
+</table>
+<h3>サンプル</h3>
+<pre class="code_block"><code>#include &lt;iostream&gt;
+#include "lattice.h"
+    
+int main()
+{
+    // 80次正方行列を基底行列に持つ格子
+    Lattice&lt;int&gt; lat(80, 80);
+    
+    // ランダムなSVP型格子に設定
+    lat.setRandom(80, 80, 1000, 9999);
+        
+    // 双対型DeepBKZ基底簡約
+    lat.dualDeepBKZ(40, 0.99);
+
+    // 基底行列の表示
+    std::cout &lt;&lt; lat &lt;&lt; std::endl;
+    
     return 0;
 }</code></pre>
 
