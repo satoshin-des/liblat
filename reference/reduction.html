@@ -1127,6 +1127,68 @@ int main()
 <br>
 <hr style="color: white;">
 <br>
+<table>
+    <tr>
+        <th style="width:60px;"><a name="ENUM">宣言</a></th>
+        <td style="color: yellow;">std::vector<long> Lattice<T>::ENUM(double R);</td>
+    </tr>
+    <tr>
+        <th style="width:60px;">概略</th>
+        <td>
+            格子上の最短ベクトルの数え上げ
+            <br>
+            <a href="https://link.springer.com/chapter/10.1007/978-3-642-13190-5_13">N. Gama and P. Q. Nguyen and O. Regev(2010)</a>
+        </td>
+    </tr>
+    <tr>
+        <th style="width:60px;">引数</th>
+        <td>
+            <table>
+                <tr>
+                    <td><code>R</code></td>
+                    <td>：</td>
+                    <td>探索半径</td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+    <tr>
+        <th style="width: 40px;">戻り値</th>
+        <td>なし</td>
+    </tr>
+    <tr>
+        <th style="width:60px;">解説</th>
+        <td>
+            探索半径\(R>0\)以下の格子ベクトルを数え上げ，格子\(L\)上の最短ベクトルを求めますぅ．ただし，\(R>0\)以下の格子ベクトルが存在しないときは零ベクトルを返します．<br>なお，``ENUM``が返すのは，正確には格子ベクトルではなく，格子ベクトルの係数ベクトルであり，格子ベクトルを知りたい場合は<a href="fund.html#mulVecBasis">mulVecBasis</a>関数を使う必要があります．
+        </td>
+    </tr>
+</table>
+<h3>サンプル</h3>
+<pre class="code_block"><code>#include &lt;iostream&gt;
+#include "lattice.h"
+    
+int main()
+{
+    // 80次正方行列を基底行列に持つ格子
+    Lattice&lt;int&gt; lat(80, 80);
+    
+    // ランダムなSVP型格子に設定
+    lat.setRandom(80, 80, 1000, 9999);
+    
+    // GSOを計算
+    lat.computeGSO();
+
+    // 最短ベクトルの係数ベクトル
+    std::vector<long> v = lat.ENUM(100);
+
+    // 最短ベクトルの表示
+    std::cout &lt;&lt; lat.mulVecBasis(v) &lt;&lt; std::endl;
+    
+    return 0;
+}</code></pre>
+<br>
+<hr style="color: white;">
+<br>
 <p><a href="index.html">戻る</a></p>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.1/highlight.min.js"></script>

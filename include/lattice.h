@@ -31,7 +31,7 @@ class Lattice
 private:
     long m_num_rows = 0;                                                   // 格子の次元
     long m_num_cols = 0;                                                   // 格子ベクトルのサイズ
-    long m_max_loop = 10;                                                  // BKZの最大ループ数
+    long m_max_loop = 99999;                                                  // BKZの最大ループ数
     std::vector<std::vector<T>> m_basis;                                   // 格子基底
     std::vector<double> m_B;                                               // GSOベクトルの二乗ノルム
     std::vector<double> m_dual_B;                                          // 双対基底のGSOベクトルの二乗ノルム
@@ -50,13 +50,9 @@ private:
      * @param end
      * @return std::vector<long>
      */
-    std::vector<long> ENUM_(const double R, const long start, const long end);
+    bool ENUM_(std::vector<long>& coeff_vector, double R, const long start, const long end);
 
-    std::vector<long> enumShortVec_(const bool compute_gso, const long start, const long end);
-
-    std::vector<long> dualENUM_(const double R, const long start, const long end);
-
-    std::vector<long> dualEnumShortVec_(const bool compute_gso, const long start, const long end);
+    bool dualENUM_(std::vector<long>& coeff_vector, double R, const long start, const long end);
 
 public:
     /**
@@ -115,6 +111,10 @@ public:
     /// @param n 格子次元
     /// @param m 格子ベクトルのサイズ
     void setDims(const long n, const long m);
+
+    /// @brief 格子基底の第一基底ベクトルのノルムを返す関数
+    /// @return 格子基底の第一基底ベクトルのノルム
+    long double b1Norm();
 
     /// @brief ランダムなSVP-challenge型格子基底の生成
     /// @param n 格子次元
@@ -250,8 +250,11 @@ public:
      *
      * @param delta 簡約パラメタ
      * @param compute_gso LLL前にGSOを計算するか
+     * @param start_ LLL簡約する基底の開始インデックス，
+     * @param end_ LLL簡約する基底の終了インデックス
+     * @param h LLLの出発インデックス
      */
-    void LLL(const double delta = 0.75, const bool compute_gso = true, const long start_ = 0, const long end_ = -1);
+    void LLL(const double delta = 0.75, const bool compute_gso = true, const long start_ = 0, const long end_ = -1, long h = 0);
 
     /**
      * @brief DeepLLL簡約
@@ -260,8 +263,11 @@ public:
      *
      * @param delta 簡約パラメタ
      * @param compute_gso DeepLLL前にGSOを計算するか
+     * @param start_ DeepLLL簡約する基底の開始インデックス，
+     * @param end_ DeepLLL簡約する基底の終了インデックス
+     * @param h DeepLLLの出発インデックス
      */
-    void deepLLL(const double delta = 0.75, const bool compute_gso = true, const long start_ = 0, const long end_ = -1);
+    void deepLLL(const double delta = 0.75, const bool compute_gso = true, const long start_ = 0, const long end_ = -1, const long h = 0);
 
     /**
      * @brief PotLLL簡約
@@ -274,22 +280,14 @@ public:
     void potLLL(const double delta = 0.75, const bool compute_gso = true);
 
     /**
-     * @brief 二乗ノルムがR以下であるような格子ベクトルの数え上げ
+     * @brief 最短ベクトルの数え上げ
      *
      * N. Gama, P. Q. Nguyen, O. Regev. Lattice enumeration using extreme pruning.(2010)
      *
      * @param R 探索半径
      * @return std::vector<long> 格子ベクトル
      */
-    std::vector<long> ENUM(const double R);
-
-    /**
-     * @brief 格子上の最短ベクトルの数え上げ
-     *
-     * @param compute_gso 数え上げ前にGSOを計算するかどうか
-     * @return std::vector<T> 最短ベクトル
-     */
-    std::vector<T> enumShortVec(const bool compute_gso = true);
+    std::vector<long> ENUM(double R);
 
     /**
      * @brief BKZ簡約アルゴリズム
