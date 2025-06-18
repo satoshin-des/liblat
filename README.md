@@ -19,14 +19,8 @@ $ cd liblat
 Next, use ``make`` command to compile the source codes:
 
 ```shell
+$ mkdir build
+$ cd build
+$ cmake ..
 $ make
-cd src && make all && cd ..
-make[1]: Entering directory 'hoge/liblat/src'
-g++ -fPIC -c -I../include lattice.cpp core.cpp reduction.cpp
-g++ -shared *.o -o ../lib/liblat.so
-make[1]: Leaving directory 'hoge/liblat/src'
-cd test && make all && cd ..
-make[1]: Entering directory 'hoget/liblat/test'
-g++ main.cpp -L../lib -llat -I../include -Xlinker -rpath -Xlinker ../lib
-make[1]: Leaving directory 'hoge/liblat/test'
 ```

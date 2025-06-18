@@ -174,7 +174,7 @@ public:
     /**
      * @brief 係数ベクトルと基底の積
      *
-     * @param v
+     * @param v 係数ベクトル
      * @return std::vector<T>
      */
     std::vector<T> mulVecBasis(const std::vector<long> v);
