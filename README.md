@@ -16,11 +16,18 @@ Use ``cd`` command to change the directories to liblat:
 $ cd liblat
 ```
 
-Next, use ``make`` command to compile the source codes:
+Next, use ``cmake`` to compile the source codes:
 
 ```shell
 $ mkdir build
 $ cd build
-$ cmake ..
-$ make
+build$ cmake ..
+build$ make
+```
+
+If you want to compile and run test.cpp, use ``ctest``
+
+```shell
+build$ ctest
+build$ ./test_exec
 ```
