@@ -1,12 +1,14 @@
 #include "lattice.h"
 
-#include <iostream>
-#include <vector>
-#include <cstdlib>
-#include <sstream>
-#include <cmath>
-
 #include "core.h"
+
+#include <stdio.h>
+#include <math.h>
+
+#include <stdexcept>
+#include <vector>
+
+#include <cmath>
 
 template <class T>
 void Lattice<T>::setMaxLoop(const long max_loop)
