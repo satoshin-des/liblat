@@ -16,8 +16,6 @@
 
 #include <iostream>
 #include <vector>
-#include <cstdlib>
-#include <sstream>
 #include <random>
 
 #include "core.h"
