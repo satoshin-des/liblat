@@ -1,12 +1,11 @@
 #include "lattice.h"
 
-#include <iostream>
-#include <vector>
-#include <cstdlib>
-#include <sstream>
-#include <cmath>
-
 #include "core.h"
+
+#include <math.h>
+
+#include <stdexcept>
+#include <vector>
 
 template <class T>
 bool Lattice<T>::ENUM_(std::vector<long>& coeff_vector, double R, const long start, const long end)
