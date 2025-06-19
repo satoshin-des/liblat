@@ -1,7 +1,6 @@
 #ifndef CORE_H_
 #define CORE_H_
 
-#include <iostream>
 #include <vector>
 
 #define ERR_STR_LEN 100
