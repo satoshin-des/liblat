@@ -2,6 +2,14 @@
 
 #include "core.h"
 
+#include <stdio.h>
+
+#include <algorithm>
+#include <exception>
+#include <iostream>
+#include <stdexcept>
+#include <vector>
+
 template<class T>
 void Lattice<T>::dualBKZ(const long beta, const double delta, const bool compute_gso)
 {
