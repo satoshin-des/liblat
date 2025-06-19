@@ -2,6 +2,10 @@
 
 #include "core.h"
 
+#include <exception>
+#include <iostream>
+#include <stdexcept>
+
 template <class T>
 void Lattice<T>::LLL(const double delta, const bool compute_gso, long start_, long end_, long h)
 {
