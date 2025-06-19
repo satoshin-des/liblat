@@ -1,6 +1,5 @@
 #include <iostream>
 
-#include "core.h"
 #include "lattice.h"
 
 int main()

@@ -20,6 +20,8 @@
 #include <sstream>
 #include <random>
 
+#include "core.h"
+
 /**
  * @brief 格子のクラス
  *
