@@ -2,6 +2,11 @@
 
 #include "core.h"
 
+#include <algorithm>
+#include <exception>
+#include <iostream>
+#include <stdexcept>
+
 template <class T>
 void Lattice<T>::deepLLL(const double delta, const bool compute_gso, long start_, long end_, const long h)
 {
