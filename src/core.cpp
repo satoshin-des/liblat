@@ -1,7 +1,11 @@
 #include "core.h"
 
+#include <math.h>
+#include <stdio.h>
+
 #include <iostream>
-#include <cmath>
+#include <stdexcept>
+#include <vector>
 
 template <class T>
 void print(const std::vector<T> v)
