@@ -2,6 +2,10 @@
 
 #include "core.h"
 
+#include <exception>
+#include <iostream>
+#include <stdexcept>
+
 template <class T>
 void Lattice<T>::potLLL(const double delta, const bool compute_gso)
 {

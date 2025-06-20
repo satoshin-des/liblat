@@ -2,6 +2,11 @@
 
 #include "core.h"
 
+#include <math.h>
+
+#include <stdexcept>
+#include <vector>
+
 template <class T>
 bool Lattice<T>::dualENUM_(std::vector<long>& coeff_vector, double R, const long start, const long end)
 {

@@ -2,6 +2,13 @@
 
 #include "core.h"
 
+#include <math.h>
+
+#include <exception>
+#include <iostream>
+#include <stdexcept>
+#include <vector>
+
 template <class T>
 void Lattice<T>::dualLLL(const double delta, const bool compute_gso)
 {

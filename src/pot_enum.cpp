@@ -2,6 +2,12 @@
 
 #include "core.h"
 
+#include <math.h>
+
+#include <algorithm>
+#include <stdexcept>
+#include <vector>
+
 template <class T>
 std::vector<long> Lattice<T>::potENUM(const long start, const long n)
 {

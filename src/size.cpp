@@ -2,6 +2,8 @@
 
 #include "core.h"
 
+#include <math.h>
+
 template <class T>
 void Lattice<T>::sizeReduce(const long i, const long j)
 {
