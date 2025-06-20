@@ -22,7 +22,7 @@ long prime(const long n)
 {
     if(n <= 0)
     {
-        char *err_s;
+        char err_s[ERR_STR_LEN];
         sprintf(err_s, "The %ld-th prime number cannot be defined.", n);
         throw std::invalid_argument(err_s);
     }
@@ -52,7 +52,7 @@ V dot(const std::vector<U> x, const std::vector<V> y)
 {
     if (x.size() != y.size())
     {
-        char *err_s;
+        char err_s[ERR_STR_LEN];
         sprintf(err_s, "An inner product of %ld-th vector and %ld-th vector cannot be defined.", x.size(), y.size());
         throw std::invalid_argument(err_s);
     }
