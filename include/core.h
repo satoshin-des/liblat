@@ -4,7 +4,7 @@
 #include <iostream>
 #include <vector>
 
-#define ERR_STR_LEN 100
+#define ERR_STR_LEN 200
 
 /**
  * @brief ベクトルの表示
