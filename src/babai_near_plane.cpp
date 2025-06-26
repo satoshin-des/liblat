@@ -4,7 +4,6 @@
 
 #include <stdio.h>
 
-#include <algorithm>
 #include <exception>
 #include <iostream>
 #include <stdexcept>
