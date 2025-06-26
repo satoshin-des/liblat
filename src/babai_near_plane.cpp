@@ -4,7 +4,6 @@
 
 #include <stdio.h>
 
-#include <exception>
 #include <iostream>
 #include <stdexcept>
 #include <vector>
@@ -12,6 +11,13 @@
 template <class T>
 std::vector<T> Lattice<T>::babaiNearPlane(const std::vector<double> target)
 {
+    if (target.size() != m_num_cols)
+    {
+        char err_s[ERR_STR_LEN];
+        sprintf(err_s, "The size of a target vector %ld is not equal to the size of the lattice vector %ld. @ function babaiNearPlane.", target.size(), m_num_cols);
+        throw std::invalid_argument(err_s);
+    }
+
     T c;
     std::vector<T> a(m_num_cols);
     std::vector<double> t = target;
