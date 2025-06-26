@@ -390,6 +390,14 @@ public:
      * @param compute_gso 双対型DeepBKZ前にGSO情報を更新するか
      */
     void dualDeepBKZ(const long beta, const double delta = 0.75, const bool compute_gso = true);
+
+    /**
+     * @brief Babaiの最近平面アルゴリズム
+     * 
+     * @param target ターゲットベクトル
+     * @return std::vector<T> ターゲットベクトルに近い格子ベクトル
+     */
+    std::vector<T> babaiNearPlane(const std::vector<double> target);
 };
 
 #endif // !LATTICE_H_
