@@ -31,7 +31,7 @@ class Lattice
 private:
     long m_num_rows = 0;                                                   // 格子の次元
     long m_num_cols = 0;                                                   // 格子ベクトルのサイズ
-    long m_max_loop = 99999;                                                  // BKZの最大ループ数
+    long m_max_loop = 99999;                                               // BKZの最大ループ数
     std::vector<std::vector<T>> m_basis;                                   // 格子基底
     std::vector<double> m_B;                                               // GSOベクトルの二乗ノルム
     std::vector<double> m_dual_B;                                          // 双対基底のGSOベクトルの二乗ノルム
@@ -43,16 +43,28 @@ private:
     std::uniform_real_distribution<> m_get_rand_uni;                       // 一様ランダムに生成
 
     /**
-     * @brief 局所射影ブロック格子上のノルムがR未満である格子ベクトルの数え上げ
+     * @brief 局所射影ブロック格子上の最短な非零ベクトルの数え上げ
      *
+     * @param coeff_vector 最短ベクトルの係数ベクトル
      * @param R 数え上げ半径
      * @param start
      * @param end
-     * @return std::vector<long>
+     * @return true 非零な最短ベクトルが見つかった場合
+     * @return false 非零な最短ベクトルが見つからなかった場合
      */
-    bool ENUM_(std::vector<long>& coeff_vector, double R, const long start, const long end);
+    bool ENUM_(std::vector<long> &coeff_vector, double R, const long start, const long end);
 
-    bool dualENUM_(std::vector<long>& coeff_vector, double R, const long start, const long end);
+    /**
+     * @brief 双対型局所射影ブロック格子上の最短な非零ベクトルの数え上げ
+     *
+     * @param coeff_vector 最短ベクトルの係数ベクトル
+     * @param R 数え上げ半径
+     * @param start
+     * @param end
+     * @return true 非零な最短ベクトルが見つかった場合
+     * @return false 非零な最短ベクトルが見つからなかった場合
+     */
+    bool dualENUM_(std::vector<long> &coeff_vector, double R, const long start, const long end);
 
 public:
     /**
@@ -165,7 +177,7 @@ public:
 
     /**
      * @brief 格子基底のポテンシャル量の自然対数を計算する
-     * 
+     *
      * @param compute_gso 計算前にGSO情報を更新するか
      * @return T 格子基底のポテンシャル量の自然対数
      */
@@ -371,6 +383,12 @@ public:
      */
     void dualPotLLL(const double delta = 0.75, const bool compute_gso = true);
 
+    /**
+     * @brief 双対基底への基底の挿入
+     * 
+     * @param x 挿入するベクトルの係数ベクトル
+     * @param dim 
+     */
     void insertToDualBasis(const std::vector<long> x, const long dim);
 
     /**
@@ -384,7 +402,7 @@ public:
 
     /**
      * @brief 双対型DeepBKZ簡約アルゴリズム
-     * 
+     *
      * @param beta ブロックサイズ
      * @param delta 簡約パラメタ
      * @param compute_gso 双対型DeepBKZ前にGSO情報を更新するか
@@ -393,9 +411,9 @@ public:
 
     /**
      * @brief Babaiの最近平面アルゴリズム
-     * 
-     * @param target ターゲットベクトル
-     * @return std::vector<T> ターゲットベクトルに近い格子ベクトル
+     *
+     * @param target 目標ベクトル
+     * @return std::vector<T> 目標ベクトルに近い格子ベクトル
      */
     std::vector<T> babaiNearPlane(const std::vector<double> target);
 };
