@@ -18,23 +18,34 @@ void print(const std::vector<T> v)
     std::cout << "\b\b" << "]\n";
 }
 
+template <class T>
+void print(const std::vector<std::vector<T>> mat)
+{
+    std::cout << "[" << std::endl;
+    for (const std::vector<T> v : mat)
+    {
+        print(v);
+    }
+    std::cout << "\n]\n";
+}
+
 long prime(const long n)
 {
-    if(n <= 0)
+    if (n <= 0)
     {
         char err_s[ERR_STR_LEN];
         sprintf(err_s, "The %ld-th prime number cannot be defined.", n);
         throw std::invalid_argument(err_s);
     }
-    
+
     long S = 0, T, U;
-    for(long k = 2, j, i; k <= floor(2 * n * log(n) + 2); ++k)
+    for (long k = 2, j, i; k <= floor(2 * n * log(n) + 2); ++k)
     {
         T = 0;
-        for(j = 2; j <= k; ++j)
+        for (j = 2; j <= k; ++j)
         {
             U = 0;
-            for(i = 1; i <= j; ++i)
+            for (i = 1; i <= j; ++i)
             {
                 U += floor(static_cast<double>(j) / i) - floor(static_cast<double>(j - 1) / i);
             }
@@ -42,10 +53,9 @@ long prime(const long n)
         }
         S += 1 - floor(static_cast<double>(T) / n);
     }
-    
+
     return S + 2;
 }
-
 
 template <class U, class V>
 V dot(const std::vector<U> x, const std::vector<V> y)
@@ -80,6 +90,9 @@ bool isZero(const std::vector<T> v)
 
 template void print<int>(const std::vector<int>);
 template void print<long>(const std::vector<long>);
+template void print<int>(const std::vector<std::vector<int>>);
+template void print<long>(const std::vector<std::vector<long>>);
+template void print<double>(const std::vector<std::vector<double>>);
 template int dot<int, int>(std::vector<int>, std::vector<int>);
 template double dot<int, double>(std::vector<int>, std::vector<double>);
 template double dot<long, double>(std::vector<long>, std::vector<double>);

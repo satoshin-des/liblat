@@ -15,6 +15,15 @@ template<class T>
 void print(const std::vector<T> v);
 
 /**
+ * @brief 行列の表示
+ * 
+ * @tparam T 
+ * @param mat 行列
+ */
+template<class T>
+void print(const std::vector<std::vector<T>> mat);
+
+/**
  * @brief 素数生成
  * 
  * @param n 正整数
