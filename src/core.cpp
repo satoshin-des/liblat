@@ -21,12 +21,12 @@ void print(const std::vector<T> v)
 template <class T>
 void print(const std::vector<std::vector<T>> mat)
 {
-    std::cout << "[" << std::endl;
+    puts("[");
     for (const std::vector<T> v : mat)
     {
         print(v);
     }
-    std::cout << "\n]\n";
+    puts("]");
 }
 
 long prime(const long n)
