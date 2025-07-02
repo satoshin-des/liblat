@@ -7,24 +7,24 @@
 template <class T>
 void Lattice<T>::choleskyFact()
 {
-    for (long k = 0, j, h; k < m_num_rows; ++k)
+    for (long i = 0, j, k; i < m_num_rows; ++i)
     {
-        for (j = 0; j <= k; ++j)
+        for (j = 0; j < i; ++j)
         {
-            m_r[k][j] = dot(m_basis[k], m_basis[j]);
-            for (h = 0; h < j; ++h)
+            m_r[i][j] = dot(m_basis[i], m_basis[j]);
+            for (k = 0; k < j; ++k)
             {
-                m_r[k][j] -= m_r[k][h] * m_mu[j][h];
+                m_r[i][j] -= m_r[i][k] * m_mu[j][k];
             }
-            m_mu[k][j] = m_r[k][j] / m_r[j][j];
+            m_mu[i][j] = m_r[i][j] / m_r[j][j];
+            m_s[0] = dot(m_basis[i], m_basis[i]);
+            for (k = 1; k <= i; ++k)
+            {
+                m_s[k] = m_s[k - 1] - m_mu[i][k - 1] * m_r[i][k - 1];
+            }
+            m_r[i][i] = m_s[i];
         }
     }
-    m_s[0] = dot(m_basis[m_num_rows - 1], m_basis[m_num_rows - 1]);
-    for (long j = 0; j < m_num_rows; ++j)
-    {
-        m_s[j + 1] = m_s[j] - m_mu[m_num_rows - 1][j] * m_r[m_num_rows - 1][j];
-    }
-    m_r[m_num_rows - 1][m_num_rows - 1] = m_s[m_num_rows];
 }
 
 template class Lattice<int>;
