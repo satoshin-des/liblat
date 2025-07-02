@@ -19,13 +19,15 @@ int main()
     print(v);
 
     // lattice basis reduction
+    // lat.L2(0.99, 0.51);
     lat.LLL(0.99);
     // lat.dualBKZ(20, 0.99);
-    //lat.deepBKZ(30, 0.99);
+    // lat.deepBKZ(30, 0.99);
     // lat.dualDeepBKZ(30, 0.99);
     // lat.BKZ(20, 0.99);
     // lat.BKZ(6, 0.99);
     std::cout << lat.b1Norm() << std::endl;
+    std::cout << lat;
     // std::cout << lat.volume(false) << std::endl;
 
     return 0;
