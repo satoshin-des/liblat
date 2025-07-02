@@ -11,6 +11,20 @@
 #include <cmath>
 
 template <class T>
+Lattice<T>::Lattice(const long n, const long m)
+    : m_num_rows(n),
+      m_num_cols(m),
+      m_basis(std::vector<std::vector<T>>(n, std::vector<T>(m, 0))),
+      m_B(std::vector<double>(n, 0)),
+      m_s(std::vector<double>(n, 0)),
+      m_b_star(std::vector<std::vector<double>>(n, std::vector<double>(m, 0))),
+      m_r(std::vector<std::vector<double>>(n, std::vector<double>(n, 0))),
+      m_mu(std::vector<std::vector<double>>(n, std::vector<double>(n, 0))),
+      m_dual_B(std::vector<double>(n, 0)),
+      m_dual_b_star(std::vector<std::vector<double>>(n, std::vector<double>(m, 0))),
+      m_dual_mu(std::vector<std::vector<double>>(n, std::vector<double>(n, 0))){};
+
+template <class T>
 void Lattice<T>::setMaxLoop(const long max_loop)
 {
     if (max_loop <= 0)
@@ -60,11 +74,17 @@ template <class T>
 long double Lattice<T>::b1Norm()
 {
     long double s = 0;
-    for(long i = 0; i < m_num_cols; ++i)
+    for (long i = 0; i < m_num_cols; ++i)
     {
         s += m_basis[0][i] * m_basis[0][i];
     }
     return sqrt(s);
+}
+
+template <class T>
+bool Lattice<T>::isBasis()
+{
+    return volume(true) > 1e-6;
 }
 
 template <class T>
@@ -486,7 +506,7 @@ void Lattice<T>::updateDualDeepInsGSO(const long k, const long l, const std::vec
 template <class T>
 void Lattice<T>::insertToDualBasis(const std::vector<long> x, const long dim)
 {
-    if((dim <= 0) || (dim > m_num_rows))
+    if ((dim <= 0) || (dim > m_num_rows))
     {
         throw std::invalid_argument("The augment dim is invalid. @ function insertToDualBasis.");
     }
