@@ -209,7 +209,8 @@
     <table>
         <tr>
             <th style="width:60px;"><a name="updateDualDeep">宣言</a></th>
-            <td style="color: yellow;">void updateDualDeepInsGSO(const long k, const long l, const std::vector<double> dual_D);</td>
+            <td style="color: yellow;">void updateDualDeepInsGSO(const long k, const long l, const std::vector<double>
+                    dual_D);</td>
         </tr>
         <tr>
             <th style="width:60px;">概略</th>
@@ -307,7 +308,7 @@
         </tr>
     </table>
     <h3>サンプル</h3>
-<pre class="code_block"><code>#include &lt;iostream&gt;
+    <pre class="code_block"><code>#include &lt;iostream&gt;
 #include "lattice.h"
         
 int main()
@@ -340,7 +341,8 @@ int main()
             <td>
                 LLL基底簡約
                 <br>
-                <a href="https://link.springer.com/article/10.1007/BF01457454">A. K. Lenstra, H. W. Lenstra and L. Lovasz.
+                <a href="https://link.springer.com/article/10.1007/BF01457454">A. K. Lenstra, H. W. Lenstra and L.
+                    Lovasz.
                     Factoring polynomials with rational coefficients.(1982)</a>
             </td>
         </tr>
@@ -385,7 +387,7 @@ int main()
         </tr>
     </table>
     <h3>サンプル</h3>
-<pre class="code_block"><code>#include &lt;iostream&gt;
+    <pre class="code_block"><code>#include &lt;iostream&gt;
 #include "lattice.h"
         
 int main()
@@ -398,6 +400,75 @@ int main()
             
     // LLL基底簡約
     lat.LLL(0.99);
+
+    // 基底行列の表示
+    std::cout &lt;&lt; lat &lt;&lt; std::endl;
+        
+    return 0;
+}</code></pre>
+    <br>
+    <hr style="color: white;">
+    <br>
+    <table>
+        <tr>
+            <th style="width:60px;"><a name="L2">宣言</a></th>
+            <td style="color: yellow;">void L2(const double delta = 0.75, const double eta = 0.51);</td>
+        </tr>
+        <tr>
+            <th style="width:60px;">概略</th>
+            <td>
+                L2アルゴリズムを用いたLLL基底簡約
+                <br>
+                <a href="https://link.springer.com/chapter/10.1007/11426639_13">P. Q. Nguyen and D. Stehle.
+                    Floating-point LLL revisited.(2005)</a>
+                <br>
+                <a href="https://epubs.siam.org/doi/10.1137/070705702">P. Q. Nguyen and D. Stehle. An LLL algorithm with
+                    quadratic complexity.(2009)</a>
+            </td>
+        </tr>
+        <tr>
+            <th style="width:60px;">引数</th>
+            <td>
+                <table>
+                    <tr>
+                        <td><code>delta</code></td>
+                        <td>：</td>
+                        <td>LLLの簡約パラメータ（0.25以上1以下）</td>
+                    </tr>
+                    <tr>
+                        <td><code>eta</code></td>
+                        <td>：</td>
+                        <td>サイズ基底簡約の簡約パラメータ（0.5以上\(\sqrt{\texttt{eta}}\)以下）</td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <th style="width: 40px;">戻り値</th>
+            <td>なし</td>
+        </tr>
+        <tr>
+            <th style="width:60px;">解説</th>
+            <td>
+                格子基底\(\lbrace\boldsymbol{b}_1, \ldots,
+                \boldsymbol{b}_n\rbrace\)を簡約パラメータdeltaとetaに関してL2アルゴリズムを用いてLLL簡約する関数です．
+            </td>
+        </tr>
+    </table>
+    <h3>サンプル</h3>
+    <pre class="code_block"><code>#include &lt;iostream&gt;
+#include "lattice.h"
+        
+int main()
+{
+    // 40次正方行列を基底行列に持つ格子
+    Lattice&lt;int&gt; lat(40, 40);
+        
+    // ランダムなSVP型格子に設定
+    lat.setRandom(40, 40, 1000, 9999);
+            
+    // LLL基底簡約
+    lat.L2(0.99, 0.51);
 
     // 基底行列の表示
     std::cout &lt;&lt; lat &lt;&lt; std::endl;
@@ -466,7 +537,7 @@ int main()
         </tr>
     </table>
     <h3>サンプル</h3>
-<pre class="code_block"><code>#include &lt;iostream&gt;
+    <pre class="code_block"><code>#include &lt;iostream&gt;
 #include "lattice.h"
         
 int main()
@@ -534,7 +605,7 @@ int main()
         </tr>
     </table>
     <h3>サンプル</h3>
-<pre class="code_block"><code>#include &lt;iostream&gt;
+    <pre class="code_block"><code>#include &lt;iostream&gt;
 #include "lattice.h"
         
 int main()
@@ -567,7 +638,8 @@ int main()
             <td>
                 BKZ基底簡約
                 <br>
-                <a href="https://link.springer.com/article/10.1007/BF01581144">C. P. Schnorr and M. Euchner. Lattice basis
+                <a href="https://link.springer.com/article/10.1007/BF01581144">C. P. Schnorr and M. Euchner. Lattice
+                    basis
                     reduction: Improved practical algorithms and solving subset sum problem.(1994)
                 </a>
             </td>
@@ -607,7 +679,7 @@ int main()
         </tr>
     </table>
     <h3>サンプル</h3>
-<pre class="code_block"><code>#include &lt;iostream&gt;
+    <pre class="code_block"><code>#include &lt;iostream&gt;
 #include "lattice.h"
         
 int main()
@@ -639,13 +711,16 @@ int main()
             <td>
                 HKZ基底簡約
                 <br>
-                <a href="https://link.springer.com/article/10.1007/BF01442912">A. Korkine and G. Zolotareff. Sur les formes
+                <a href="https://link.springer.com/article/10.1007/BF01442912">A. Korkine and G. Zolotareff. Sur les
+                    formes
                     quadratiques positives ternaires.(1872)</a>
                 <br>
-                <a href="https://link.springer.com/article/10.1007/BF01442795">A. Korkine and G. Zolotareff. Sur les formes
+                <a href="https://link.springer.com/article/10.1007/BF01442795">A. Korkine and G. Zolotareff. Sur les
+                    formes
                     quadratiques.(1873)</a>
                 <br>
-                <a href="https://link.springer.com/article/10.1007/BF01581144">C. P. Schnorr and M. Euchner. Lattice basis
+                <a href="https://link.springer.com/article/10.1007/BF01581144">C. P. Schnorr and M. Euchner. Lattice
+                    basis
                     reduction: Improved practical algorithms and solving subset sum problem.(1994)
                 </a>
             </td>
@@ -682,7 +757,7 @@ int main()
         </tr>
     </table>
     <h3>サンプル</h3>
-<pre class="code_block"><code>#include &lt;iostream&gt;
+    <pre class="code_block"><code>#include &lt;iostream&gt;
 #include "lattice.h"
         
 int main()
@@ -757,7 +832,7 @@ int main()
         </tr>
     </table>
     <h3>サンプル</h3>
-<pre class="code_block"><code>#include &lt;iostream&gt;
+    <pre class="code_block"><code>#include &lt;iostream&gt;
 #include "lattice.h"
         
 int main()
@@ -830,7 +905,7 @@ int main()
         </tr>
     </table>
     <h3>サンプル</h3>
-<pre class="code_block"><code>#include &lt;iostream&gt;
+    <pre class="code_block"><code>#include &lt;iostream&gt;
 #include "lattice.h"
         
 int main()
@@ -863,7 +938,8 @@ int main()
                 双対型DeepLLL基底簡約
                 <br>
                 <a href="https://link.springer.com/chapter/10.1007/978-3-319-89339-6_10">M. Yasuda, J. Yamaguchi, M.
-                    Ooka and S. Nakamura. Development of a dual version of DeepBKZ and its application to solving the LWE
+                    Ooka and S. Nakamura. Development of a dual version of DeepBKZ and its application to solving the
+                    LWE
                     challenge.(2018)
                 </a>
             </td>
@@ -898,7 +974,7 @@ int main()
         </tr>
     </table>
     <h3>サンプル</h3>
-<pre class="code_block"><code>#include &lt;iostream&gt;
+    <pre class="code_block"><code>#include &lt;iostream&gt;
 #include "lattice.h"
         
 int main()
@@ -965,7 +1041,7 @@ int main()
         </tr>
     </table>
     <h3>サンプル</h3>
-<pre class="code_block"><code>#include &lt;iostream&gt;
+    <pre class="code_block"><code>#include &lt;iostream&gt;
 #include "lattice.h"
         
 int main()
@@ -990,14 +1066,16 @@ int main()
     <table>
         <tr>
             <th style="width:60px;"><a name="DualBKZ">宣言</a></th>
-            <td style="color: yellow;">void dualBKZ(const long beta, const double delta = 0.75, const bool compute_gso = true);</td>
+            <td style="color: yellow;">void dualBKZ(const long beta, const double delta = 0.75, const bool compute_gso =
+                true);</td>
         </tr>
         <tr>
             <th style="width:60px;">概略</th>
             <td>
                 双対型BKZ基底簡約
                 <br>
-                <a href="https://link.springer.com/chapter/10.1007/978-3-662-49890-3_31">D. Micciancio and M. Walter. Practical, predictable lattice basis reduction.(2016)</a>
+                <a href="https://link.springer.com/chapter/10.1007/978-3-662-49890-3_31">D. Micciancio and M. Walter.
+                    Practical, predictable lattice basis reduction.(2016)</a>
             </td>
         </tr>
         <tr>
@@ -1035,7 +1113,7 @@ int main()
         </tr>
     </table>
     <h3>サンプル</h3>
-<pre class="code_block"><code>#include &lt;iostream&gt;
+    <pre class="code_block"><code>#include &lt;iostream&gt;
 #include "lattice.h"
         
 int main()
@@ -1054,58 +1132,60 @@ int main()
         
     return 0;
 }</code></pre>
-<br>
-<hr style="color: white;">
-<br>
-<table>
-    <tr>
-        <th style="width:60px;"><a name="DualDeepBKZ">宣言</a></th>
-        <td style="color: yellow;">void dualDeepBKZ(const long beta, const double delta = 0.75, const bool compute_gso = true);</td>
-    </tr>
-    <tr>
-        <th style="width:60px;">概略</th>
-        <td>
-            双対型DeepBKZ基底簡約
-            <br>
-            <a href="https://link.springer.com/chapter/10.1007/978-3-662-49890-3_31">D. Micciancio and M. Walter. Practical, predictable lattice basis reduction.(2016)</a>
-        </td>
-    </tr>
-    <tr>
-        <th style="width:60px;">引数</th>
-        <td>
-            <table>
-                <tr>
-                    <td><code>beta</code></td>
-                    <td>：</td>
-                    <td>ブロックサイズ（2以上格子次元以下）</td>
-                </tr>
-                <tr>
-                    <td><code>delta</code></td>
-                    <td>：</td>
-                    <td>簡約パラメータ（0.75以上1以下）</td>
-                </tr>
-                <tr>
-                    <td><code>compute_gso</code></td>
-                    <td>：</td>
-                    <td>簡約する前にGSO情報を更新するか．<br>事前にGSO情報を計算していない場合はtrueにする必要がある</td>
-                </tr>
-            </table>
-        </td>
-    </tr>
-    <tr>
-        <th style="width: 40px;">戻り値</th>
-        <td>なし</td>
-    </tr>
-    <tr>
-        <th style="width:60px;">解説</th>
-        <td>
-            格子基底\(\lbrace\boldsymbol{b}_1, \ldots,
-            \boldsymbol{b}_n\rbrace\)をブロックサイズ<code>beta</code>と簡約パラメータ<code>delta</code>に関して双対型BKZ簡約する関数です．
-        </td>
-    </tr>
-</table>
-<h3>サンプル</h3>
-<pre class="code_block"><code>#include &lt;iostream&gt;
+    <br>
+    <hr style="color: white;">
+    <br>
+    <table>
+        <tr>
+            <th style="width:60px;"><a name="DualDeepBKZ">宣言</a></th>
+            <td style="color: yellow;">void dualDeepBKZ(const long beta, const double delta = 0.75, const bool
+                compute_gso = true);</td>
+        </tr>
+        <tr>
+            <th style="width:60px;">概略</th>
+            <td>
+                双対型DeepBKZ基底簡約
+                <br>
+                <a href="https://link.springer.com/chapter/10.1007/978-3-662-49890-3_31">D. Micciancio and M. Walter.
+                    Practical, predictable lattice basis reduction.(2016)</a>
+            </td>
+        </tr>
+        <tr>
+            <th style="width:60px;">引数</th>
+            <td>
+                <table>
+                    <tr>
+                        <td><code>beta</code></td>
+                        <td>：</td>
+                        <td>ブロックサイズ（2以上格子次元以下）</td>
+                    </tr>
+                    <tr>
+                        <td><code>delta</code></td>
+                        <td>：</td>
+                        <td>簡約パラメータ（0.75以上1以下）</td>
+                    </tr>
+                    <tr>
+                        <td><code>compute_gso</code></td>
+                        <td>：</td>
+                        <td>簡約する前にGSO情報を更新するか．<br>事前にGSO情報を計算していない場合はtrueにする必要がある</td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <th style="width: 40px;">戻り値</th>
+            <td>なし</td>
+        </tr>
+        <tr>
+            <th style="width:60px;">解説</th>
+            <td>
+                格子基底\(\lbrace\boldsymbol{b}_1, \ldots,
+                \boldsymbol{b}_n\rbrace\)をブロックサイズ<code>beta</code>と簡約パラメータ<code>delta</code>に関して双対型BKZ簡約する関数です．
+            </td>
+        </tr>
+    </table>
+    <h3>サンプル</h3>
+    <pre class="code_block"><code>#include &lt;iostream&gt;
 #include "lattice.h"
     
 int main()
@@ -1124,47 +1204,49 @@ int main()
     
     return 0;
 }</code></pre>
-<br>
-<hr style="color: white;">
-<br>
-<table>
-    <tr>
-        <th style="width:60px;"><a name="ENUM">宣言</a></th>
-        <td style="color: yellow;">std::vector<long> Lattice<T>::ENUM(double R);</td>
-    </tr>
-    <tr>
-        <th style="width:60px;">概略</th>
-        <td>
-            格子上の最短ベクトルの数え上げ
-            <br>
-            <a href="https://link.springer.com/chapter/10.1007/978-3-642-13190-5_13">N. Gama and P. Q. Nguyen and O. Regev(2010)</a>
-        </td>
-    </tr>
-    <tr>
-        <th style="width:60px;">引数</th>
-        <td>
-            <table>
-                <tr>
-                    <td><code>R</code></td>
-                    <td>：</td>
-                    <td>探索半径</td>
-                </tr>
-            </table>
-        </td>
-    </tr>
-    <tr>
-        <th style="width: 40px;">戻り値</th>
-        <td>なし</td>
-    </tr>
-    <tr>
-        <th style="width:60px;">解説</th>
-        <td>
-            探索半径\(R>0\)以下の格子ベクトルを数え上げ，格子\(L\)上の最短ベクトルを求めますぅ．ただし，\(R>0\)以下の格子ベクトルが存在しないときは零ベクトルを返します．<br>なお，``ENUM``が返すのは，正確には格子ベクトルではなく，格子ベクトルの係数ベクトルであり，格子ベクトルを知りたい場合は<a href="fund.html#mulVecBasis">mulVecBasis</a>関数を使う必要があります．
-        </td>
-    </tr>
-</table>
-<h3>サンプル</h3>
-<pre class="code_block"><code>#include &lt;iostream&gt;
+    <br>
+    <hr style="color: white;">
+    <br>
+    <table>
+        <tr>
+            <th style="width:60px;"><a name="ENUM">宣言</a></th>
+            <td style="color: yellow;">std::vector<long> Lattice<T>::ENUM(double R);</td>
+        </tr>
+        <tr>
+            <th style="width:60px;">概略</th>
+            <td>
+                格子上の最短ベクトルの数え上げ
+                <br>
+                <a href="https://link.springer.com/chapter/10.1007/978-3-642-13190-5_13">N. Gama and P. Q. Nguyen and O.
+                    Regev(2010)</a>
+            </td>
+        </tr>
+        <tr>
+            <th style="width:60px;">引数</th>
+            <td>
+                <table>
+                    <tr>
+                        <td><code>R</code></td>
+                        <td>：</td>
+                        <td>探索半径</td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <th style="width: 40px;">戻り値</th>
+            <td>なし</td>
+        </tr>
+        <tr>
+            <th style="width:60px;">解説</th>
+            <td>
+                探索半径\(R>0\)以下の格子ベクトルを数え上げ，格子\(L\)上の最短ベクトルを求めますぅ．ただし，\(R>0\)以下の格子ベクトルが存在しないときは零ベクトルを返します．<br>なお，``ENUM``が返すのは，正確には格子ベクトルではなく，格子ベクトルの係数ベクトルであり，格子ベクトルを知りたい場合は<a
+                    href="fund.html#mulVecBasis">mulVecBasis</a>関数を使う必要があります．
+            </td>
+        </tr>
+    </table>
+    <h3>サンプル</h3>
+    <pre class="code_block"><code>#include &lt;iostream&gt;
 #include "lattice.h"
     
 int main()
@@ -1186,10 +1268,10 @@ int main()
     
     return 0;
 }</code></pre>
-<br>
-<hr style="color: white;">
-<br>
-<p><a href="index.html">戻る</a></p>
+    <br>
+    <hr style="color: white;">
+    <br>
+    <p><a href="index.html">戻る</a></p>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.1/highlight.min.js"></script>
     <script>hljs.initHighlightingOnLoad();</script>
