@@ -35,8 +35,10 @@ private:
     std::vector<std::vector<T>> m_basis;                                   // 格子基底
     std::vector<double> m_B;                                               // GSOベクトルの二乗ノルム
     std::vector<double> m_dual_B;                                          // 双対基底のGSOベクトルの二乗ノルム
+    std::vector<double> m_s;                                               // L2内で利用するLovasz条件の検証用のベクトル
     std::vector<std::vector<double>> m_b_star;                             // GSOベクトル
     std::vector<std::vector<double>> m_dual_b_star;                        // 双対基底のGSOベクトル
+    std::vector<std::vector<double>> m_r;                                  // L2内で利用するGSO情報
     std::vector<std::vector<double>> m_mu;                                 // GSO係数行列
     std::vector<std::vector<double>> m_dual_mu;                            // 双対基底のGSO係数行列
     std::mt19937_64 m_mt64 = std::mt19937_64((unsigned int)time(nullptr)); // 乱数生成機
@@ -66,6 +68,14 @@ private:
      */
     bool dualENUM_(std::vector<long> &coeff_vector, double R, const long start, const long end);
 
+    /**
+     * @brief 今の"基底ベクトル"が基底になっているかどうか
+     * 
+     * @return true 基底である
+     * @return false 基底でない
+     */
+    bool isBasis();
+
 public:
     /**
      * @brief Construct a new Lattice object
@@ -73,7 +83,7 @@ public:
      * @param n 基底行列の行数
      * @param m 基底行列の列数
      */
-    Lattice(const long n = 0, const long m = 0) : m_num_rows(n), m_num_cols(m), m_basis(std::vector<std::vector<T>>(n, std::vector<T>(m, 0))), m_B(std::vector<double>(n, 0)), m_b_star(std::vector<std::vector<double>>(n, std::vector<double>(m, 0))), m_mu(std::vector<std::vector<double>>(n, std::vector<double>(n, 0))), m_dual_B(std::vector<double>(n, 0)), m_dual_b_star(std::vector<std::vector<double>>(n, std::vector<double>(m, 0))), m_dual_mu(std::vector<std::vector<double>>(n, std::vector<double>(n, 0))) {};
+    Lattice(const long n = 0, const long m = 0);
 
     /**
      * @brief ストリームへの出力
@@ -208,6 +218,12 @@ public:
     void dualDeepInsertion(const long k, const long l);
 
     /**
+     * @brief 基底のGram行列のCholesky分解
+     * 
+     */
+    void choleskyFact();
+
+    /**
      * @brief GSO情報の計算
      *
      */
@@ -267,6 +283,24 @@ public:
      * @param h LLLの出発インデックス
      */
     void LLL(const double delta = 0.75, const bool compute_gso = true, const long start_ = 0, const long end_ = -1, long h = 0);
+
+    /**
+     * @brief L2アルゴリズム内で利用するサイズ簡約アルゴリズム
+     *
+     * @param eta 簡約パラメタ
+     * @param k インデックス
+     */
+    void sizeReduceL2(const double eta, const long k);
+
+    /**
+     * @brief L2アルゴリズム
+     *
+     * P. Q. Nguyen, D. Stehle. Floating-point LLL revisited.
+     *
+     * @param delta 簡約パラメタ
+     * @param eta サイズ簡約のパラメタ
+     */
+    void L2(const double delta = 0.75, const double eta = 0.51);
 
     /**
      * @brief DeepLLL簡約
@@ -385,9 +419,9 @@ public:
 
     /**
      * @brief 双対基底への基底の挿入
-     * 
+     *
      * @param x 挿入するベクトルの係数ベクトル
-     * @param dim 
+     * @param dim
      */
     void insertToDualBasis(const std::vector<long> x, const long dim);
 
