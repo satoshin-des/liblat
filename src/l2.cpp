@@ -9,6 +9,18 @@
 template <class T>
 void Lattice<T>::sizeReduceL2(const double eta, const long k)
 {
+    try
+    {
+        if ((eta < 0.5) || (eta > 1))
+        {
+            throw std::out_of_range("[WARNING]The reduction parameter must be in [0.5, 1.0].");
+        }
+    }
+    catch (const std::exception &ex)
+    {
+        std::cerr << ex.what() << "@ function " << __FUNCTION__ << std::endl;
+    }
+
     const double eta_bar = (eta + eta + 1) * 0.25;
     double max;
 
@@ -68,6 +80,25 @@ void Lattice<T>::sizeReduceL2(const double eta, const long k)
 template <class T>
 void Lattice<T>::L2(const double delta, const double eta)
 {
+    try
+    {
+        if ((eta < 0.5) || (eta > sqrt(delta)))
+        {
+            char err_s[ERR_STR_LEN];
+            sprintf(err_s, "[WARNING]The reduction parameter eta must be in [0.5, %lf].", sqrt(delta));
+            throw std::out_of_range(err_s);
+        }
+
+        if ((eta < 0.5) || (eta > 1))
+        {
+            throw std::out_of_range("[WARNING]The reduction parameter delta must be in [0.25, 1.0].");
+        }
+    }
+    catch (const std::exception &ex)
+    {
+        std::cerr << ex.what() << "@ function " << __FUNCTION__ << std::endl;
+    }
+
     T tmp;
     const double delta_bar = (delta + 1) * 0.5;
     m_r[0][0] = dot(m_basis[0], m_basis[0]);
