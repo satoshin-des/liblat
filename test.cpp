@@ -28,6 +28,8 @@ int main()
     // lat.BKZ(6, 0.99);
     std::cout << lat.b1Norm() << std::endl;
     std::cout << lat;
+    printf("rhf = %Lf\n", lat.rhf());
+    printf("sl = %Lf\n", lat.sl());
     // std::cout << lat.volume(false) << std::endl;
 
     return 0;

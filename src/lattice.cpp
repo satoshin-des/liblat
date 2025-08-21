@@ -10,6 +10,9 @@
 
 #include <cmath>
 
+bool output_rhf = false;
+bool output_gsa_sl = false;
+
 template <class T>
 Lattice<T>::Lattice(const long n, const long m)
     : m_num_rows(n),
@@ -117,6 +120,8 @@ void Lattice<T>::setRandom(const long n, const long m, const T min, const T max)
         m_basis[i][i] = 1;
         m_basis[i][0] = static_cast<T>(m_get_rand_uni(m_mt64));
     }
+
+    m_vol = volume(true);
 }
 
 template <class T>
@@ -134,6 +139,8 @@ void Lattice<T>::setBasis(const std::vector<std::vector<T>> basis_mat)
             m_basis[i][j] = basis_mat[i][j];
         }
     }
+
+    m_vol = volume(true);
 }
 
 template <class T>
@@ -163,6 +170,8 @@ void Lattice<T>::setGoldesteinMayerLattice(const T p, const T q)
         m_basis[i][0] = q;
     }
     m_basis[0][0] = p;
+
+    m_vol = volume(true);
 }
 
 template <class T>
@@ -187,6 +196,8 @@ void Lattice<T>::setSchnorrLattice(const long N, const double c)
         m_basis[i][i] = sqrt(log(prime(i + 1)));
         m_basis[i][m_num_cols - 1] = std::pow(N, c) * log(prime(i + 1));
     }
+
+    m_vol = volume(true);
 }
 
 template <class T>
@@ -202,7 +213,10 @@ T Lattice<T>::volume(const bool compute_gso)
     {
         vol *= m_B[i];
     }
-    return sqrt(vol);
+
+    m_vol = sqrt(vol);
+
+    return m_vol;
 }
 
 template <class T>

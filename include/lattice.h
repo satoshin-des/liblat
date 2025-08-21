@@ -20,6 +20,9 @@
 
 #include "core.h"
 
+extern bool output_rhf;    // Output root of hermite factor to csv-file or not
+extern bool output_gsa_sl; // Output GSA-slope to csv-file or not
+
 /**
  * @brief 格子のクラス
  *
@@ -31,6 +34,7 @@ class Lattice
 private:
     long m_num_rows = 0;                                                   // 格子の次元
     long m_num_cols = 0;                                                   // 格子ベクトルのサイズ
+    T m_vol;                                                               // 格子の体積
     long m_max_loop = 99999;                                               // BKZの最大ループ数
     std::vector<std::vector<T>> m_basis;                                   // 格子基底
     std::vector<double> m_B;                                               // GSOベクトルの二乗ノルム
@@ -70,7 +74,7 @@ private:
 
     /**
      * @brief 今の"基底ベクトル"が基底になっているかどうか
-     * 
+     *
      * @return true 基底である
      * @return false 基底でない
      */
@@ -219,7 +223,7 @@ public:
 
     /**
      * @brief 基底のGram行列のCholesky分解
-     * 
+     *
      */
     void choleskyFact();
 
@@ -251,6 +255,20 @@ public:
      * @param dual_D
      */
     void updateDualDeepInsGSO(const long k, const long l, const std::vector<double> dual_D);
+
+    /**
+     * @brief 格子基底のRHFの計算
+     *
+     * @return double 格子基底のRHF
+     */
+    long double rhf();
+
+    /**
+     * @brief 格子基底のGSO-slopeの計算
+     * 
+     * @return long double 格子基底のGSO-slope
+     */
+    long double sl();
 
     /**
      * @brief 部分サイズ基底簡約
