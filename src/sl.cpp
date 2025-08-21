@@ -4,7 +4,7 @@
 #include <cmath>
 
 template <class T>
-long double Lattice<T>::sl()
+long double Lattice<T>::sl() const
 {
     long double sum1 = 0, sum2 = 0;
     for (int i = 0; i < m_num_rows; ++i)

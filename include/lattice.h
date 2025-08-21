@@ -261,14 +261,14 @@ public:
      *
      * @return double 格子基底のRHF
      */
-    long double rhf();
+    long double rhf() const;
 
     /**
      * @brief 格子基底のGSO-slopeの計算
      * 
      * @return long double 格子基底のGSO-slope
      */
-    long double sl();
+    long double sl() const;
 
     /**
      * @brief 部分サイズ基底簡約

@@ -4,9 +4,14 @@
 #include <cmath>
 
 template <class T>
-long double Lattice<T>::rhf()
+long double Lattice<T>::rhf() const
 {
-    const long double hf = b1Norm() / powl(m_vol, 1.0 / m_num_rows);
+    long double norm = 0;
+    for (int i = 0; i < m_num_rows; ++i)
+    {
+        norm += m_basis[0][i] * m_basis[0][i];
+    }
+    const long double hf = sqrtl(norm) / powl(m_vol, 1.0 / m_num_rows);
     return powl(hf, 1.0 / m_num_rows);
 }
 
