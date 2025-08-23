@@ -142,6 +142,14 @@ public:
     /// @return 格子基底の第一基底ベクトルのノルム
     long double b1Norm();
 
+    /**
+     * @brief SVP-challengeのLLL簡約基底に設定
+     * 
+     * @param dim 格子次元（40 ~ 200）
+     * @param seed シード（0~9）
+     */
+    void setSVPChallenge(const long dim, const long seed);
+
     /// @brief ランダムなSVP-challenge型格子基底の生成
     /// @param n 格子次元
     /// @param m 格子ベクトルのサイズ

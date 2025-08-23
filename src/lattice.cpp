@@ -5,9 +5,9 @@
 #include <stdio.h>
 #include <math.h>
 
+#include <fstream>
 #include <stdexcept>
 #include <vector>
-
 #include <cmath>
 
 bool output_rhf = false;
@@ -141,6 +141,24 @@ void Lattice<T>::setBasis(const std::vector<std::vector<T>> basis_mat)
     }
 
     m_vol = volume(true);
+}
+
+template <class T>
+void Lattice<T>::setSVPChallenge(const long dim, const long seed)
+{
+    char file_name[200];
+
+    sprintf(file_name, "../svp_challenge_list/svp_challenge_%ld_%ld.txt", dim, seed);
+
+    std::ifstream fin(file_name);
+
+    for (int i = 0; i < dim; ++i)
+    {
+        for (int j = 0; j < dim; ++j)
+        {
+            fin >> m_basis[i][j];
+        }
+    }
 }
 
 template <class T>
