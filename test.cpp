@@ -4,9 +4,10 @@
 
 int main()
 {
-    Lattice<int> lat(10, 10); // 10-demensional full-rank lattice
+    Lattice<int> lat(40, 40); // 40-demensional full-rank lattice
+    lat.setSVPChallenge(40, 0);
     // set as a random lattice
-    lat.setRandom(10, 10, 1000, 10000);
+    // lat.setRandom(10, 10, 1000, 10000);
 
     // print the lattice basis
     std::cout << lat;
@@ -15,16 +16,16 @@ int main()
     lat.computeGSO();
 
     // compute the shortest vector
-    std::vector<int> v = lat.mulVecBasis(lat.ENUM(1000));
+    std::vector<int> v = lat.mulVecBasis(lat.ENUM(4000000));
     print(v);
 
     // lattice basis reduction
     // lat.L2(0.99, 0.51);
-    lat.LLL(0.99);
+    // lat.LLL(0.99);
     // lat.dualBKZ(20, 0.99);
     // lat.deepBKZ(30, 0.99);
     // lat.dualDeepBKZ(30, 0.99);
-    // lat.BKZ(20, 0.99);
+    lat.BKZ(20, 0.99);
     // lat.BKZ(6, 0.99);
     std::cout << lat.b1Norm() << std::endl;
     std::cout << lat;
